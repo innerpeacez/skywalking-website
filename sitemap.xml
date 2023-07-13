@@ -5524,6 +5524,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/guides/i18n/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/guides/community/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
