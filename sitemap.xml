@@ -3540,6 +3540,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/setup/backend/storages/banyandb/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/skywalking-banyandb/next/concept/clustering/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -5049,6 +5055,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/setup/backend/storages/elasticsearch/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/faq/es-version-conflict/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -5603,6 +5615,12 @@
   
   <url>
     <loc>/docs/skywalking-satellite/v1.1.0/en/guides/readme/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/main/next/en/setup/backend/storages/h2/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -6808,6 +6826,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/setup/backend/storages/mysql/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/v9.2.0/en/setup/backend/backend-mysql-monitoring/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -7445,6 +7469,12 @@
   
   <url>
     <loc>/docs/skywalking-python/v1.0.0/en/contribution/how-to-test-plugin/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/main/next/en/setup/backend/storages/postgresql/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
