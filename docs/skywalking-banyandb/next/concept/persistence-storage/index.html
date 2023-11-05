@@ -504,7 +504,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 222ca55</div>
+                  <div class="commit-id">Commit Id: 4e92c42</div>
                 
 
 
@@ -544,7 +544,7 @@ BanyanDB provides a concise interface that shields the complexity of the impleme
 <p>Persistence storage offers a range of IO modes to cater to various throughput requirements. The interface can be accessed by developers and can be configured through settings, which can be set in the configuration file.</p>
 <h2 id="io_uring">Io_uring</h2>
 <p>Io_uring is a new feature in Linux 5.1, which is fully asynchronous and offers high throughput. In the scene of massive storage, io_uring can bring significant benefits. The following is the diagram about how io_uring works.
-<img src="https://skywalking.apache.org/doc-graph/banyandb/v0.5.0/io_uring.png" alt="">
+<img src="https://skywalking.apache.org/doc-graph/banyandb/v0.5.0/io_uring.jpg" alt="">
 If the user sets io_uring for use, the read and write requests will first be placed in the submission queue buffer when calling the operation API. When the threshold is reached, batch submissions will be made to SQ. After the kernel threads complete execution, the requests will be placed in the CQ, and the user can obtain the request results.</p>
 <h2 id="synchronous-io">Synchronous IO</h2>
 <p>The most common IO mode is Synchronous IO, but it has a relatively low throughput. BanyanDB provides a nonblocking mode that is compatible with lower Linux versions.</p>
