@@ -8344,6 +8344,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/setup/backend/backend-rocketmq-monitoring/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/setup/backend/dashboards-so11y-satellite/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
