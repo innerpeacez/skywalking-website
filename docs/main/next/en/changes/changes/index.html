@@ -36,7 +36,7 @@
 <meta itemprop="name" content="10.0.0">
 <meta itemprop="description" content="10.0.0 Project  Support Java 21 runtime. Support oap-java21 image for Java 21 runtime. Upgrade OTEL collector version to 0.92.0 in all e2e tests. Switch CI macOS runner to m1.  OAP Server  Add layer parameter to the global topology graphQL query. Add is_present function in MQE for check if the list metrics has a value or not. Remove unreasonable default configurations for gRPC thread executor. Remove gRPCThreadPoolQueueSize (SW_RECEIVER_GRPC_POOL_QUEUE_SIZE) configuration.">
 
-<meta itemprop="wordCount" content="607">
+<meta itemprop="wordCount" content="625">
 
 
 
@@ -2352,7 +2352,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 48c766e</div>
+                  <div class="commit-id">Commit Id: a41bd6e</div>
                 
 
 
@@ -2461,6 +2461,9 @@ service metadata.</li>
 <li>VIRTUAL_MQ -&gt; ROCKETMQ</li>
 </ul>
 </li>
+<li>Fix ServiceInstance <code>in</code> query.</li>
+<li>Mock <code>/api/v1/status/buildinfo</code> for PromQL API.</li>
+<li>Fix table exists check in the JDBC Storage Plugin.</li>
 </ul>
 <h4 id="ui">UI</h4>
 <ul>
@@ -2645,6 +2648,8 @@ service metadata.</li>
 
     </div>
     
+
+
 
 
 
