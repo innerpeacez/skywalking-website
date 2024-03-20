@@ -28,28 +28,28 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>Module Design | Apache SkyWalking</title><meta property="og:title" content="Module Design" />
-<meta property="og:description" content="Module Design Overview The module is an isolation concept in Rover. Each module completes an independent feature.
-Life Cycle Each concept has a complete life cycle.
- Start: Start phase is to start the current module. NotifyStartSuccess: Execute when all modules have finished starting without any errors. Shutdown: The shutdown phase is to close all the used resources.  Config Each module has its corresponding configurations and only when they&rsquo;re set in the configuration file, the module would be enabled." />
+<title>Common configuration | Apache SkyWalking</title><meta property="og:title" content="Common configuration" />
+<meta property="og:description" content="Common configuration Logger Logger is used to configure the system log.
+   Name Default Environment Key Description     logger.level INFO ROVER_LOGGER_LEVEL The lowest level of printing allowed.    Core Core is used to communicate with the backend server. It provides APIs for other modules to establish connections with the backend.
+   Name Default Environment Key Description     core.cluster_name  ROVER_CORE_CLUSTER_NAME The name of the cluster." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/skywalking-rover/next/en/concepts-and-designs/module_design/" />
+<meta property="og:url" content="/docs/skywalking-rover/next/en/setup/configuration/common/" />
 
-<meta itemprop="name" content="Module Design">
-<meta itemprop="description" content="Module Design Overview The module is an isolation concept in Rover. Each module completes an independent feature.
-Life Cycle Each concept has a complete life cycle.
- Start: Start phase is to start the current module. NotifyStartSuccess: Execute when all modules have finished starting without any errors. Shutdown: The shutdown phase is to close all the used resources.  Config Each module has its corresponding configurations and only when they&rsquo;re set in the configuration file, the module would be enabled.">
+<meta itemprop="name" content="Common configuration">
+<meta itemprop="description" content="Common configuration Logger Logger is used to configure the system log.
+   Name Default Environment Key Description     logger.level INFO ROVER_LOGGER_LEVEL The lowest level of printing allowed.    Core Core is used to communicate with the backend server. It provides APIs for other modules to establish connections with the backend.
+   Name Default Environment Key Description     core.cluster_name  ROVER_CORE_CLUSTER_NAME The name of the cluster.">
 
-<meta itemprop="wordCount" content="210">
+<meta itemprop="wordCount" content="155">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Module Design"/>
-<meta name="twitter:description" content="Module Design Overview The module is an isolation concept in Rover. Each module completes an independent feature.
-Life Cycle Each concept has a complete life cycle.
- Start: Start phase is to start the current module. NotifyStartSuccess: Execute when all modules have finished starting without any errors. Shutdown: The shutdown phase is to close all the used resources.  Config Each module has its corresponding configurations and only when they&rsquo;re set in the configuration file, the module would be enabled."/>
+<meta name="twitter:title" content="Common configuration"/>
+<meta name="twitter:description" content="Common configuration Logger Logger is used to configure the system log.
+   Name Default Environment Key Description     logger.level INFO ROVER_LOGGER_LEVEL The lowest level of printing allowed.    Core Core is used to communicate with the backend server. It provides APIs for other modules to establish connections with the backend.
+   Name Default Environment Key Description     core.cluster_name  ROVER_CORE_CLUSTER_NAME The name of the cluster."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -78,7 +78,7 @@ if (!doNotTrack) {
 
 
 
-    <title>Module Design | Apache SkyWalking</title>
+    <title>Common configuration | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -315,40 +315,6 @@ if (!doNotTrack) {
 
     
 
-    <li>
-        
-
-            
-            <a href="#">Design<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-rover/next/en/concepts-and-designs/module_design">Module Design</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-rover/next/en/concepts-and-designs/project_structue">Project Structure</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
 </ul>
 
         
@@ -374,6 +340,14 @@ if (!doNotTrack) {
 
     <li>
         
+            <a href="/docs/skywalking-rover/next/en/setup/deployment/kubernetes/readme">Deploy on Kubernetes</a>
+        
+    </li>
+
+    
+
+    <li>
+        
 
             
             <a href="#">Configuration<i class="iconfont icon-arrow-right pull-right"></i></a>
@@ -385,7 +359,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-rover/next/en/setup/configuration/logger">Logger Module</a>
+            <a href="/docs/skywalking-rover/next/en/setup/configuration/common">Common</a>
         
     </li>
 
@@ -393,7 +367,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-rover/next/en/setup/configuration/core">Core Module</a>
+            <a href="/docs/skywalking-rover/next/en/setup/configuration/service-discovery">Service Discovery</a>
         
     </li>
 
@@ -401,7 +375,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-rover/next/en/setup/configuration/process-discovery">Process Discovery Module</a>
+            <a href="/docs/skywalking-rover/next/en/setup/configuration/traffic">Traffic</a>
         
     </li>
 
@@ -409,59 +383,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-rover/next/en/setup/configuration/profiling">Profiling Module</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-rover/next/en/setup/configuration/accesslog">Access Log Module</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Examples<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-
-            
-            <a href="#">Deploy<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-rover/next/en/setup/examples/deploy/kubernetes/readme">Deploy on Kubernetes</a>
-        
-    </li>
-
-    
-
-</ul>
-
+            <a href="/docs/skywalking-rover/next/en/setup/configuration/profiling">Profiling</a>
         
     </li>
 
@@ -576,7 +498,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: d3a0f87</div>
+                  <div class="commit-id">Commit Id: dabe462</div>
                 
 
 
@@ -602,32 +524,96 @@ if (!doNotTrack) {
 
 
 
-	<h1 id="module-design">Module Design</h1>
-<h2 id="overview">Overview</h2>
-<p>The module is an isolation concept in Rover. Each module completes an independent feature.</p>
-<h2 id="life-cycle">Life Cycle</h2>
-<p>Each concept has a complete life cycle.</p>
-<ul>
-<li>Start: Start phase is to start the current module.</li>
-<li>NotifyStartSuccess: Execute when all modules have finished starting without any errors.</li>
-<li>Shutdown: The shutdown phase is to close all the used resources.</li>
-</ul>
-<h2 id="config">Config</h2>
-<p>Each module has its corresponding configurations and only when they&rsquo;re set in the configuration file, the module would be enabled.</p>
-<p>The config data support various data structures, and it could use <code>${ENV_NAME:DEFAULT}</code> to read the value from the environment variables.</p>
-<h2 id="dependency">Dependency</h2>
-<p>There may have dependencies between modules.</p>
-<p>For example, process and profiling are two separate modules, the profiling module needs to read all registered processes from the processing module. So, we could say the profiling module is dependent on the process module.</p>
-<h3 id="module-api">Module API</h3>
-<p>Modules can communicate by calling APIs from dependent modules.</p>
-<h3 id="start-sequence">Start Sequence</h3>
-<p>When Rover starts, it would analyze the dependency order of all enabled modules to a startup module list.</p>
-<p>The startup sequence is following these steps:</p>
-<ol>
-<li>Modules have the fewest dependent modules.</li>
-<li>The position of the module declaration in the configuration file.</li>
-</ol>
-<p>After parsing the list of startup modules, it would be started sequentially in a single-threaded manner.</p>
+	<h1 id="common-configuration">Common configuration</h1>
+<h2 id="logger">Logger</h2>
+<p>Logger is used to configure the system log.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Default</th>
+<th>Environment Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>logger.level</td>
+<td>INFO</td>
+<td>ROVER_LOGGER_LEVEL</td>
+<td>The lowest level of printing allowed.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="core">Core</h2>
+<p>Core is used to communicate with the backend server.
+It provides APIs for other modules to establish connections with the backend.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Default</th>
+<th>Environment Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>core.cluster_name</td>
+<td></td>
+<td>ROVER_CORE_CLUSTER_NAME</td>
+<td>The name of the cluster.</td>
+</tr>
+<tr>
+<td>core.backend.addr</td>
+<td>localhost:11800</td>
+<td>ROVER_BACKEND_ADDR</td>
+<td>The backend server address.</td>
+</tr>
+<tr>
+<td>core.backend.enable_TLS</td>
+<td>false</td>
+<td>ROVER_BACKEND_ENABLE_TLS</td>
+<td>The TLS switch.</td>
+</tr>
+<tr>
+<td>core.backend.client_pem_path</td>
+<td>client.pem</td>
+<td>ROVER_BACKEND_PEM_PATH</td>
+<td>The file path of client.pem. The config only works when opening the TLS switch.</td>
+</tr>
+<tr>
+<td>core.backend.client_key_path</td>
+<td>client.key</td>
+<td>ROVER_BACKEND_KEY_PATH</td>
+<td>The file path of client.key. The config only works when opening the TLS switch.</td>
+</tr>
+<tr>
+<td>core.backend.insecure_skip_verify</td>
+<td>false</td>
+<td>ROVER_BACKEND_INSECURE_SKIP_VERIFY</td>
+<td>InsecureSkipVerify controls whether a client verifies the server&rsquo;s certificate chain and host name.</td>
+</tr>
+<tr>
+<td>core.backend.ca_pem_path</td>
+<td>ca.pem</td>
+<td>ROVER_BACKEND_CA_PEM_PATH</td>
+<td>The file path oca.pem. The config only works when opening the TLS switch.</td>
+</tr>
+<tr>
+<td>core.backend.check_period</td>
+<td>5</td>
+<td>ROVER_BACKEND_CHECK_PERIOD</td>
+<td>How frequently to check the connection(second).</td>
+</tr>
+<tr>
+<td>core.backend.authentication</td>
+<td></td>
+<td>ROVER_BACKEND_AUTHENTICATION</td>
+<td>The auth value when send request.</td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -663,17 +649,10 @@ if (!doNotTrack) {
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#module-design">Module Design</a>
+    <li><a href="#common-configuration">Common configuration</a>
       <ul>
-        <li><a href="#overview">Overview</a></li>
-        <li><a href="#life-cycle">Life Cycle</a></li>
-        <li><a href="#config">Config</a></li>
-        <li><a href="#dependency">Dependency</a>
-          <ul>
-            <li><a href="#module-api">Module API</a></li>
-            <li><a href="#start-sequence">Start Sequence</a></li>
-          </ul>
-        </li>
+        <li><a href="#logger">Logger</a></li>
+        <li><a href="#core">Core</a></li>
       </ul>
     </li>
   </ul>
@@ -791,12 +770,6 @@ if (!doNotTrack) {
 
     </div>
     
-
-
-
-
-
-
 
 
 

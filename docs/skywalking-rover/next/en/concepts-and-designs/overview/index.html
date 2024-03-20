@@ -315,40 +315,6 @@ if (!doNotTrack) {
 
     
 
-    <li>
-        
-
-            
-            <a href="#">Design<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-rover/next/en/concepts-and-designs/module_design">Module Design</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-rover/next/en/concepts-and-designs/project_structue">Project Structure</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
 </ul>
 
         
@@ -374,6 +340,14 @@ if (!doNotTrack) {
 
     <li>
         
+            <a href="/docs/skywalking-rover/next/en/setup/deployment/kubernetes/readme">Deploy on Kubernetes</a>
+        
+    </li>
+
+    
+
+    <li>
+        
 
             
             <a href="#">Configuration<i class="iconfont icon-arrow-right pull-right"></i></a>
@@ -385,7 +359,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-rover/next/en/setup/configuration/logger">Logger Module</a>
+            <a href="/docs/skywalking-rover/next/en/setup/configuration/common">Common</a>
         
     </li>
 
@@ -393,7 +367,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-rover/next/en/setup/configuration/core">Core Module</a>
+            <a href="/docs/skywalking-rover/next/en/setup/configuration/service-discovery">Service Discovery</a>
         
     </li>
 
@@ -401,7 +375,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-rover/next/en/setup/configuration/process-discovery">Process Discovery Module</a>
+            <a href="/docs/skywalking-rover/next/en/setup/configuration/traffic">Traffic</a>
         
     </li>
 
@@ -409,59 +383,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-rover/next/en/setup/configuration/profiling">Profiling Module</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-rover/next/en/setup/configuration/accesslog">Access Log Module</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Examples<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-
-            
-            <a href="#">Deploy<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-rover/next/en/setup/examples/deploy/kubernetes/readme">Deploy on Kubernetes</a>
-        
-    </li>
-
-    
-
-</ul>
-
+            <a href="/docs/skywalking-rover/next/en/setup/configuration/profiling">Profiling</a>
         
     </li>
 
@@ -576,7 +498,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: d3a0f87</div>
+                  <div class="commit-id">Commit Id: dabe462</div>
                 
 
 
@@ -614,7 +536,7 @@ and upload them to the SkyWalking backend for analysis, aggregate, and visualize
 <li>Network monitoring for generating network access logs.</li>
 </ol>
 <h2 id="architecture">Architecture</h2>
-<p><img src="https://skywalking.apache.org/doc-graph/skywalking-rover/v0.1.0/architecture.png" alt="architecture.png"></p>
+<p><img src="/images/skywalking-rover_next_architecture.png" alt="architecture"></p>
 <ul>
 <li><strong>Process</strong> represents the data monitored by Rover.</li>
 <li><strong>Rover</strong> is deployed in the VM instance, collects data in VM and Process, and reports it to the OAP cluster.</li>
@@ -776,12 +698,6 @@ and upload them to the SkyWalking backend for analysis, aggregate, and visualize
 
     </div>
     
-
-
-
-
-
-
 
 
 
