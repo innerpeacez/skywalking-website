@@ -10723,6 +10723,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/faq/why-clickhouse-not-supported/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/setup/backend/backend-win-monitoring/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
