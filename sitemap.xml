@@ -6064,12 +6064,6 @@
   </url>
   
   <url>
-    <loc>/docs/skywalking-banyandb/next/installation/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>/docs/skywalking-banyandb/v0.3.1/installation/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
