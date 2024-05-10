@@ -500,7 +500,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/storages/h2">H2</a>
+            <a href="/docs/main/next/en/setup/backend/storages/banyandb">BanyanDB</a>
         
     </li>
 
@@ -508,7 +508,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/storages/elasticsearch">Elasticsearch &amp; OpenSearch</a>
+            <a href="/docs/main/next/en/setup/backend/storages/h2">H2</a>
         
     </li>
 
@@ -532,7 +532,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/storages/banyandb">BanyanDB(Alpha)</a>
+            <a href="/docs/main/next/en/setup/backend/storages/elasticsearch">Elasticsearch &amp; OpenSearch</a>
         
     </li>
 
@@ -2134,11 +2134,45 @@ if (!doNotTrack) {
         
 
             
+            <a href="#">10.x Releases<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/changes/changes-10.0.0">10.0.0</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
             <a href="#">9.x Releases<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
 <ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/changes/changes-9.7.0">9.7.0</a>
+        
+    </li>
+
     
 
     <li>
@@ -2377,7 +2411,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 28bf552</div>
+                  <div class="commit-id">Commit Id: 19fba2d</div>
                 
 
 
@@ -2838,7 +2872,7 @@ However, if the metrics list contains meter with values, it would return <code>1
 <p>Trend Operation takes an expression and performs a trend calculation on its results.</p>
 <p>Expression:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&lt;Trend-Operator&gt;(Metrics Expression, time_range)
-</code></pre></div><p><code>time_range</code> is the positive int of the calculated range. The unit will automatically align with to the query <a href="https://github.com/apache/skywalking/tree/28bf55219f2cc6d6be58e50b92983e57cd42a97e/oap-server/server-core/src/main/java/org/apache/skywalking/oap/server/core/query/enumeration/Step.java">Step</a>,
+</code></pre></div><p><code>time_range</code> is the positive int of the calculated range. The unit will automatically align with to the query <a href="https://github.com/apache/skywalking/tree/19fba2dae8069d4d743312a4d79acbb4f1256cfa/oap-server/server-core/src/main/java/org/apache/skywalking/oap/server/core/query/enumeration/Step.java">Step</a>,
 for example, if the query Step is <code>MINUTE</code>, the unit of <code>time_range</code> is <code>minute</code>.</p>
 <table>
 <thead>
@@ -3270,6 +3304,8 @@ metric{label1=&#39;a&#39;, label2=&#39;2a&#39;}
 
     </div>
     
+
+
 
 
 
