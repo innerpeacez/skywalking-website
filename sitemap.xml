@@ -3799,12 +3799,6 @@
   </url>
   
   <url>
-    <loc>/docs/skywalking-banyandb/next/installation/cluster/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>/docs/main/next/en/setup/backend/backend-cluster/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -6089,6 +6083,18 @@
   
   <url>
     <loc>/docs/skywalking-python/v1.0.0/en/setup/installation/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/installation/cluster/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/installation/standalone/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -9420,12 +9426,6 @@
   
   <url>
     <loc>/docs/main/v9.3.0/en/papers/stam/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>/docs/skywalking-banyandb/next/installation/standalone/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
