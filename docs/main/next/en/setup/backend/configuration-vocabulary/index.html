@@ -38,7 +38,7 @@
 <meta itemprop="description" content="Configuration Vocabulary The Configuration Vocabulary lists all available configurations provided by application.yml.
    Module Provider Settings Value(s) and Explanation System Environment Variable¹ Default     core default role Option values: Mixed/Receiver/Aggregator. Receiver mode OAP opens the service to the agents, then analyzes and aggregates the results, and forwards the results for distributed aggregation. Aggregator mode OAP receives data from Mixer and Receiver role OAP nodes, and performs 2nd level aggregation.">
 
-<meta itemprop="wordCount" content="5242">
+<meta itemprop="wordCount" content="5254">
 
 
 
@@ -2437,7 +2437,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 2e8b4f9</div>
+                  <div class="commit-id">Commit Id: fb6f352</div>
                 
 
 
@@ -3590,7 +3590,7 @@ if (!doNotTrack) {
 <td>maxBulkSize</td>
 <td>The maximum size of write entities in a single batch write call.</td>
 <td>SW_STORAGE_BANYANDB_MAX_BULK_SIZE</td>
-<td>5000</td>
+<td>10000</td>
 </tr>
 <tr>
 <td>-</td>
@@ -3599,6 +3599,14 @@ if (!doNotTrack) {
 <td>Period of flush interval. In the timeunit of seconds.</td>
 <td>SW_STORAGE_BANYANDB_FLUSH_INTERVAL</td>
 <td>15</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>flushTimeout</td>
+<td>The timeout seconds of a bulk flush.</td>
+<td>SW_STORAGE_BANYANDB_FLUSH_TIMEOUT</td>
+<td>10</td>
 </tr>
 <tr>
 <td>-</td>
