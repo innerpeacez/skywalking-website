@@ -6088,6 +6088,18 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/installation/docker/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/installation/kubernetes/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/skywalking-banyandb/next/installation/cluster/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -8093,6 +8105,12 @@
   
   <url>
     <loc>/docs/skywalking-python/v1.0.0/en/contribution/developer/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/guides/quick-start/quick-start/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
