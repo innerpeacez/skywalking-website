@@ -28,34 +28,31 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>CRUD Streams | Apache SkyWalking</title><meta property="og:title" content="CRUD Streams" />
-<meta property="og:description" content="CRUD Streams CRUD operations create, read, update and delete streams.
+<title>Query [Measures](../../../../concept/data-model#measures) | Apache SkyWalking</title><meta property="og:title" content="Query [Measures](../../../../concept/data-model#measures)" />
+<meta property="og:description" content="Query Measures Query operation queries the data in a measure.
 bydbctl is the command line tool in examples.
-Stream intends to store streaming data, for example, traces or logs.
-Create operation Create operation adds a new stream to the database&rsquo;s metadata registry repository. If the stream does not currently exist, create operation will create the schema.
-Examples of creating A stream belongs to a unique group. We should create such a group with a catalog CATALOG_STREAM before creating a stream." />
+The input contains two parts:
+ Request: a YAML-based text which is defined by the API Time Range: YAML and CLI&rsquo;s flags both support it.  Time Range The query specification contains time_range field. The request should set absolute times to it. bydbctl also provides start and end flags to support passing absolute and relative times." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/skywalking-banyandb/next/crud/stream/schema/" />
+<meta property="og:url" content="/docs/skywalking-banyandb/next/interacting/bydbctl/query/measure/" />
 
-<meta itemprop="name" content="CRUD Streams">
-<meta itemprop="description" content="CRUD Streams CRUD operations create, read, update and delete streams.
+<meta itemprop="name" content="Query [Measures](../../../../concept/data-model#measures)">
+<meta itemprop="description" content="Query Measures Query operation queries the data in a measure.
 bydbctl is the command line tool in examples.
-Stream intends to store streaming data, for example, traces or logs.
-Create operation Create operation adds a new stream to the database&rsquo;s metadata registry repository. If the stream does not currently exist, create operation will create the schema.
-Examples of creating A stream belongs to a unique group. We should create such a group with a catalog CATALOG_STREAM before creating a stream.">
+The input contains two parts:
+ Request: a YAML-based text which is defined by the API Time Range: YAML and CLI&rsquo;s flags both support it.  Time Range The query specification contains time_range field. The request should set absolute times to it. bydbctl also provides start and end flags to support passing absolute and relative times.">
 
-<meta itemprop="wordCount" content="296">
+<meta itemprop="wordCount" content="719">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="CRUD Streams"/>
-<meta name="twitter:description" content="CRUD Streams CRUD operations create, read, update and delete streams.
+<meta name="twitter:title" content="Query [Measures](../../../../concept/data-model#measures)"/>
+<meta name="twitter:description" content="Query Measures Query operation queries the data in a measure.
 bydbctl is the command line tool in examples.
-Stream intends to store streaming data, for example, traces or logs.
-Create operation Create operation adds a new stream to the database&rsquo;s metadata registry repository. If the stream does not currently exist, create operation will create the schema.
-Examples of creating A stream belongs to a unique group. We should create such a group with a catalog CATALOG_STREAM before creating a stream."/>
+The input contains two parts:
+ Request: a YAML-based text which is defined by the API Time Range: YAML and CLI&rsquo;s flags both support it.  Time Range The query specification contains time_range field. The request should set absolute times to it. bydbctl also provides start and end flags to support passing absolute and relative times."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -84,7 +81,7 @@ if (!doNotTrack) {
 
 
 
-    <title>CRUD Streams | Apache SkyWalking</title>
+    <title>Query [Measures](../../../../concept/data-model#measures) | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -408,41 +405,9 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/clients">Clients</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="">Insert and Update Data</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="">Querying Data</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="">Deleting Data</a>
-        
-    </li>
-
-    
-
-    <li>
-        
 
             
-            <a href="#">CRUD Operations<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">CLI<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -451,7 +416,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/group">Group</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/bydbctl">bydbctl</a>
         
     </li>
 
@@ -461,7 +426,7 @@ if (!doNotTrack) {
         
 
             
-            <a href="#">Measure<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">CRUD Schema<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -470,7 +435,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/measure/schema">Schema</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/group">Group</a>
         
     </li>
 
@@ -478,7 +443,31 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/measure/query">Query</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/measure">Measure</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule">IndexRule</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule-binding">IndexRuleBinding</a>
         
     </li>
 
@@ -495,7 +484,7 @@ if (!doNotTrack) {
         
 
             
-            <a href="#">Stream<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">Querying Data<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -504,7 +493,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/stream/schema">Schema</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/measure">Measure</a>
         
     </li>
 
@@ -512,7 +501,15 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/stream/query">Query</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/filter-operation">Filter Operation</a>
         
     </li>
 
@@ -527,7 +524,14 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/index_rule">IndexRule</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/property">CRUD Property</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -535,7 +539,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/index_rule_binding">IndexRuleBinding</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/java-client">Java Client</a>
         
     </li>
 
@@ -543,7 +547,142 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/property">Property</a>
+
+            
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui">Web UI<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/dashboard">Dashboard</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">CRUD Schema<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/group">Group</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/measure">Measure</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/index-rule">IndexRule</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/index-rule-binding">IndexRuleBinding</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/top-n-aggregation">Top N Aggregation</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Querying Data<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/query/measure">Measure</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/property">CRUD Property</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/java-client">Java Client</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="">Web UI</a>
         
     </li>
 
@@ -768,7 +907,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: f354d0a</div>
+                  <div class="commit-id">Commit Id: 4588b55</div>
                 
 
 
@@ -790,78 +929,187 @@ if (!doNotTrack) {
 
 
 
-	<h1 id="crud-streams">CRUD Streams</h1>
-<p>CRUD operations create, read, update and delete streams.</p>
-<p><a href="../../../clients#command-line"><code>bydbctl</code></a> is the command line tool in examples.</p>
-<p>Stream intends to store streaming data, for example, traces or logs.</p>
-<h2 id="create-operation">Create operation</h2>
-<p>Create operation adds a new stream to the database&rsquo;s metadata registry repository. If the stream does not currently exist, create operation will create the schema.</p>
-<h3 id="examples-of-creating">Examples of creating</h3>
-<p>A stream belongs to a unique group. We should create such a group with a catalog <code>CATALOG_STREAM</code>
-before creating a stream.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl group create -f - <span style="color:#d14">&lt;&lt;EOF
-</span><span style="color:#d14">metadata:
-</span><span style="color:#d14">  name: default
-</span><span style="color:#d14">catalog: CATALOG_STREAM
-</span><span style="color:#d14">resource_opts:
-</span><span style="color:#d14">  shard_num: 2
-</span><span style="color:#d14">  segment_interval:
-</span><span style="color:#d14">    unit: UNIT_DAY
-</span><span style="color:#d14">    num: 1
-</span><span style="color:#d14">  ttl:
-</span><span style="color:#d14">    unit: UNIT_DAY
-</span><span style="color:#d14">    num: 7
+	<h1 id="query-measuresconceptdata-modelmeasures">Query <a href="../../../../concept/data-model#measures">Measures</a></h1>
+<p>Query operation queries the data in a measure.</p>
+<p><a href="../../bydbctl">bydbctl</a> is the command line tool in examples.</p>
+<p>The input contains two parts:</p>
+<ul>
+<li>Request: a YAML-based text which is defined by the <a href="#api-reference">API</a></li>
+<li>Time Range: YAML and CLI&rsquo;s flags both support it.</li>
+</ul>
+<h2 id="time-range">Time Range</h2>
+<p>The query specification contains <code>time_range</code> field. The request should set absolute times to it.
+<code>bydbctl</code> also provides <code>start</code> and <code>end</code> flags to support passing absolute and relative times.</p>
+<p>&ldquo;start&rdquo; and &ldquo;end&rdquo; specify a time range during which the query is performed, they can be an absolute time like <a href="https://www.rfc-editor.org/rfc/rfc3339">&ldquo;2006-01-02T15:04:05Z07:00&rdquo;</a>,
+or relative time (to the current time) like &ldquo;-30m&rdquo;, or &ldquo;30m&rdquo;.
+They are both optional and their default values follow the rules below:</p>
+<ul>
+<li>when &ldquo;start&rdquo; and &ldquo;end&rdquo; are both absent, &ldquo;start = now - 30 minutes&rdquo; and &ldquo;end = now&rdquo;,
+namely past 30 minutes;</li>
+<li>when &ldquo;start&rdquo; is absent and &ldquo;end&rdquo; is present, this command calculates &ldquo;start&rdquo; (minus 30 units),
+e.g. &ldquo;end = 2022-11-09T12:34:00Z&rdquo;, so &ldquo;start = end - 30 minutes = 2022-11-09T12:04:00Z&rdquo;;</li>
+<li>when &ldquo;start&rdquo; is present and &ldquo;end&rdquo; is absent, this command calculates &ldquo;end&rdquo; (plus 30 units),
+e.g. &ldquo;start = 2022-11-09T12:04:00Z&rdquo;, so &ldquo;end = start + 30 minutes = 2022-11-09T12:34:00Z&rdquo;.</li>
+</ul>
+<h2 id="understand-the-schema-you-are-querying">Understand the schema you are querying</h2>
+<p>Before querying the data, you need to know the measure name and the tag families and fields in the measure. You can use the <code>bydbctl measure get</code> command to get the measure schema.
+If you want to get the schema of a measure named <code>service_cpm_minute</code> in the group <code>measure-minute</code>, you can use the below command:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl measure get -g measure-minute -n service_cpm_minute
+</code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">measure:
+  entity:
+    tagNames:
+    - entity_id
+  fields:
+  - compressionMethod: COMPRESSION_METHOD_ZSTD
+    encodingMethod: ENCODING_METHOD_GORILLA
+    fieldType: FIELD_TYPE_INT
+    name: value
+  - compressionMethod: COMPRESSION_METHOD_ZSTD
+    encodingMethod: ENCODING_METHOD_GORILLA
+    fieldType: FIELD_TYPE_INT
+    name: total
+  interval: 1m
+  metadata:
+    createRevision: <span style="color:#d14">&#34;206&#34;</span>
+    group: measure-minute
+    id: <span style="color:#099">0</span>
+    modRevision: <span style="color:#d14">&#34;206&#34;</span>
+    name: service_cpm_minute
+  tagFamilies:
+  - name: storage-only
+    tags:
+    - indexedOnly: <span style="color:#0086b3">false</span>
+      name: entity_id
+      type: TAG_TYPE_STRING
+  updatedAt: null
+</code></pre></div><h2 id="examples">Examples</h2>
+<p>The following examples use above schema to show how to query data in a measure and cover some common use cases:</p>
+<h3 id="query-between-specific-time-range">Query between specific time range</h3>
+<p>To retrieve a series of data points between <code>2022-10-15T22:32:48Z</code> and <code>2022-10-15T23:32:48Z</code> could use the below command. These data points contain tags: <code>id</code> and <code>entity_id</code> that belong to a family <code>default</code>. They also choose fields: <code>total</code> and <code>value</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl measure query -f - <span style="color:#d14">&lt;&lt;EOF
+</span><span style="color:#d14">name: &#34;service_cpm_minute&#34;
+</span><span style="color:#d14">groups: [&#34;measure-minute&#34;]
+</span><span style="color:#d14">tagProjection:
+</span><span style="color:#d14">  tagFamilies:
+</span><span style="color:#d14">    - name: &#34;storage-only&#34;
+</span><span style="color:#d14">      tags: [&#34;entity_id&#34;]
+</span><span style="color:#d14">fieldProjection:
+</span><span style="color:#d14">  names: [&#34;total&#34;, &#34;value&#34;]
+</span><span style="color:#d14">timeRange:
+</span><span style="color:#d14">  begin: 2022-10-15T22:32:48Z
+</span><span style="color:#d14">  end: 2022-10-15T23:32:48Z
 </span><span style="color:#d14">EOF</span>
-</code></pre></div><p>The group creates two shards to store stream data points. Every one day, it would create a
-segment which will generate a block every 2 hours.</p>
-<p>The data in this group will keep 7 days.</p>
-<p>Then, below command will create a new stream:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl stream create -f - <span style="color:#d14">&lt;&lt;EOF
-</span><span style="color:#d14">metadata:
-</span><span style="color:#d14">  name: sw
-</span><span style="color:#d14">  group: default
-</span><span style="color:#d14">tagFamilies:
-</span><span style="color:#d14">  - name: searchable
-</span><span style="color:#d14">    tags: 
-</span><span style="color:#d14">      - name: trace_id
-</span><span style="color:#d14">        type: TAG_TYPE_STRING
-</span><span style="color:#d14">entity:
-</span><span style="color:#d14">  tagNames:
-</span><span style="color:#d14">    - stream_id
+</code></pre></div><h3 id="query-using-relative-time-duration">Query using relative time duration</h3>
+<p>The below command could query data in the last 30 minutes using relative time duration :</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl measure query --start -30m -f - <span style="color:#d14">&lt;&lt;EOF
+</span><span style="color:#d14">name: &#34;service_cpm_minute&#34;
+</span><span style="color:#d14">groups: [&#34;measure-minute&#34;]
+</span><span style="color:#d14">tagProjection:
+</span><span style="color:#d14">  tagFamilies:
+</span><span style="color:#d14">    - name: &#34;storage-only&#34;
+</span><span style="color:#d14">      tags: [&#34;entity_id&#34;]
+</span><span style="color:#d14">fieldProjection:
+</span><span style="color:#d14">  names: [&#34;total&#34;, &#34;value&#34;]
 </span><span style="color:#d14">EOF</span>
-</code></pre></div><h2 id="get-operation">Get operation</h2>
-<p>Get(Read) operation get a stream&rsquo;s schema.</p>
-<h3 id="examples-of-getting">Examples of getting</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl stream get -g default -n sw
-</code></pre></div><h2 id="update-operation">Update operation</h2>
-<p>Update operation update a stream&rsquo;s schema.</p>
-<h3 id="examples-of-updating">Examples of updating</h3>
-<p><code>bydbctl</code> is the command line tool to update a stream in this example.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl stream update -f - <span style="color:#d14">&lt;&lt;EOF
-</span><span style="color:#d14">metadata:
-</span><span style="color:#d14">  name: sw
-</span><span style="color:#d14">  group: default
-</span><span style="color:#d14">tagFamilies:
-</span><span style="color:#d14">  - name: searchable
-</span><span style="color:#d14">    tags: 
-</span><span style="color:#d14">      - name: trace_id
-</span><span style="color:#d14">        type: TAG_TYPE_STRING
-</span><span style="color:#d14">entity:
-</span><span style="color:#d14">  tagNames:    
-</span><span style="color:#d14">    - stream_id
+</code></pre></div><h3 id="query-with-filter">Query with filter</h3>
+<p>The below command could query data with a filter where the entity_id is <code>bW9ja19iX3NlcnZpY2U=.1</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl measure query -f - <span style="color:#d14">&lt;&lt;EOF
+</span><span style="color:#d14">name: &#34;service_cpm_minute&#34;
+</span><span style="color:#d14">groups: [&#34;measure-minute&#34;]
+</span><span style="color:#d14">tagProjection:
+</span><span style="color:#d14">  tagFamilies:
+</span><span style="color:#d14">    - name: &#34;storage-only&#34;
+</span><span style="color:#d14">      tags: [&#34;entity_id&#34;]
+</span><span style="color:#d14">fieldProjection:
+</span><span style="color:#d14">  names: [&#34;total&#34;, &#34;value&#34;]
+</span><span style="color:#d14">criteria:
+</span><span style="color:#d14">  condition:
+</span><span style="color:#d14">    name: &#34;entity_id&#34;
+</span><span style="color:#d14">    op: &#34;BINARY_OP_EQ&#34;
+</span><span style="color:#d14">    value:
+</span><span style="color:#d14">      str:
+</span><span style="color:#d14">        value: &#34;bW9ja19iX3NlcnZpY2U=.1&#34;
 </span><span style="color:#d14">EOF</span>
-
-</code></pre></div><h2 id="delete-operation">Delete operation</h2>
-<p>Delete operation delete a stream&rsquo;s schema.</p>
-<h3 id="examples-of-deleting">Examples of deleting</h3>
-<p><code>bydbctl</code> is the command line tool to delete a stream in this example.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl stream delete -g default -n sw
-</code></pre></div><h2 id="list-operation">List operation</h2>
-<p>List operation list all streams' schema in a group.</p>
-<h3 id="examples-of-listing">Examples of listing</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl stream list -g default
-</code></pre></div><h2 id="api-reference">API Reference</h2>
-<p><a href="../../../api-reference#streamservice">StreamService v1</a></p>
+</code></pre></div><p>More filter operations can be found in <a href="../filter-operation">here</a>.</p>
+<h3 id="query-ordered-by-time-series">Query ordered by time-series</h3>
+<p>The below command could query data order by time-series in descending <a href="../../../../api-reference#sort">order</a> :</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl measure query -f - <span style="color:#d14">&lt;&lt;EOF
+</span><span style="color:#d14">name: &#34;service_cpm_minute&#34;
+</span><span style="color:#d14">groups: [&#34;measure-minute&#34;]
+</span><span style="color:#d14">tagProjection:
+</span><span style="color:#d14">  tagFamilies:
+</span><span style="color:#d14">    - name: &#34;storage-only&#34;
+</span><span style="color:#d14">      tags: [&#34;entity_id&#34;]
+</span><span style="color:#d14">fieldProjection:
+</span><span style="color:#d14">  names: [&#34;total&#34;, &#34;value&#34;]
+</span><span style="color:#d14">orderBy:
+</span><span style="color:#d14">  sort: &#34;SORT_DESC&#34;
+</span><span style="color:#d14">EOF</span>
+</code></pre></div><h3 id="query-limit-result">Query limit result</h3>
+<p>The below command could query ordered data and return the first two results:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl measure query -f - <span style="color:#d14">&lt;&lt;EOF
+</span><span style="color:#d14">name: &#34;service_cpm_minute&#34;
+</span><span style="color:#d14">groups: [&#34;measure-minute&#34;]
+</span><span style="color:#d14">tagProjection:
+</span><span style="color:#d14">  tagFamilies:
+</span><span style="color:#d14">    - name: &#34;storage-only&#34;
+</span><span style="color:#d14">      tags: [&#34;entity_id&#34;]
+</span><span style="color:#d14">fieldProjection:
+</span><span style="color:#d14">  names: [&#34;total&#34;, &#34;value&#34;]
+</span><span style="color:#d14">orderBy:
+</span><span style="color:#d14">  sort: &#34;SORT_DESC&#34;
+</span><span style="color:#d14">limit: 2
+</span><span style="color:#d14">offset: 0
+</span><span style="color:#d14">EOF</span>
+</code></pre></div><h3 id="aggregation-query-max">Aggregation Query Max</h3>
+<p>The below command could query data with aggregate by entity_id and get <code>MAX</code> value:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl measure query -f - <span style="color:#d14">&lt;&lt;EOF
+</span><span style="color:#d14">name: &#34;service_cpm_minute&#34;
+</span><span style="color:#d14">groups: [&#34;measure-minute&#34;]
+</span><span style="color:#d14">tagProjection:
+</span><span style="color:#d14">  tagFamilies:
+</span><span style="color:#d14">    - name: &#34;storage-only&#34;
+</span><span style="color:#d14">      tags: [&#34;entity_id&#34;]
+</span><span style="color:#d14">fieldProjection:
+</span><span style="color:#d14">  names: [&#34;total&#34;, &#34;value&#34;]
+</span><span style="color:#d14">groupBy:
+</span><span style="color:#d14">  tagProjection:
+</span><span style="color:#d14">    tagFamilies:
+</span><span style="color:#d14">    - name: &#34;storage-only&#34;
+</span><span style="color:#d14">      tags: [&#34;entity_id&#34;]
+</span><span style="color:#d14">  fieldName: &#34;value&#34;
+</span><span style="color:#d14">agg:
+</span><span style="color:#d14">  function: &#34;AGGREGATION_FUNCTION_MAX&#34;
+</span><span style="color:#d14">  fieldName: &#34;value&#34;
+</span><span style="color:#d14">EOF</span>
+</code></pre></div><h3 id="aggregation-query-topn">Aggregation Query TopN</h3>
+<p>The below command could query data with aggregate by entity_id and get <code>AVG</code> top 3 value:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl measure query -f - <span style="color:#d14">&lt;&lt;EOF
+</span><span style="color:#d14">name: &#34;service_cpm_minute&#34;
+</span><span style="color:#d14">groups: [&#34;measure-minute&#34;]
+</span><span style="color:#d14">tagProjection:
+</span><span style="color:#d14">  tagFamilies:
+</span><span style="color:#d14">    - name: &#34;storage-only&#34;
+</span><span style="color:#d14">      tags: [&#34;entity_id&#34;]
+</span><span style="color:#d14">fieldProjection:
+</span><span style="color:#d14">  names: [&#34;value&#34;]
+</span><span style="color:#d14">groupBy:
+</span><span style="color:#d14">  tagProjection:
+</span><span style="color:#d14">    tagFamilies:
+</span><span style="color:#d14">    - name: &#34;storage-only&#34;
+</span><span style="color:#d14">      tags: [&#34;entity_id&#34;]
+</span><span style="color:#d14">  fieldName: &#34;value&#34;
+</span><span style="color:#d14">agg:
+</span><span style="color:#d14">  function: &#34;AGGREGATION_FUNCTION_MEAN&#34;
+</span><span style="color:#d14">  fieldName: &#34;value&#34;
+</span><span style="color:#d14">top:
+</span><span style="color:#d14">  number: 3
+</span><span style="color:#d14">  fieldName: &#34;value&#34;
+</span><span style="color:#d14">  fieldValueSort: &#34;SORT_DESC&#34;
+</span><span style="color:#d14">EOF</span>
+</code></pre></div><h3 id="more-examples-can-be-found-in-herehttpsgithubcomapacheskywalking-banyandbtreemaintestcasesmeasuredatainput">More examples can be found in <a href="https://github.com/apache/skywalking-banyandb/tree/main/test/cases/measure/data/input">here</a>.</h3>
+<h2 id="api-reference">API Reference</h2>
+<p><a href="../../../../api-reference#measureservice">MeasureService v1</a></p>
 
 
 
@@ -897,31 +1145,20 @@ segment which will generate a block every 2 hours.</p>
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#crud-streams">CRUD Streams</a>
+    <li><a href="#query-measuresconceptdata-modelmeasures">Query <a href="../../../../concept/data-model#measures">Measures</a></a>
       <ul>
-        <li><a href="#create-operation">Create operation</a>
+        <li><a href="#time-range">Time Range</a></li>
+        <li><a href="#understand-the-schema-you-are-querying">Understand the schema you are querying</a></li>
+        <li><a href="#examples">Examples</a>
           <ul>
-            <li><a href="#examples-of-creating">Examples of creating</a></li>
-          </ul>
-        </li>
-        <li><a href="#get-operation">Get operation</a>
-          <ul>
-            <li><a href="#examples-of-getting">Examples of getting</a></li>
-          </ul>
-        </li>
-        <li><a href="#update-operation">Update operation</a>
-          <ul>
-            <li><a href="#examples-of-updating">Examples of updating</a></li>
-          </ul>
-        </li>
-        <li><a href="#delete-operation">Delete operation</a>
-          <ul>
-            <li><a href="#examples-of-deleting">Examples of deleting</a></li>
-          </ul>
-        </li>
-        <li><a href="#list-operation">List operation</a>
-          <ul>
-            <li><a href="#examples-of-listing">Examples of listing</a></li>
+            <li><a href="#query-between-specific-time-range">Query between specific time range</a></li>
+            <li><a href="#query-using-relative-time-duration">Query using relative time duration</a></li>
+            <li><a href="#query-with-filter">Query with filter</a></li>
+            <li><a href="#query-ordered-by-time-series">Query ordered by time-series</a></li>
+            <li><a href="#query-limit-result">Query limit result</a></li>
+            <li><a href="#aggregation-query-max">Aggregation Query Max</a></li>
+            <li><a href="#aggregation-query-topn">Aggregation Query TopN</a></li>
+            <li><a href="#more-examples-can-be-found-in-herehttpsgithubcomapacheskywalking-banyandbtreemaintestcasesmeasuredatainput">More examples can be found in <a href="https://github.com/apache/skywalking-banyandb/tree/main/test/cases/measure/data/input">here</a>.</a></li>
           </ul>
         </li>
         <li><a href="#api-reference">API Reference</a></li>
@@ -1042,6 +1279,34 @@ segment which will generate a block every 2 hours.</p>
 
     </div>
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

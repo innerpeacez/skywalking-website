@@ -28,31 +28,31 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>CRUD IndexRules | Apache SkyWalking</title><meta property="og:title" content="CRUD IndexRules" />
-<meta property="og:description" content="CRUD IndexRules CRUD operations create, read, update and delete index rules.
-IndexRule defines how to generate indices based on tags and the index type. IndexRule should bind to a subject(stream or measure) through an IndexRuleBinding to generate proper indices.
-bydbctl is the command line tool in examples.
-Create operation Create operation adds a new index rule to the database&rsquo;s metadata registry repository. If the index rule does not currently exist, create operation will create the schema." />
+<title>Filter Operation | Apache SkyWalking</title><meta property="og:title" content="Filter Operation" />
+<meta property="og:description" content="Filter Operation Filter operation is a part of the query configuration. It is used to filter the data based on the given condition for Stream and Measure queries.
+The condition is a combination of the tag name, operation, and value. The operation&rsquo;s root is Criteria which is defined in the API Reference.
+The following are the examples of filter operations:
+Condition.BinaryOp EQ, NE, LT, GT, LE and GE EQ, NE, LT, GT, LE and GE, only one operand should be given, i." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/skywalking-banyandb/next/crud/index_rule/" />
+<meta property="og:url" content="/docs/skywalking-banyandb/next/interacting/bydbctl/query/filter-operation/" />
 
-<meta itemprop="name" content="CRUD IndexRules">
-<meta itemprop="description" content="CRUD IndexRules CRUD operations create, read, update and delete index rules.
-IndexRule defines how to generate indices based on tags and the index type. IndexRule should bind to a subject(stream or measure) through an IndexRuleBinding to generate proper indices.
-bydbctl is the command line tool in examples.
-Create operation Create operation adds a new index rule to the database&rsquo;s metadata registry repository. If the index rule does not currently exist, create operation will create the schema.">
+<meta itemprop="name" content="Filter Operation">
+<meta itemprop="description" content="Filter Operation Filter operation is a part of the query configuration. It is used to filter the data based on the given condition for Stream and Measure queries.
+The condition is a combination of the tag name, operation, and value. The operation&rsquo;s root is Criteria which is defined in the API Reference.
+The following are the examples of filter operations:
+Condition.BinaryOp EQ, NE, LT, GT, LE and GE EQ, NE, LT, GT, LE and GE, only one operand should be given, i.">
 
-<meta itemprop="wordCount" content="319">
+<meta itemprop="wordCount" content="278">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="CRUD IndexRules"/>
-<meta name="twitter:description" content="CRUD IndexRules CRUD operations create, read, update and delete index rules.
-IndexRule defines how to generate indices based on tags and the index type. IndexRule should bind to a subject(stream or measure) through an IndexRuleBinding to generate proper indices.
-bydbctl is the command line tool in examples.
-Create operation Create operation adds a new index rule to the database&rsquo;s metadata registry repository. If the index rule does not currently exist, create operation will create the schema."/>
+<meta name="twitter:title" content="Filter Operation"/>
+<meta name="twitter:description" content="Filter Operation Filter operation is a part of the query configuration. It is used to filter the data based on the given condition for Stream and Measure queries.
+The condition is a combination of the tag name, operation, and value. The operation&rsquo;s root is Criteria which is defined in the API Reference.
+The following are the examples of filter operations:
+Condition.BinaryOp EQ, NE, LT, GT, LE and GE EQ, NE, LT, GT, LE and GE, only one operand should be given, i."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -81,7 +81,7 @@ if (!doNotTrack) {
 
 
 
-    <title>CRUD IndexRules | Apache SkyWalking</title>
+    <title>Filter Operation | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -405,41 +405,9 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/clients">Clients</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="">Insert and Update Data</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="">Querying Data</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="">Deleting Data</a>
-        
-    </li>
-
-    
-
-    <li>
-        
 
             
-            <a href="#">CRUD Operations<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">CLI<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -448,7 +416,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/group">Group</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/bydbctl">bydbctl</a>
         
     </li>
 
@@ -458,7 +426,7 @@ if (!doNotTrack) {
         
 
             
-            <a href="#">Measure<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">CRUD Schema<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -467,7 +435,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/measure/schema">Schema</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/group">Group</a>
         
     </li>
 
@@ -475,7 +443,31 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/measure/query">Query</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/measure">Measure</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule">IndexRule</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule-binding">IndexRuleBinding</a>
         
     </li>
 
@@ -492,7 +484,7 @@ if (!doNotTrack) {
         
 
             
-            <a href="#">Stream<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">Querying Data<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -501,7 +493,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/stream/schema">Schema</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/measure">Measure</a>
         
     </li>
 
@@ -509,7 +501,15 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/stream/query">Query</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/filter-operation">Filter Operation</a>
         
     </li>
 
@@ -524,7 +524,14 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/index_rule">IndexRule</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/property">CRUD Property</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -532,7 +539,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/index_rule_binding">IndexRuleBinding</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/java-client">Java Client</a>
         
     </li>
 
@@ -540,7 +547,142 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/property">Property</a>
+
+            
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui">Web UI<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/dashboard">Dashboard</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">CRUD Schema<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/group">Group</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/measure">Measure</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/index-rule">IndexRule</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/index-rule-binding">IndexRuleBinding</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/top-n-aggregation">Top N Aggregation</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Querying Data<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/query/measure">Measure</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/property">CRUD Property</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/java-client">Java Client</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="">Web UI</a>
         
     </li>
 
@@ -765,7 +907,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: f354d0a</div>
+                  <div class="commit-id">Commit Id: 4588b55</div>
                 
 
 
@@ -787,70 +929,73 @@ if (!doNotTrack) {
 
 
 
-	<h1 id="crud-indexrules">CRUD IndexRules</h1>
-<p>CRUD operations create, read, update and delete index rules.</p>
-<p>IndexRule defines how to generate indices based on tags and the index type.
-IndexRule should bind to a subject(stream or measure) through an IndexRuleBinding to generate proper indices.</p>
-<p><a href="../../clients#command-line"><code>bydbctl</code></a> is the command line tool in examples.</p>
-<h2 id="create-operation">Create operation</h2>
-<p>Create operation adds a new index rule to the database&rsquo;s metadata registry repository. If the index rule does not currently exist, create operation will create the schema.</p>
-<h3 id="examples-of-creating">Examples of creating</h3>
-<p>An index rule belongs to its subjects' group. We should create such a group if there is no such group.</p>
-<p>The command supposes that the index rule will bind to streams. So it creates a <code>CATALOG_STREAM</code> group here.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl group create -f - <span style="color:#d14">&lt;&lt;EOF
-</span><span style="color:#d14">metadata:
-</span><span style="color:#d14">  name: sw_stream
-</span><span style="color:#d14">catalog: CATALOG_STREAM
-</span><span style="color:#d14">resource_opts:
-</span><span style="color:#d14">  shard_num: 2
-</span><span style="color:#d14">  segment_interval:
-</span><span style="color:#d14">    unit: UNIT_DAY
-</span><span style="color:#d14">    num: 1
-</span><span style="color:#d14">  ttl:
-</span><span style="color:#d14">    unit: UNIT_DAY
-</span><span style="color:#d14">    num: 7
-</span><span style="color:#d14">EOF</span>
-</code></pre></div><p>The group creates two shards to store indexRule data points. Every day, it would create a
-segment that will generate a block every 2 hours.</p>
-<p>The data in this group will keep 7 days.</p>
-<p>Then, the next command will create a new index rule:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl indexRule create -f - <span style="color:#d14">&lt;&lt;EOF
-</span><span style="color:#d14">metadata:
-</span><span style="color:#d14">  name: trace_id
-</span><span style="color:#d14">  group: sw_stream
-</span><span style="color:#d14">tags:
-</span><span style="color:#d14">- trace_id
-</span><span style="color:#d14">type: TYPE_INVERTED
-</span><span style="color:#d14">EOF</span>
-</code></pre></div><p>This YAML creates an index rule which uses the tag <code>trace_id</code> to generate a <code>TYPE_INVERTED</code> index.</p>
-<h2 id="get-operation">Get operation</h2>
-<p>Get(Read) operation gets an index rule&rsquo;s schema.</p>
-<h3 id="examples-of-getting">Examples of getting</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl indexRule get -g sw_stream -n trace_id
-</code></pre></div><h2 id="update-operation">Update operation</h2>
-<p>Update operation updates an index rule&rsquo;s schema.</p>
-<h3 id="examples-of-updating">Examples of updating</h3>
-<p>This example changes the type from <code>TREE</code> to <code>INVERTED</code>.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl indexRule update -f - <span style="color:#d14">&lt;&lt;EOF
-</span><span style="color:#d14">metadata:
-</span><span style="color:#d14">  name: trace_id
-</span><span style="color:#d14">  group: sw_stream
-</span><span style="color:#d14">tags:
-</span><span style="color:#d14">- trace_id
-</span><span style="color:#d14">type: TYPE_INVERTED
-</span><span style="color:#d14">EOF</span>
-
-</code></pre></div><h2 id="delete-operation">Delete operation</h2>
-<p>Delete operation deletes an index rule&rsquo;s schema.</p>
-<h3 id="examples-of-deleting">Examples of deleting</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl indexRule delete -g sw_stream -n trace_id
-</code></pre></div><h2 id="list-operation">List operation</h2>
-<p>List operation list all index rules' schema in a group.</p>
-<h3 id="examples-of-listing">Examples of listing</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl indexRule list -g sw_stream
-</code></pre></div><h2 id="api-reference">API Reference</h2>
-<p><a href="../../api-reference#indexruleregistryservice">indexRuleService v1</a></p>
-
+	<h1 id="filter-operation">Filter Operation</h1>
+<p>Filter operation is a part of the query configuration. It is used to filter the data based on the given condition for <a href="../stream">Stream</a> and <a href="../measure">Measure</a> queries.</p>
+<p>The condition is a combination of the tag name, operation, and value.
+The operation&rsquo;s root is Criteria which is defined in the <a href="../../../../api-reference#criteria">API Reference</a>.</p>
+<p>The following are the examples of filter operations:</p>
+<h2 id="conditionbinaryopapi-referenceconditionbinaryop"><a href="../../../../api-reference#conditionbinaryop">Condition.BinaryOp</a></h2>
+<h3 id="eq-ne-lt-gt-le-and-ge">EQ, NE, LT, GT, LE and GE</h3>
+<p>EQ, NE, LT, GT, LE and GE, only one operand should be given, i.e. one-to-one relationship.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">criteria:
+  condition:
+    name: <span style="color:#d14">&#34;entity_id&#34;</span>
+    op: <span style="color:#d14">&#34;BINARY_OP_EQ&#34;</span>
+    value:
+      str:
+        value: <span style="color:#d14">&#34;entity_1&#34;</span>
+</code></pre></div><h3 id="in-and-not_in">IN and NOT_IN</h3>
+<p>HAVING and NOT_HAVING allow multi-value to be the operand such as array/vector, i.e. one-to-many relationship.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">criteria:
+  condition:
+    name: <span style="color:#d14">&#34;entity_id&#34;</span>
+    op: <span style="color:#d14">&#34;BINARY_OP_IN&#34;</span>
+    value:
+      str_array:
+        value: <span style="color:#000;font-weight:bold">[</span><span style="color:#d14">&#34;entity_1&#34;</span>, <span style="color:#d14">&#34;entity_2&#34;</span>, <span style="color:#d14">&#34;unknown&#34;</span><span style="color:#000;font-weight:bold">]</span>
+</code></pre></div><h3 id="having-and-not_having">HAVING and NOT_HAVING</h3>
+<p>HAVING and NOT_HAVING allow multi-value to be the operand such as array/vector, i.e. one-to-many relationship. For example, &ldquo;keyA&rdquo; contains &ldquo;valueA&rdquo; and &ldquo;valueB&rdquo;</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">criteria:
+  condition:
+    name: <span style="color:#d14">&#34;extended_tags&#34;</span>
+    op: <span style="color:#d14">&#34;BINARY_OP_HAVING&#34;</span>
+    value:
+      strArray:
+        value: <span style="color:#000;font-weight:bold">[</span><span style="color:#d14">&#34;c&#34;</span>, <span style="color:#d14">&#34;b&#34;</span><span style="color:#000;font-weight:bold">]</span>
+</code></pre></div><h3 id="match">MATCH</h3>
+<p>MATCH performances a full-text search if the tag is analyzed.
+The string value applies to the same analyzer as the tag, but string array value does not.
+Each item in a string array is seen as a token instead of a query expression.</p>
+<p>How to set the analyzer for a tag can find in the <a href="../../schema/index-rule">IndexRules</a>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">criteria:
+  condition:
+    name: <span style="color:#d14">&#34;name&#34;</span>
+    op: <span style="color:#d14">&#34;BINARY_OP_MATCH&#34;</span>
+    value:
+      str:
+        value: <span style="color:#d14">&#34;us&#34;</span>
+</code></pre></div><h2 id="logicalexpressionlogicalopapi-referencelogicalexpressionlogicalop"><a href="../../../../api-reference#logicalexpressionlogicalop">LogicalExpression.LogicalOp</a></h2>
+<p>Logical operation is used to combine multiple conditions.</p>
+<h3 id="and-or">AND, OR</h3>
+<p>The following example queries the data where the <code>id</code> is <code>1</code> and the <code>service_id</code> is <code>service_1</code></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">criteria:
+  le:
+    op: <span style="color:#d14">&#34;LOGICAL_OP_AND&#34;</span>
+    right:
+      condition:
+        name: <span style="color:#d14">&#34;id&#34;</span>
+        op: <span style="color:#d14">&#34;BINARY_OP_EQ&#34;</span>
+        value:
+          str:
+            value: <span style="color:#d14">&#34;1&#34;</span>
+    left:
+      condition:
+        name: <span style="color:#d14">&#34;service_id&#34;</span>
+        op: <span style="color:#d14">&#34;BINARY_OP_EQ&#34;</span>
+        value:
+          str:
+            value: <span style="color:#d14">&#34;service_1&#34;</span>
+</code></pre></div>
 
 
 
@@ -885,34 +1030,21 @@ segment that will generate a block every 2 hours.</p>
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#crud-indexrules">CRUD IndexRules</a>
+    <li><a href="#filter-operation">Filter Operation</a>
       <ul>
-        <li><a href="#create-operation">Create operation</a>
+        <li><a href="#conditionbinaryopapi-referenceconditionbinaryop"><a href="../../../../api-reference#conditionbinaryop">Condition.BinaryOp</a></a>
           <ul>
-            <li><a href="#examples-of-creating">Examples of creating</a></li>
+            <li><a href="#eq-ne-lt-gt-le-and-ge">EQ, NE, LT, GT, LE and GE</a></li>
+            <li><a href="#in-and-not_in">IN and NOT_IN</a></li>
+            <li><a href="#having-and-not_having">HAVING and NOT_HAVING</a></li>
+            <li><a href="#match">MATCH</a></li>
           </ul>
         </li>
-        <li><a href="#get-operation">Get operation</a>
+        <li><a href="#logicalexpressionlogicalopapi-referencelogicalexpressionlogicalop"><a href="../../../../api-reference#logicalexpressionlogicalop">LogicalExpression.LogicalOp</a></a>
           <ul>
-            <li><a href="#examples-of-getting">Examples of getting</a></li>
+            <li><a href="#and-or">AND, OR</a></li>
           </ul>
         </li>
-        <li><a href="#update-operation">Update operation</a>
-          <ul>
-            <li><a href="#examples-of-updating">Examples of updating</a></li>
-          </ul>
-        </li>
-        <li><a href="#delete-operation">Delete operation</a>
-          <ul>
-            <li><a href="#examples-of-deleting">Examples of deleting</a></li>
-          </ul>
-        </li>
-        <li><a href="#list-operation">List operation</a>
-          <ul>
-            <li><a href="#examples-of-listing">Examples of listing</a></li>
-          </ul>
-        </li>
-        <li><a href="#api-reference">API Reference</a></li>
       </ul>
     </li>
   </ul>
@@ -1030,6 +1162,34 @@ segment that will generate a block every 2 hours.</p>
 
     </div>
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
