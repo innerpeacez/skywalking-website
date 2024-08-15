@@ -3811,6 +3811,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/operation/cluster/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/setup/backend/backend-cluster/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
