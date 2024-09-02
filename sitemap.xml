@@ -4123,6 +4123,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/operation/configuration/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/setup/backend/configuration-vocabulary/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -8561,6 +8567,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/operation/security/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/security/readme/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -9833,6 +9845,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/operation/system/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/skywalking-java/next/en/setup/service-agent/java-agent/configurations/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -10314,6 +10332,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/operation/troubleshooting/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/setup/backend/ttl/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -10411,6 +10435,12 @@
   
   <url>
     <loc>/docs/skywalking-satellite/v1.1.0/en/guides/test/how-to-unit-test/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/operation/upgrade/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
