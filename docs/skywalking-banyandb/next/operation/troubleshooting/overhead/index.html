@@ -28,28 +28,28 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>Troubleshooting | Apache SkyWalking</title><meta property="og:title" content="Troubleshooting" />
-<meta property="og:description" content="Troubleshooting Error Checklist When facing issues with BanyanDB, follow this checklist to effectively troubleshoot and resolve errors.
-1. Collect Information Gather detailed information about the error to assist in diagnosing the issue:
- Error Message: Note the exact error message displayed. Logs: Collect relevant log files from the BanyanDB system. See the Logging section for more information. Query Tracing: If the error is related to a query, enable query tracing to capture detailed information about the query execution." />
+<title>Troubleshooting Overhead Issue | Apache SkyWalking</title><meta property="og:title" content="Troubleshooting Overhead Issue" />
+<meta property="og:description" content="Troubleshooting Overhead Issue If you encounter issues with high overhead in BanyanDB, follow these troubleshooting steps to identify and resolve the problem.
+High CPU and Memory Usage If you notice high CPU and memory usage on the BanyanDB server, follow these steps to troubleshoot the issue:
+ Check Write and Query Rate: Monitor the write and query rates to identify any spikes in traffic that may be causing high CPU and memory usage." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/skywalking-banyandb/next/operation/troubleshooting/" />
+<meta property="og:url" content="/docs/skywalking-banyandb/next/operation/troubleshooting/overhead/" />
 
-<meta itemprop="name" content="Troubleshooting">
-<meta itemprop="description" content="Troubleshooting Error Checklist When facing issues with BanyanDB, follow this checklist to effectively troubleshoot and resolve errors.
-1. Collect Information Gather detailed information about the error to assist in diagnosing the issue:
- Error Message: Note the exact error message displayed. Logs: Collect relevant log files from the BanyanDB system. See the Logging section for more information. Query Tracing: If the error is related to a query, enable query tracing to capture detailed information about the query execution.">
+<meta itemprop="name" content="Troubleshooting Overhead Issue">
+<meta itemprop="description" content="Troubleshooting Overhead Issue If you encounter issues with high overhead in BanyanDB, follow these troubleshooting steps to identify and resolve the problem.
+High CPU and Memory Usage If you notice high CPU and memory usage on the BanyanDB server, follow these steps to troubleshoot the issue:
+ Check Write and Query Rate: Monitor the write and query rates to identify any spikes in traffic that may be causing high CPU and memory usage.">
 
-<meta itemprop="wordCount" content="920">
+<meta itemprop="wordCount" content="462">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Troubleshooting"/>
-<meta name="twitter:description" content="Troubleshooting Error Checklist When facing issues with BanyanDB, follow this checklist to effectively troubleshoot and resolve errors.
-1. Collect Information Gather detailed information about the error to assist in diagnosing the issue:
- Error Message: Note the exact error message displayed. Logs: Collect relevant log files from the BanyanDB system. See the Logging section for more information. Query Tracing: If the error is related to a query, enable query tracing to capture detailed information about the query execution."/>
+<meta name="twitter:title" content="Troubleshooting Overhead Issue"/>
+<meta name="twitter:description" content="Troubleshooting Overhead Issue If you encounter issues with high overhead in BanyanDB, follow these troubleshooting steps to identify and resolve the problem.
+High CPU and Memory Usage If you notice high CPU and memory usage on the BanyanDB server, follow these steps to troubleshoot the issue:
+ Check Write and Query Rate: Monitor the write and query rates to identify any spikes in traffic that may be causing high CPU and memory usage."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -78,7 +78,7 @@ if (!doNotTrack) {
 
 
 
-    <title>Troubleshooting | Apache SkyWalking</title>
+    <title>Troubleshooting Overhead Issue | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -741,7 +741,65 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/operation/troubleshooting">Troubleshooting</a>
+
+            
+            <a href="#">Troubleshooting<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/troubleshooting/error-checklist">Error Checklist</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/troubleshooting/install">Troubleshooting Installation</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/troubleshooting/crash">Troubleshooting Crash</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/troubleshooting/no-data">Troubleshooting No Data</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/troubleshooting/overhead">Troubleshooting Overhead</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/troubleshooting/query">Troubleshooting Query</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -836,7 +894,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 75b0638</div>
+                  <div class="commit-id">Commit Id: 40ea208</div>
                 
 
 
@@ -858,147 +916,29 @@ if (!doNotTrack) {
 
 
 
-	<h1 id="troubleshooting">Troubleshooting</h1>
-<h2 id="error-checklist">Error Checklist</h2>
-<p>When facing issues with BanyanDB, follow this checklist to effectively troubleshoot and resolve errors.</p>
-<h3 id="1-collect-information">1. Collect Information</h3>
-<p>Gather detailed information about the error to assist in diagnosing the issue:</p>
-<ul>
-<li><strong>Error Message</strong>: Note the exact error message displayed.</li>
-<li><strong>Logs</strong>: Collect relevant log files from the BanyanDB system. See the <a href="./../observability#logging">Logging</a> section for more information.</li>
-<li><strong>Query Tracing</strong>: If the error is related to a query, enable query tracing to capture detailed information about the query execution. See the <a href="./../observability#query-tracing">Query Tracing</a> section for more information.</li>
-<li><strong>Environment</strong>: Document the environment details, including OS, BanyanDB version, and hardware specifications.</li>
-<li><strong>Database Schema</strong>: Provide the schema details related to the error. See the <a href="../../interacting/bydbctl/schema/">Schema Management</a> section for more information.</li>
-<li><strong>Data Sample</strong>: If applicable, include a sample of the data causing the error.</li>
-<li><strong>Configuration Settings</strong>: Share the relevant configuration settings.</li>
-<li><strong>Data Files</strong>: Attach any relevant data files. See the <a href="./../configuration">Configuration</a> section to find where the date files is stored.</li>
-<li><strong>Reproduction Steps</strong>: Describe the steps to reproduce the error.</li>
-</ul>
-<h3 id="2-define-error-type">2. Define Error Type</h3>
-<p>Classify the error to streamline the troubleshooting process:</p>
-<ul>
-<li><strong>Configuration Error</strong>: Issues related to incorrect configuration settings.</li>
-<li><strong>Network Error</strong>: Problems caused by network connectivity.</li>
-<li><strong>Performance Error</strong>: Slowdowns or high resource usage.</li>
-<li><strong>Data Error</strong>: Inconsistencies or corruption in stored data.</li>
-</ul>
-<h3 id="3-error-support-procedure">3. Error Support Procedure</h3>
-<p>Follow this procedure to address the identified error type:</p>
-<ul>
-<li>Identify the error type based on the collected information.</li>
-<li>Refer to the relevant sections in the documentation to troubleshoot the error.</li>
-<li>Refer to the issues section in the SkyWalking repository for known issues and solutions.</li>
-<li>If the issue persists, submit a discussion in the <a href="https://github.com/apache/skywalking/discussions">SkyWalking Discussion</a> for assistance.</li>
-<li>You can also raise a bug report in the <a href="https://github.com/apache/skywalking/issues">SkyWalking Issue Tracker</a> if the issue is not resolved.</li>
-<li>Finally, As a OpenSource project, you could try to fix the issue by yourself and submit a pull request.</li>
-</ul>
-<p>Here&rsquo;s an expanded section on common issues for your BanyanDB troubleshooting document:</p>
-<h2 id="common-issues">Common Issues</h2>
-<h3 id="write-failures">Write Failures</h3>
-<p><strong>Troubleshooting Steps:</strong></p>
+	<h1 id="troubleshooting-overhead-issue">Troubleshooting Overhead Issue</h1>
+<p>If you encounter issues with high overhead in BanyanDB, follow these troubleshooting steps to identify and resolve the problem.</p>
+<h2 id="high-cpu-and-memory-usage">High CPU and Memory Usage</h2>
+<p>If you notice high CPU and memory usage on the BanyanDB server, follow these steps to troubleshoot the issue:</p>
 <ol>
-<li><strong>Check Disk Space</strong>: Ensure there is enough disk space available for writes.</li>
-<li><strong>Review Permissions</strong>: Verify that BanyanDB has the necessary permissions to write to the target directories.</li>
-<li><strong>Examine Logs</strong>: Look for error messages in the logs that might indicate the cause of the failure.</li>
-<li><strong>Network Issues</strong>: Ensure network stability if the write operation involves remote nodes.</li>
-<li><strong>Configuration Settings</strong>: Double-check configuration settings related to write operations.</li>
+<li><strong>Check Write and Query Rate</strong>: Monitor the write and query rates to identify any spikes in traffic that may be causing high CPU and memory usage. Refer to the <a href="../../observability#metrics">metrics</a> documentation for more information on monitoring BanyanDB metrics.</li>
+<li><strong>Check Merge Operation Rate</strong>: Monitor the merge operation rate to identify any issues with data compaction that may be be causing high CPU and memory usage. Refer to the <a href="../../observability#merge-file-rate">metrics</a> documentation for more information on monitoring BanyanDB metrics.</li>
 </ol>
-<h3 id="incorrect-query-results">Incorrect Query Results</h3>
-<p><strong>Diagnose and Fix:</strong></p>
+<h2 id="high-disk-usage">High Disk Usage</h2>
+<p>If you notice high disk usage on the BanyanDB server, follow these steps to troubleshoot the issue:</p>
 <ol>
-<li><strong>Verify Query Syntax</strong>: Ensure that the query syntax is correct and aligns with BanyanDB&rsquo;s query API.</li>
-<li><strong>Inspect Indexes</strong>: Ensure indexes are correctly defined and up-to-date.</li>
-<li><strong>Review Recent Changes</strong>: Consider any recent changes to data or schema that might affect query results.</li>
-<li>**</li>
+<li><strong>Check Group TTL</strong>: Verify that the TTL policy for groups is not causing excessive data storage. If the TTL for a group is set too high, it may result in high disk usage. Use the <code>bydbctl</code> command to <a href="../../../interacting/bydbctl/schema/group#update-operation">update the group schema</a> and adjust the TTL as needed.</li>
+<li><strong>Check Segment Interval</strong>: Check the segment interval for groups to ensure that data is being compacted and stored efficiently. If the TTL is 7 days, the segment interval is set to 3 days. At the 10th morning, the first segment will be deleted. There will be 9 days of data in the database at most, which is more than the TTL.</li>
 </ol>
-<h3 id="performance-issues">Performance Issues</h3>
-<h4 id="slow-write">Slow Write</h4>
-<p><strong>Steps to Address:</strong></p>
+<h2 id="too-many-open-files">Too Many Open Files</h2>
+<p>The BanyanDB uses LSM-tree storage engine, which may open many files. If you encounter issues with too many open files, follow these steps to troubleshoot the issue:</p>
 <ol>
-<li><strong>Resource Allocation</strong>: Ensure adequate resources (CPU, memory) are allocated to BanyanDB.</li>
-<li><strong>Batch Writes</strong>: Increasing batch sizes can improve write performance.</li>
-<li><strong>Monitor Disk I/O</strong>: Check for disk I/O bottlenecks.</li>
+<li><strong>Check File Descriptor Limit</strong>: Verify that the file descriptor limit is set high enough to accommodate the number of open files required by BanyanDB. Use the <code>ulimit</code> command to increase the file descriptor limit if needed. Refer to the <a href="../../system#remove-system-limits">remove system limits</a> documentation for more information on setting system limits.</li>
+<li><strong>Check Write Rate</strong>: Monitor the write rate to identify any spikes in traffic that may be causing too many open files. High write rates can result in a large number of open files on the BanyanDB server.</li>
+<li><strong>Check Merge Operation Rate</strong>: Monitor the merge operation rate to identify any issues with data compaction that may be causing too many open files. Low merge operation rates can result in a large number of open files on the BanyanDB server.</li>
 </ol>
-<h4 id="slow-query">Slow Query</h4>
-<p><strong>Optimize Slow Queries:</strong></p>
-<ol>
-<li><strong>Analyze Query Plans</strong>: Use query tracing to understand execution plans and identify bottlenecks.</li>
-<li><strong>Index Usage</strong>: Ensure appropriate indexes are used to speed up queries.</li>
-<li><strong>Refactor Queries</strong>: Simplify complex queries where possible. For example, using <code>IN</code> instead of multiple <code>OR</code> conditions.</li>
-<li><strong>Sharding</strong>: Consider adding more shards to distribute query load.</li>
-</ol>
-<h4 id="out-of-memory-oom">Out of Memory (OOM)</h4>
-<p><strong>Handle OOM Errors:</strong></p>
-<ol>
-<li><strong>Increase Memory Limits</strong>: Adjust memory allocation settings for BanyanDB.</li>
-<li><strong>Optimize Queries</strong>: Ensure queries are efficient and not causing excessive memory usage.</li>
-<li><strong>Data Sharding</strong>: Distribute data across shards to reduce memory pressure.</li>
-<li><strong>Monitor Memory Usage</strong>: Use monitoring tools to track memory usage patterns.</li>
-</ol>
-<h3 id="process-crashes-and-file-corruption">Process Crashes and File Corruption</h3>
-<p><strong>Steps to Diagnose and Recover:</strong></p>
-<ol>
-<li><strong>Examine Log Files</strong>: Check logs for error messages leading up to the crash.</li>
-<li><strong>Check File System</strong>: Ensure the file system is not corrupted and is functioning properly.</li>
-<li><strong>Update Software</strong>: Ensure BanyanDB and its dependencies are up-to-date with the latest patches.</li>
-<li><strong>Remove Corrupted Data</strong>: If data corruption is detected, remove the corrupted data and restore from backups if necessary.</li>
-</ol>
-<h3 id="how-to-remove-corrupted-data">How to Remove Corrupted Data</h3>
-<p>Corrupted data can cause BanyanDB to malfunction or produce incorrect results. Follow these steps to safely remove corrupted data from BanyanDB:</p>
-<ol>
-<li>
-<p><strong>Identify the Corrupted Data</strong>:
-Monitor the BanyanDB logs for any error messages indicating data corruption. The file is located in a part directory. You have to remove the whole part directory instead of a single file.</p>
-</li>
-<li>
-<p><strong>Shutdown BanyanDB</strong>:</p>
-<ul>
-<li>Before making any changes to the data files, ensure that BanyanDB is not running. This prevents further corruption and ensures data integrity.</li>
-<li>Send <code>SIGTERM</code> or <code>SIGINT</code> signals to the BanyanDB process to gracefully shut it down</li>
-</ul>
-</li>
-<li>
-<p><strong>Locate the Snapshot File</strong>:</p>
-<ul>
-<li>In each shard of the TSDB (Time Series Database), there is a <a href="../../concept/tsdb#shard">snapshot file</a> that contains all alive parts directories.</li>
-<li>Navigate to the directory where BanyanDB stores its data. This is typically specified in the <a href="./../configuration">flags</a></li>
-</ul>
-</li>
-<li>
-<p><strong>Remove the Corrupted File</strong>:</p>
-<ul>
-<li>Identify the corrupted part within the snapshot directory.</li>
-<li>Remove the part&rsquo;s record from the snapshot file.</li>
-</ul>
-</li>
-<li>
-<p><strong>Clean Up Part</strong>:</p>
-<ul>
-<li>Remove the corrupted part directory from the disk.</li>
-</ul>
-</li>
-<li>
-<p><strong>Restart BanyanDB</strong>:</p>
-<ul>
-<li>Once the corrupted part is removed and the metadata is cleaned up, restart BanyanDB to apply the changes</li>
-</ul>
-</li>
-<li>
-<p><strong>Verify the Integrity</strong>:</p>
-<ul>
-<li>After restarting, monitor the BanyanDB logs to ensure that the corruption issues have been resolved.</li>
-<li>Run any necessary integrity checks or queries to verify that the database is functioning correctly.</li>
-</ul>
-</li>
-<li>
-<p><strong>Prevent Future Corruptions</strong>:</p>
-<ul>
-<li>Monitor system resources and ensure that the hardware and storage systems are functioning correctly.</li>
-<li>Keep BanyanDB and its dependencies updated to the latest versions to benefit from bug fixes and improvements.</li>
-</ul>
-</li>
-</ol>
-<p>By following these steps, you can safely remove corrupted data from BanyanDB and ensure the continued integrity and performance of your database.</p>
+<h2 id="profile-banyandb-server">Profile BanyanDB Server</h2>
+<p>If you are unable to identify the cause of high overhead, you can profile the BanyanDB server to identify performance bottlenecks. Use the <code>pprof</code> tool to generate a CPU profile and analyze the performance of the BanyanDB server. Refer to the <a href="../../observability#profiling">profiling</a> documentation for more information on profiling BanyanDB.</p>
 
 
 
@@ -1034,24 +974,12 @@ Monitor the BanyanDB logs for any error messages indicating data corruption. The
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#troubleshooting">Troubleshooting</a>
+    <li><a href="#troubleshooting-overhead-issue">Troubleshooting Overhead Issue</a>
       <ul>
-        <li><a href="#error-checklist">Error Checklist</a>
-          <ul>
-            <li><a href="#1-collect-information">1. Collect Information</a></li>
-            <li><a href="#2-define-error-type">2. Define Error Type</a></li>
-            <li><a href="#3-error-support-procedure">3. Error Support Procedure</a></li>
-          </ul>
-        </li>
-        <li><a href="#common-issues">Common Issues</a>
-          <ul>
-            <li><a href="#write-failures">Write Failures</a></li>
-            <li><a href="#incorrect-query-results">Incorrect Query Results</a></li>
-            <li><a href="#performance-issues">Performance Issues</a></li>
-            <li><a href="#process-crashes-and-file-corruption">Process Crashes and File Corruption</a></li>
-            <li><a href="#how-to-remove-corrupted-data">How to Remove Corrupted Data</a></li>
-          </ul>
-        </li>
+        <li><a href="#high-cpu-and-memory-usage">High CPU and Memory Usage</a></li>
+        <li><a href="#high-disk-usage">High Disk Usage</a></li>
+        <li><a href="#too-many-open-files">Too Many Open Files</a></li>
+        <li><a href="#profile-banyandb-server">Profile BanyanDB Server</a></li>
       </ul>
     </li>
   </ul>
@@ -1169,6 +1097,18 @@ Monitor the BanyanDB logs for any error messages indicating data corruption. The
 
     </div>
     
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

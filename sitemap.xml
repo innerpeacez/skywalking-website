@@ -4357,6 +4357,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/concept/rotation/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/concepts-and-designs/service-hierarchy-configuration/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -5236,6 +5242,12 @@
   
   <url>
     <loc>/docs/main/next/en/guides/e2e/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/operation/troubleshooting/error-checklist/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -10344,7 +10356,31 @@
   </url>
   
   <url>
-    <loc>/docs/skywalking-banyandb/next/operation/troubleshooting/</loc>
+    <loc>/docs/skywalking-banyandb/next/operation/troubleshooting/crash/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/operation/troubleshooting/install/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/operation/troubleshooting/no-data/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/operation/troubleshooting/overhead/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/operation/troubleshooting/query/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
