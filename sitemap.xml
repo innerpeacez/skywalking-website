@@ -6436,6 +6436,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/setup/backend/backend-kong-monitoring/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/setup/backend/backend-k8s-monitoring/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -9774,6 +9780,12 @@
   
   <url>
     <loc>/docs/skywalking-java/v8.9.0/en/setup/service-agent/java-agent/agent-optional-plugins/trace-ignore-plugin/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/main/next/en/swip/swip-8/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
