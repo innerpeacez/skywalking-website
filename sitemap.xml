@@ -3215,6 +3215,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/interacting/bydbctl/analyze/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/</loc>
     <lastmod>2023-02-28T16:58:57+08:00</lastmod>
     <changefreq>daily</changefreq>
@@ -6935,6 +6941,12 @@
   
   <url>
     <loc>/docs/skywalking-java/v8.14.0/en/setup/service-agent/java-agent/application-toolkit-micrometer/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/main/next/en/concepts-and-designs/metrics-additional-attributes/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
