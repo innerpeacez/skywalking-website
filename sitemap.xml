@@ -5812,12 +5812,6 @@
   </url>
   
   <url>
-    <loc>/docs/main/next/en/setup/backend/storages/h2/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>/docs/main/next/en/setup/backend/backend-health-check/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
