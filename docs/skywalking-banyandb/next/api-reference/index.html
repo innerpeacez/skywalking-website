@@ -44,10 +44,11 @@ Table of Contents   banyandb/model/v1/write.proto
   ResourceOpts
   Catalog
   IntervalRule.Unit
-    banyandb/common/v1/trace.proto
- Span Tag Trace    banyandb/database/v1/database.proto
-  Node
-  Shard" />
+    banyandb/common/v1/rpc.proto
+  APIVersion
+  GetAPIVersionRequest
+  GetAPIVersionResponse
+  Service" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/skywalking-banyandb/next/api-reference/" />
 
@@ -67,12 +68,13 @@ Table of Contents   banyandb/model/v1/write.proto
   ResourceOpts
   Catalog
   IntervalRule.Unit
-    banyandb/common/v1/trace.proto
- Span Tag Trace    banyandb/database/v1/database.proto
-  Node
-  Shard">
+    banyandb/common/v1/rpc.proto
+  APIVersion
+  GetAPIVersionRequest
+  GetAPIVersionResponse
+  Service">
 
-<meta itemprop="wordCount" content="4636">
+<meta itemprop="wordCount" content="4727">
 
 
 
@@ -94,10 +96,11 @@ Table of Contents   banyandb/model/v1/write.proto
   ResourceOpts
   Catalog
   IntervalRule.Unit
-    banyandb/common/v1/trace.proto
- Span Tag Trace    banyandb/database/v1/database.proto
-  Node
-  Shard"/>
+    banyandb/common/v1/rpc.proto
+  APIVersion
+  GetAPIVersionRequest
+  GetAPIVersionResponse
+  Service"/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -958,7 +961,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: bd83a38</div>
+                  <div class="commit-id">Commit Id: 362d68e</div>
                 
 
 
@@ -1030,6 +1033,23 @@ if (!doNotTrack) {
 </li>
 <li>
 <p><a href="#banyandb-common-v1-intervalrule-unit">IntervalRule.Unit</a></p>
+</li>
+</ul>
+</li>
+<li>
+<p><a href="#banyandb_common_v1_rpc-proto">banyandb/common/v1/rpc.proto</a></p>
+<ul>
+<li>
+<p><a href="#banyandb-common-v1-apiversion">APIVersion</a></p>
+</li>
+<li>
+<p><a href="#banyandb-common-v1-getapiversionrequest">GetAPIVersionRequest</a></p>
+</li>
+<li>
+<p><a href="#banyandb-common-v1-getapiversionresponse">GetAPIVersionResponse</a></p>
+</li>
+<li>
+<p><a href="#banyandb-common-v1-service">Service</a></p>
 </li>
 </ul>
 </li>
@@ -1956,6 +1976,82 @@ if (!doNotTrack) {
 <td>UNIT_DAY</td>
 <td>2</td>
 <td></td>
+</tr>
+</tbody>
+</table>
+<p><a name="banyandb_common_v1_rpc-proto"></a></p>
+<p align="right"><a href="#top">Top</a></p>
+<h2 id="banyandbcommonv1rpcproto">banyandb/common/v1/rpc.proto</h2>
+<p><a name="banyandb-common-v1-APIVersion"></a></p>
+<h3 id="apiversion">APIVersion</h3>
+<p>APIVersion is the version of the API</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>version</td>
+<td><a href="#string">string</a></td>
+<td></td>
+<td>version is the version of the API</td>
+</tr>
+<tr>
+<td>revision</td>
+<td><a href="#string">string</a></td>
+<td></td>
+<td>revision is the commit hash of the API</td>
+</tr>
+</tbody>
+</table>
+<p><a name="banyandb-common-v1-GetAPIVersionRequest"></a></p>
+<h3 id="getapiversionrequest">GetAPIVersionRequest</h3>
+<p>GetAPIVersionRequest is the request for GetAPIVersion</p>
+<p>empty</p>
+<p><a name="banyandb-common-v1-GetAPIVersionResponse"></a></p>
+<h3 id="getapiversionresponse">GetAPIVersionResponse</h3>
+<p>GetAPIVersionResponse is the response for GetAPIVersion</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>version</td>
+<td><a href="#banyandb-common-v1-apiversion">APIVersion</a></td>
+<td></td>
+<td>version is the version of the API</td>
+</tr>
+</tbody>
+</table>
+<p><a name="banyandb-common-v1-Service"></a></p>
+<h3 id="service-1">Service</h3>
+<p>Service is the service for the API</p>
+<table>
+<thead>
+<tr>
+<th>Method Name</th>
+<th>Request Type</th>
+<th>Response Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GetAPIVersion</td>
+<td><a href="#banyandb-common-v1-getapiversionrequest">GetAPIVersionRequest</a></td>
+<td><a href="#banyandb-common-v1-getapiversionresponse">GetAPIVersionResponse</a></td>
+<td>GetAPIVersion returns the version of the API</td>
 </tr>
 </tbody>
 </table>
@@ -6704,6 +6800,14 @@ to control how to generate time series indices.</p>
             <li><a href="#intervalruleunit">IntervalRule.Unit</a></li>
           </ul>
         </li>
+        <li><a href="#banyandbcommonv1rpcproto">banyandb/common/v1/rpc.proto</a>
+          <ul>
+            <li><a href="#apiversion">APIVersion</a></li>
+            <li><a href="#getapiversionrequest">GetAPIVersionRequest</a></li>
+            <li><a href="#getapiversionresponse">GetAPIVersionResponse</a></li>
+            <li><a href="#service-1">Service</a></li>
+          </ul>
+        </li>
         <li><a href="#banyandbcommonv1traceproto">banyandb/common/v1/trace.proto</a>
           <ul>
             <li><a href="#span">Span</a></li>
@@ -7043,6 +7147,8 @@ to control how to generate time series indices.</p>
 
     </div>
     
+
+
 
 
 
