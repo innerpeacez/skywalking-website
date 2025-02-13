@@ -5686,6 +5686,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/status/query_alarm_runtime_status/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/skywalking-banyandb/next/installation/binaries/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -6083,12 +6089,6 @@
   
   <url>
     <loc>/docs/skywalking-satellite/v1.1.0/en/guides/contribution/how-to-write-plugin/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>/docs/main/next/en/api/browser-http-api-protocol/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -8573,6 +8573,12 @@
   
   <url>
     <loc>/docs/main/next/en/api/instance-properties/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/operation/restore/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
