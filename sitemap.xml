@@ -8572,6 +8572,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-php/next/en/configuration/report-log/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/api/instance-properties/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>

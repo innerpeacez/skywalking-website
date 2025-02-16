@@ -38,7 +38,7 @@
 <meta itemprop="description" content="INI Settings This is the configuration list supported in php.ini.
    Configuration Item Description Default Value     skywalking_agent.enable Enable skywalking_agent extension or not. Off   skywalking_agent.log_file Log file path. /tmp/skywalking-agent.log   skywalking_agent.log_level Log level: one of OFF, TRACE, DEBUG, INFO, WARN, ERROR. INFO   skywalking_agent.runtime_dir Skywalking agent runtime directory. /tmp/skywalking-agent   skywalking_agent.server_addr Address of skywalking oap server. Only available when reporter_type is grpc.">
 
-<meta itemprop="wordCount" content="324">
+<meta itemprop="wordCount" content="346">
 
 
 
@@ -340,7 +340,15 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-php/next/en/configuration/context-injection">Context injection</a>
+            <a href="/docs/skywalking-php/next/en/configuration/context-injection">Context Injection</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-php/next/en/configuration/report-log">Report Log</a>
         
     </li>
 
@@ -435,7 +443,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 2a6e39b</div>
+                  <div class="commit-id">Commit Id: 56fac28</div>
                 
 
 
@@ -586,6 +594,11 @@ if (!doNotTrack) {
 <td>Unix domain socket file path of standalone skywalking php worker. Only available when <code>reporter_type</code> is <code>standalone</code>.</td>
 <td></td>
 </tr>
+<tr>
+<td>skywalking_agent.psr_logging_level</td>
+<td>The log level reported to SkyWalking, based on PSR-3, one of <code>Off</code>, <code>Debug</code>, <code>Info</code>, Notice<code>, Warning</code>, Error<code>, Critical</code>, Alert<code>, Emergency</code>.</td>
+<td>Off</td>
+</tr>
 </tbody>
 </table>
 
@@ -733,6 +746,8 @@ if (!doNotTrack) {
 
     </div>
     
+
+
 
 
 
