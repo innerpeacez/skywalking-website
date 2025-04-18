@@ -40,7 +40,7 @@ Proposed Changes Flink expose its metrics via HTTP endpoint to OpenTelemetry col
 Architecture Graph There is no significant architecture-level change.
 Proposed Changes Flink expose its metrics via HTTP endpoint to OpenTelemetry collector, using SkyWalking openTelemetry receiver to receive these metrics。 Provide cluster, instance, and endpoint dimensions monitoring.">
 
-<meta itemprop="wordCount" content="1040">
+<meta itemprop="wordCount" content="1071">
 
 
 
@@ -880,6 +880,32 @@ if (!doNotTrack) {
     <li>
         
             <a href="/docs/main/next/en/setup/backend/backend-activemq-monitoring">ActiveMQ</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Data Processing Engine<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/backend-flink-monitoring">Flink</a>
         
     </li>
 
@@ -2581,7 +2607,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 6273cb2</div>
+                  <div class="commit-id">Commit Id: 7dccf96</div>
                 
 
 
@@ -2672,7 +2698,7 @@ Provide cluster, instance, and endpoint dimensions monitoring.</p>
 <td>JVM thread count</td>
 <td>Count</td>
 <td>meter_flink_jobManager_jvm_thread_count</td>
-<td>The total number of the jobManager JVM threads.</td>
+<td>The total number of the jobManager JVM live threads.</td>
 <td>Flink JobManager</td>
 </tr>
 <tr>
@@ -2707,7 +2733,7 @@ Provide cluster, instance, and endpoint dimensions monitoring.</p>
 <td>JVM CPU Time</td>
 <td>ms</td>
 <td>meter_flink_jobManager_jvm_cpu_time</td>
-<td>The jobManager CPU time used by the JVM.</td>
+<td>The jobManager CPU time used by the JVM increase per minute.</td>
 <td>Flink JobManager</td>
 </tr>
 <tr>
@@ -2742,42 +2768,42 @@ Provide cluster, instance, and endpoint dimensions monitoring.</p>
 <td>JVM G1 Young Generation Count</td>
 <td>Count</td>
 <td>meter_flink_jobManager_jvm_g1_young_generation_count</td>
-<td>The number of the jobManager JVM g1 young generation count.</td>
+<td>The incremental number of the jobManager JVM G1 young generation count per minute.</td>
 <td>Flink JobManager</td>
 </tr>
 <tr>
 <td>JVM G1 Old Generation Count</td>
 <td>Count</td>
 <td>meter_flink_jobManager_jvm_g1_old_generation_count</td>
-<td>The number of the jobManager JVM g1 old generation count.</td>
+<td>The incremental number of the jobManager JVM G1 old generation count per minute.</td>
 <td>Flink JobManager</td>
 </tr>
 <tr>
 <td>JVM G1 Young Generation Time</td>
 <td>Count</td>
 <td>meter_flink_jobManager_jvm_g1_young_generation_time</td>
-<td>The time of the jobManager JVM g1 young generation.</td>
+<td>The incremental time of the jobManager JVM G1 young generation per minute.</td>
 <td>Flink JobManager</td>
 </tr>
 <tr>
 <td>JVM G1 Old Generation Time</td>
 <td>ms</td>
 <td>meter_flink_jobManager_jvm_g1_old_generation_time</td>
-<td>The time of  JVM g1 old generation.</td>
+<td>The incremental time of JVM G1 old generation increase per minute.</td>
 <td>Flink JobManager</td>
 </tr>
 <tr>
 <td>JVM G1 Old Generation Count</td>
 <td>Count</td>
 <td>meter_flink_jobManager_jvm_all_garbageCollector_count</td>
-<td>The number of the jobManager JVM all garbageCollector count.</td>
+<td>The incremental number of the jobManager JVM all garbageCollector count per minute.</td>
 <td>Flink JobManager</td>
 </tr>
 <tr>
 <td>JVM All GarbageCollector Time</td>
 <td>ms</td>
 <td>meter_flink_jobManager_jvm_all_garbageCollector_time</td>
-<td>The time spent performing garbage collection for the given (or all) collector for the jobManager.</td>
+<td>The incremental time spent performing garbage collection for the given (or all) collector for the jobManager per minute.</td>
 <td>Flink JobManager</td>
 </tr>
 </tbody>
@@ -2805,7 +2831,7 @@ Provide cluster, instance, and endpoint dimensions monitoring.</p>
 <td>JVM Thread Count</td>
 <td>Count</td>
 <td>meter_flink_taskManager_jvm_thread_count</td>
-<td>The total number of JVM threads.</td>
+<td>The total number of JVM live threads.</td>
 <td>Flink TaskManager</td>
 </tr>
 <tr>
@@ -2826,7 +2852,7 @@ Provide cluster, instance, and endpoint dimensions monitoring.</p>
 <td>JVM CPU Time</td>
 <td>ms</td>
 <td>meter_flink_taskManager_jvm_cpu_time</td>
-<td>The CPU time used by the JVM.</td>
+<td>The CPU time used by the JVM increase per minute.</td>
 <td>Flink TaskManager</td>
 </tr>
 <tr>
@@ -2861,14 +2887,14 @@ Provide cluster, instance, and endpoint dimensions monitoring.</p>
 <td>NumRecordsIn</td>
 <td>Count</td>
 <td>meter_flink_taskManager_numRecordsIn</td>
-<td>The total number of records this task has received.</td>
+<td>The incremental number of records this task has received per minute..</td>
 <td>Flink TaskManager</td>
 </tr>
 <tr>
 <td>NumRecordsOut</td>
 <td>Count</td>
 <td>meter_flink_taskManager_numRecordsOut</td>
-<td>The total number of records this task has emitted.</td>
+<td>The incremental number of records this task has emitted per minute.</td>
 <td>Flink TaskManager</td>
 </tr>
 <tr>
@@ -3241,6 +3267,8 @@ Provide cluster, instance, and endpoint dimensions monitoring.</p>
 
     </div>
     
+
+
 
 
 
