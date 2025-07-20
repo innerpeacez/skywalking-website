@@ -4411,6 +4411,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/contribute/debugging/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/concepts-and-designs/service-hierarchy-configuration/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
