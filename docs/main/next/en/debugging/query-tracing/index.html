@@ -38,7 +38,7 @@ Tracing Structure  Trace     Field Description     traceId The unique ID of the 
 <meta itemprop="description" content="Tracing OAP query SkyWalking OAP provides the metrics/trace/log/topology query tracing to help users debug and diagnose the query performance for the SkyWalking backend self.
 Tracing Structure  Trace     Field Description     traceId The unique ID of the trace   condition The query conditions   startTime The start time of the trace. In nanoseconds   endTime The end time of the trace.">
 
-<meta itemprop="wordCount" content="2212">
+<meta itemprop="wordCount" content="2233">
 
 
 
@@ -2604,7 +2604,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 97985ec</div>
+                  <div class="commit-id">Commit Id: f930830</div>
                 
 
 
@@ -2737,6 +2737,7 @@ if (!doNotTrack) {
 <h2 id="debugging-through-http-apis">Debugging through HTTP APIs</h2>
 <p>The query tracing service is provided within the OAP rest server,
 which could be accessed through HTTP GET <code>http://{core restHost}:{core restPort}/debugging/query/...</code>.</p>
+<p><strong>Note:</strong> The <code>layer</code> of the service is optional, but if the service is virtual then required, such the <code>layer</code> is <code>VIRTUAL_DATABASE/VIRTUAL_MQ/VIRTUAL_GATEWAY</code>.</p>
 <h3 id="tracing-mqe-execution">Tracing MQE Execution</h3>
 <ul>
 <li>URL: HTTP GET <code>http://{core restHost}:{core restPort}/debugging/query/mqe?{parameters}</code>.</li>
@@ -2789,7 +2790,7 @@ which could be accessed through HTTP GET <code>http://{core restHost}:{core rest
 <tr>
 <td>serviceLayer</td>
 <td>The service layer name</td>
-<td>Yes</td>
+<td>No</td>
 </tr>
 <tr>
 <td>serviceInstance</td>
@@ -2986,7 +2987,7 @@ the debuggingTrace will include the BanyanDB internal execution trace info, such
 <tr>
 <td>serviceLayer</td>
 <td>The service layer name</td>
-<td>Yes</td>
+<td>No</td>
 </tr>
 <tr>
 <td>serviceInstance</td>
@@ -3041,7 +3042,7 @@ the debuggingTrace will include the BanyanDB internal execution trace info, such
 <ul>
 <li>Example</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl -X GET <span style="color:#d14">&#39;http://127.0.0.1:12800/debugging/query/trace/queryBasicTraces?startTime=2024-06-26%200900&amp;endTime=2024-06-26%200915&amp;step=MINUTE&amp;service=mock_a_service&amp;serviceLayer=GENERAL&amp;serviceInstance=mock_a_service_instance&amp;traceState=ALL&amp;queryOrder=BY_DURATION&amp;pageNum=1&amp;pageSize=15&amp;tags=http.status_code%3D404%2Chttp.method%3Dget&#39;</span> 
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl -X GET <span style="color:#d14">&#39;http://127.0.0.1:12800/debugging/query/trace/queryBasicTraces?startTime=2024-06-26%200900&amp;endTime=2024-06-26%200915&amp;step=MINUTE&amp;service=mock_a_service&amp;serviceInstance=mock_a_service_instance&amp;traceState=ALL&amp;queryOrder=BY_DURATION&amp;pageNum=1&amp;pageSize=15&amp;tags=http.status_code%3D404%2Chttp.method%3Dget&#39;</span> 
 </code></pre></div><p>Response will include query result and the debuggingTrace information, the debuggingTrace information is the same as the MQE query tracing:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">traces</span>:<span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#555">...</span><span style="color:#bbb">
@@ -3325,7 +3326,7 @@ the debuggingTrace will include the BanyanDB internal execution trace info, such
 <tr>
 <td>serviceLayer</td>
 <td>The service layer name</td>
-<td>Yes</td>
+<td>No</td>
 </tr>
 <tr>
 <td>services</td>
@@ -3339,7 +3340,7 @@ the debuggingTrace will include the BanyanDB internal execution trace info, such
 <p>Example</p>
 </li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl -X GET <span style="color:#d14">&#39;http://127.0.0.1:12800/debugging/query/topology/getServicesTopology?startTime=2024-07-03&amp;endTime=2024-07-03&amp;step=DAY&amp;serviceLayer=GENERAL&amp;services=mock_a_service%2Cmock_b_service&#39;</span>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl -X GET <span style="color:#d14">&#39;http://127.0.0.1:12800/debugging/query/topology/getServicesTopology?startTime=2024-07-03&amp;endTime=2024-07-03&amp;step=DAY&amp;services=mock_a_service%2Cmock_b_service&#39;</span>
 </code></pre></div><p>Response will include query result and the debuggingTrace information, the debuggingTrace information is the same as the MQE query tracing:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">nodes</span>:<span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#555">...</span><span style="color:#bbb">
@@ -3396,12 +3397,12 @@ the debuggingTrace will include the BanyanDB internal execution trace info, such
 <tr>
 <td>clientServiceLayer</td>
 <td>The client side service layer name</td>
-<td>Yes</td>
+<td>No</td>
 </tr>
 <tr>
 <td>serverServiceLayer</td>
 <td>The server side service layer name</td>
-<td>Yes</td>
+<td>No</td>
 </tr>
 </tbody>
 </table>
@@ -3410,7 +3411,7 @@ the debuggingTrace will include the BanyanDB internal execution trace info, such
 <p>Example</p>
 </li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl -X GET <span style="color:#d14">&#39;http://127.0.0.1:12800/debugging/query/topology/getServiceInstanceTopology?startTime=2024-07-03&amp;endTime=2024-07-03&amp;step=DAY&amp;clientService=mock_a_service&amp;serverService=mock_b_service&amp;clientServiceLayer=GENERAL&amp;serverServiceLayer=GENERAL&#39;</span>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl -X GET <span style="color:#d14">&#39;http://127.0.0.1:12800/debugging/query/topology/getServiceInstanceTopology?startTime=2024-07-03&amp;endTime=2024-07-03&amp;step=DAY&amp;clientService=mock_a_service&amp;serverService=mock_b_service&#39;</span>
 </code></pre></div><p>Response will include query result and the debuggingTrace information, the debuggingTrace information is the same as the MQE query tracing:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">nodes</span>:<span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#555">...</span><span style="color:#bbb">
@@ -3462,7 +3463,7 @@ the debuggingTrace will include the BanyanDB internal execution trace info, such
 <tr>
 <td>serviceLayer</td>
 <td>The service layer name</td>
-<td>Yes</td>
+<td>No</td>
 </tr>
 <tr>
 <td>endpoint</td>
@@ -3479,7 +3480,7 @@ the debuggingTrace will include the BanyanDB internal execution trace info, such
 <p>Example</p>
 </li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl -X GET <span style="color:#d14">&#39;http://127.0.0.1:12800/debugging/query/topology/getEndpointDependencies?startTime=2024-07-03&amp;endTime=2024-07-03&amp;step=DAY&amp;service=mock_a_service&amp;serviceLayer=GENERAL&amp;endpoint=%2Fdubbox-case%2Fcase%2Fdubbox-rest%2F404-test&#39;</span>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl -X GET <span style="color:#d14">&#39;http://127.0.0.1:12800/debugging/query/topology/getEndpointDependencies?startTime=2024-07-03&amp;endTime=2024-07-03&amp;step=DAY&amp;service=mock_a_service&amp;endpoint=%2Fdubbox-case%2Fcase%2Fdubbox-rest%2F404-test&#39;</span>
 </code></pre></div><p>Response will include query result and the debuggingTrace information, the debuggingTrace information is the same as the MQE query tracing:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">nodes</span>:<span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#555">...</span><span style="color:#bbb">
@@ -3531,7 +3532,7 @@ the debuggingTrace will include the BanyanDB internal execution trace info, such
 <tr>
 <td>serviceLayer</td>
 <td>The service layer name</td>
-<td>Yes</td>
+<td>No</td>
 </tr>
 <tr>
 <td>instance</td>
@@ -3545,7 +3546,7 @@ the debuggingTrace will include the BanyanDB internal execution trace info, such
 <p>Example</p>
 </li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl -X GET <span style="color:#d14">&#39;http://127.0.0.1:12800/debugging/query/topology/getProcessTopology?startTime=2024-07-03&amp;endTime=2024-07-03&amp;step=DAY&amp;service=mock_a_service&amp;serviceLayer=GENERAL&amp;instance=mock_a_service_instance&#39;</span>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl -X GET <span style="color:#d14">&#39;http://127.0.0.1:12800/debugging/query/topology/getProcessTopology?startTime=2024-07-03&amp;endTime=2024-07-03&amp;step=DAY&amp;service=mock_a_service&amp;instance=mock_a_service_instance&#39;</span>
 </code></pre></div><p>Response will include query result and the debuggingTrace information, the debuggingTrace information is the same as the MQE query tracing:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">nodes</span>:<span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#555">...</span><span style="color:#bbb">
@@ -3656,7 +3657,7 @@ Parameters</p>
 <ul>
 <li>Example</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl -X GET <span style="color:#d14">&#39;http://127.0.0.1:12800/debugging/query/log/queryLogs?service=e2e-service-provider&amp;serviceLayer=GENERAL&amp;startTime=2024-07-09&amp;endTime=2024-07-09&amp;step=DAY&amp;pageNum=1&amp;pageSize=15&amp;queryOrder=ASC&amp;tags=level%3DINFO&#39;</span>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl -X GET <span style="color:#d14">&#39;http://127.0.0.1:12800/debugging/query/log/queryLogs?service=e2e-service-provider&amp;startTime=2024-07-09&amp;endTime=2024-07-09&amp;step=DAY&amp;pageNum=1&amp;pageSize=15&amp;queryOrder=ASC&amp;tags=level%3DINFO&#39;</span>
 </code></pre></div><p>Response will include query result and the debuggingTrace information, the debuggingTrace information is the same as the MQE query tracing:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">logs</span>:<span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#555">...</span><span style="color:#bbb">
