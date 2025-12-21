@@ -3835,6 +3835,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/interacting/client/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/skywalking-satellite/next/en/setup/plugins/client_grpc-client/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -6448,12 +6454,6 @@
   </url>
   
   <url>
-    <loc>/docs/skywalking-banyandb/next/interacting/java-client/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>/docs/main/next/en/guides/benchmark/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -6575,6 +6575,12 @@
   
   <url>
     <loc>/docs/main/next/en/setup/backend/backend-kong-monitoring/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/operation/fodc/ktm_metrics/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
