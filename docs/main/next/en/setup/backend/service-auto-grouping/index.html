@@ -30,15 +30,17 @@
 
 <title>Service Auto Grouping | Apache SkyWalking</title><meta property="og:title" content="Service Auto Grouping" />
 <meta property="og:description" content="Service Auto Grouping SkyWalking supports various default and customized dashboard templates. Each template provides an appropriate layout for services in a particular field. For example, the metrics for services with language agents installed may be different from that of services detected by the service mesh observability solution as well as SkyWalking&rsquo;s self-observability metrics dashboard.
-Therefore, since version 8.3.0, the SkyWalking OAP has generated the groups based on this simple naming format:" />
+The SkyWalking OAP generates the groups based on this simple naming format:
+${service name} = [${group name}::]${logic name} If the service name includes double colons (::), the literal string before the colons is taken as the group name." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/main/next/en/setup/backend/service-auto-grouping/" />
 
 <meta itemprop="name" content="Service Auto Grouping">
 <meta itemprop="description" content="Service Auto Grouping SkyWalking supports various default and customized dashboard templates. Each template provides an appropriate layout for services in a particular field. For example, the metrics for services with language agents installed may be different from that of services detected by the service mesh observability solution as well as SkyWalking&rsquo;s self-observability metrics dashboard.
-Therefore, since version 8.3.0, the SkyWalking OAP has generated the groups based on this simple naming format:">
+The SkyWalking OAP generates the groups based on this simple naming format:
+${service name} = [${group name}::]${logic name} If the service name includes double colons (::), the literal string before the colons is taken as the group name.">
 
-<meta itemprop="wordCount" content="131">
+<meta itemprop="wordCount" content="126">
 
 
 
@@ -46,7 +48,8 @@ Therefore, since version 8.3.0, the SkyWalking OAP has generated the groups base
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Service Auto Grouping"/>
 <meta name="twitter:description" content="Service Auto Grouping SkyWalking supports various default and customized dashboard templates. Each template provides an appropriate layout for services in a particular field. For example, the metrics for services with language agents installed may be different from that of services detected by the service mesh observability solution as well as SkyWalking&rsquo;s self-observability metrics dashboard.
-Therefore, since version 8.3.0, the SkyWalking OAP has generated the groups based on this simple naming format:"/>
+The SkyWalking OAP generates the groups based on this simple naming format:
+${service name} = [${group name}::]${logic name} If the service name includes double colons (::), the literal string before the colons is taken as the group name."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -407,14 +410,6 @@ if (!doNotTrack) {
 
     
 
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/marketplace">Find out-of-box Features in Marketplace</a>
-        
-    </li>
-
-    
-
 </ul>
 
         
@@ -431,6 +426,14 @@ if (!doNotTrack) {
 
             
 <ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/marketplace">Overview</a>
+        
+    </li>
+
     
 
     <li>
@@ -2628,7 +2631,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 95182a7</div>
+                  <div class="commit-id">Commit Id: 685ada3</div>
                 
 
 
@@ -2678,7 +2681,7 @@ if (!doNotTrack) {
 Each template provides an appropriate layout for services in a particular field.
 For example, the metrics for services with language agents installed
 may be different from that of services detected by the service mesh observability solution as well as SkyWalking&rsquo;s self-observability metrics dashboard.</p>
-<p>Therefore, since version 8.3.0, the SkyWalking OAP has generated the groups based on this simple naming format:</p>
+<p>The SkyWalking OAP generates the groups based on this simple naming format:</p>
 <h3 id="service-name--group-namelogic-name">${service name} = [${group name}::]${logic name}</h3>
 <p>If the service name includes double colons (<code>::</code>), the literal string before the colons is taken as the group name.
 In the latest GraphQL query, the group name has been provided as an optional parameter.</p>
@@ -2845,12 +2848,6 @@ In the latest GraphQL query, the group name has been provided as an optional par
 
     </div>
     
-
-
-
-
-
-
 
 
 
