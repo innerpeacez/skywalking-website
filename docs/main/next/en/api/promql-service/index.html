@@ -2631,7 +2631,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 95c03d5</div>
+                  <div class="commit-id">Commit Id: 4418152</div>
                 
 
 
@@ -2914,7 +2914,7 @@ we could calculate the total number of seen HTTP requests per service and group 
 </tr>
 <tr>
 <td>time</td>
-<td><strong>The latest metrics value from current time to this time is returned. If time is empty, the default look-back time is 2 minutes.</strong> time format: RFC3399 or unix_timestamp in seconds</td>
+<td><strong>The latest metrics value from current time to this time is returned. If time is empty, the default look-back time is 2 minutes.</strong> time format: RFC3339 or unix_timestamp in seconds</td>
 <td>yes</td>
 <td>yes</td>
 </tr>
@@ -2973,13 +2973,13 @@ we could calculate the total number of seen HTTP requests per service and group 
 </tr>
 <tr>
 <td>start</td>
-<td>start timestamp, format: RFC3399 or unix_timestamp in seconds</td>
+<td>start timestamp, format: RFC3339 or unix_timestamp in seconds</td>
 <td>yes</td>
 <td>no</td>
 </tr>
 <tr>
 <td>end</td>
-<td>end timestamp, format: RFC3399 or unix_timestamp in seconds</td>
+<td>end timestamp, format: RFC3339 or unix_timestamp in seconds</td>
 <td>yes</td>
 <td>no</td>
 </tr>
@@ -3064,13 +3064,13 @@ we could calculate the total number of seen HTTP requests per service and group 
 </tr>
 <tr>
 <td>start</td>
-<td>start, format: RFC3399 or unix_timestamp in seconds</td>
+<td>start, format: RFC3339 or unix_timestamp in seconds</td>
 <td>yes</td>
 <td>no</td>
 </tr>
 <tr>
 <td>end</td>
-<td>end, format: RFC3399 or unix_timestamp in seconds</td>
+<td>end, format: RFC3339 or unix_timestamp in seconds</td>
 <td>yes</td>
 <td>no</td>
 </tr>
@@ -3196,7 +3196,7 @@ we could calculate the total number of seen HTTP requests per service and group 
 </tr>
 <tr>
 <td>start</td>
-<td>start, format: RFC3399 or unix_timestamp in seconds</td>
+<td>start, format: RFC3339 or unix_timestamp in seconds</td>
 <td><strong>no</strong></td>
 <td>yes</td>
 </tr>
@@ -3249,13 +3249,13 @@ we could calculate the total number of seen HTTP requests per service and group 
 </tr>
 <tr>
 <td>start</td>
-<td>start, format: RFC3399 or unix_timestamp in seconds</td>
+<td>start, format: RFC3339 or unix_timestamp in seconds</td>
 <td><strong>no</strong></td>
 <td>yes</td>
 </tr>
 <tr>
 <td>end</td>
-<td>end, format: RFC3399 or unix_timestamp in seconds, if end time is not present, use current time as default end time</td>
+<td>end, format: RFC3339 or unix_timestamp in seconds, if end time is not present, use current time as default end time</td>
 <td>yes</td>
 <td>yes</td>
 </tr>
@@ -3443,9 +3443,9 @@ we could calculate the total number of seen HTTP requests per service and group 
 </tr>
 </tbody>
 </table>
-<p>All Scopes could be found <a href="https://github.com/apache/skywalking/tree/95c03d52602a1ca5c62365aa7219919cab1cc8e9/oap-server/server-core/src/main/java/org/apache/skywalking/oap/server/core/query/enumeration/Scope.java">here</a>.</p>
+<p>All Scopes could be found <a href="https://github.com/apache/skywalking/tree/44181523f0e9fa2299c228806d862c6db8bdd0cf/oap-server/server-core/src/main/java/org/apache/skywalking/oap/server/core/query/enumeration/Scope.java">here</a>.</p>
 <h3 id="general-labels">General labels</h3>
-<p>Each metric contains general labels: <a href="https://github.com/apache/skywalking/tree/95c03d52602a1ca5c62365aa7219919cab1cc8e9/oap-server/server-core/src/main/java/org/apache/skywalking/oap/server/core/analysis/Layer.java">layer</a>.
+<p>Each metric contains general labels: <a href="https://github.com/apache/skywalking/tree/44181523f0e9fa2299c228806d862c6db8bdd0cf/oap-server/server-core/src/main/java/org/apache/skywalking/oap/server/core/analysis/Layer.java">layer</a>.
 Different metrics will have different labels depending on their Scope and metric value type.</p>
 <table>
 <thead>
