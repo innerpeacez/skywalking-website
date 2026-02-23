@@ -29,21 +29,27 @@
 <meta name="theme-color" content="#ffffff">
 
 <title>10.4.0 | Apache SkyWalking</title><meta property="og:title" content="10.4.0" />
-<meta property="og:description" content="10.4.0 Project  Introduce OAL V2 engine:  Immutable AST models for thread safety and predictable behavior Type-safe enums replacing string-based filter operators Precise error location reporting with file, line, and column numbers Clean separation between parsing and code generation phases Enhanced testability with models that can be constructed without parsing   Fix E2E test metrics verify: make it failure if the metric values all null. Support building, testing, and publishing with Java 25." />
+<meta property="og:description" content="10.4.0 Project   Introduce OAL V2 engine:
+ Immutable AST models for thread safety and predictable behavior Type-safe enums replacing string-based filter operators Precise error location reporting with file, line, and column numbers Clean separation between parsing and code generation phases Enhanced testability with models that can be constructed without parsing    Fix E2E test metrics verify: make it failure if the metric values all null.
+  Support building, testing, and publishing with Java 25." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/main/next/en/changes/changes/" />
 
 <meta itemprop="name" content="10.4.0">
-<meta itemprop="description" content="10.4.0 Project  Introduce OAL V2 engine:  Immutable AST models for thread safety and predictable behavior Type-safe enums replacing string-based filter operators Precise error location reporting with file, line, and column numbers Clean separation between parsing and code generation phases Enhanced testability with models that can be constructed without parsing   Fix E2E test metrics verify: make it failure if the metric values all null. Support building, testing, and publishing with Java 25.">
+<meta itemprop="description" content="10.4.0 Project   Introduce OAL V2 engine:
+ Immutable AST models for thread safety and predictable behavior Type-safe enums replacing string-based filter operators Precise error location reporting with file, line, and column numbers Clean separation between parsing and code generation phases Enhanced testability with models that can be constructed without parsing    Fix E2E test metrics verify: make it failure if the metric values all null.
+  Support building, testing, and publishing with Java 25.">
 
-<meta itemprop="wordCount" content="471">
+<meta itemprop="wordCount" content="565">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="10.4.0"/>
-<meta name="twitter:description" content="10.4.0 Project  Introduce OAL V2 engine:  Immutable AST models for thread safety and predictable behavior Type-safe enums replacing string-based filter operators Precise error location reporting with file, line, and column numbers Clean separation between parsing and code generation phases Enhanced testability with models that can be constructed without parsing   Fix E2E test metrics verify: make it failure if the metric values all null. Support building, testing, and publishing with Java 25."/>
+<meta name="twitter:description" content="10.4.0 Project   Introduce OAL V2 engine:
+ Immutable AST models for thread safety and predictable behavior Type-safe enums replacing string-based filter operators Precise error location reporting with file, line, and column numbers Clean separation between parsing and code generation phases Enhanced testability with models that can be constructed without parsing    Fix E2E test metrics verify: make it failure if the metric values all null.
+  Support building, testing, and publishing with Java 25."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -2625,7 +2631,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: b39805b</div>
+                  <div class="commit-id">Commit Id: 46c1625</div>
                 
 
 
@@ -2673,7 +2679,8 @@ if (!doNotTrack) {
 	<h2 id="1040">10.4.0</h2>
 <h4 id="project">Project</h4>
 <ul>
-<li>Introduce OAL V2 engine:
+<li>
+<p>Introduce OAL V2 engine:</p>
 <ul>
 <li>Immutable AST models for thread safety and predictable behavior</li>
 <li>Type-safe enums replacing string-based filter operators</li>
@@ -2682,11 +2689,55 @@ if (!doNotTrack) {
 <li>Enhanced testability with models that can be constructed without parsing</li>
 </ul>
 </li>
-<li>Fix E2E test metrics verify: make it failure if the metric values all null.</li>
-<li>Support building, testing, and publishing with Java 25.</li>
-<li>Add <code>CLAUDE.md</code> as AI assistant guide for the project.</li>
-<li>Upgrade Groovy to 5.0.3 in OAP backend.</li>
-<li>Bump up nodejs to v24.13.0 for the latest UI(booster-ui) compiling.</li>
+<li>
+<p>Fix E2E test metrics verify: make it failure if the metric values all null.</p>
+</li>
+<li>
+<p>Support building, testing, and publishing with Java 25.</p>
+</li>
+<li>
+<p>Add <code>CLAUDE.md</code> as AI assistant guide for the project.</p>
+</li>
+<li>
+<p>Upgrade Groovy to 5.0.3 in OAP backend.</p>
+</li>
+<li>
+<p>Bump up nodejs to v24.13.0 for the latest UI(booster-ui) compiling.</p>
+</li>
+<li>
+<p>Add virtual thread support (JDK 25+) for gRPC and Armeria HTTP server handler threads.
+Set <code>SW_VIRTUAL_THREADS_ENABLED=false</code> to disable.</p>
+<table>
+<thead>
+<tr>
+<th>Pool</th>
+<th>Threads (JDK &lt; 25)</th>
+<th>Threads (JDK 25+)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gRPC server handler (<code>core-grpc</code>, <code>receiver-grpc</code>, <code>als-grpc</code>, <code>ebpf-grpc</code>)</td>
+<td>Cached platform (unbounded)</td>
+<td>Virtual threads</td>
+</tr>
+<tr>
+<td>HTTP blocking (<code>core-http</code>, <code>receiver-http</code>, <code>promql-http</code>, <code>logql-http</code>, <code>zipkin-query-http</code>, <code>zipkin-http</code>, <code>firehose-http</code>)</td>
+<td>Cached platform (max 200)</td>
+<td>Virtual threads</td>
+</tr>
+<tr>
+<td>VT carrier threads (ForkJoinPool)</td>
+<td>N/A</td>
+<td>~9 shared</td>
+</tr>
+</tbody>
+</table>
+<p>On JDK 25+, all 11 thread pools above share ~9 carrier threads instead of up to 1,400+ platform threads.</p>
+</li>
+<li>
+<p>Change default Docker base image to JDK 25 (<code>eclipse-temurin:25-jre</code>). JDK 11 kept as <code>-java11</code> variant.</p>
+</li>
 </ul>
 <h4 id="oap-server">OAP Server</h4>
 <ul>
