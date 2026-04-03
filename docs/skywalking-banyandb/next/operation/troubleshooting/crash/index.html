@@ -40,7 +40,7 @@ Remove Corrupted Standalone Metadata If the BanyanDB standalone process crashes 
 Remove Corrupted Standalone Metadata If the BanyanDB standalone process crashes due to corrupted metadata. You should remove the corrupted metadata:
  Shutdown BanyanDB:  Before making any changes to the data files, ensure that BanyanDB is not running. This prevents further corruption and ensures data integrity. Send SIGTERM or SIGINT signals to the BanyanDB process to gracefully shut it down   Locate the Metadata File:  The metadata file is located in the standalone directory.">
 
-<meta itemprop="wordCount" content="409">
+<meta itemprop="wordCount" content="410">
 
 
 
@@ -464,6 +464,14 @@ if (!doNotTrack) {
 
     <li>
         
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/trace">Trace</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule">IndexRule</a>
         
     </li>
@@ -515,6 +523,14 @@ if (!doNotTrack) {
     <li>
         
             <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/trace">Trace</a>
         
     </li>
 
@@ -1139,7 +1155,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 2890d8e</div>
+                  <div class="commit-id">Commit Id: 5dedaa1</div>
                 
 
 
@@ -1179,7 +1195,7 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ol>
-<h2 id="remove-corrupted-stream-or-measure-data">Remove Corrupted Stream or Measure Data</h2>
+<h2 id="remove-corrupted-stream-measure-or-trace-data">Remove Corrupted Stream, Measure or Trace Data</h2>
 <p>The logs may indicate that the crash was caused by corrupted data. In such cases, it is essential to remove the corrupted data to restore the integrity of the database. Follow these steps to safely remove corrupted data from BanyanDB:</p>
 <ol>
 <li>
@@ -1273,7 +1289,7 @@ Monitor the BanyanDB logs for any error messages indicating data corruption. The
     <li><a href="#troubleshooting-crash-issues">Troubleshooting Crash Issues</a>
       <ul>
         <li><a href="#remove-corrupted-standalone-metadata">Remove Corrupted Standalone Metadata</a></li>
-        <li><a href="#remove-corrupted-stream-or-measure-data">Remove Corrupted Stream or Measure Data</a></li>
+        <li><a href="#remove-corrupted-stream-measure-or-trace-data">Remove Corrupted Stream, Measure or Trace Data</a></li>
       </ul>
     </li>
   </ul>
@@ -1391,6 +1407,10 @@ Monitor the BanyanDB logs for any error messages indicating data corruption. The
 
     </div>
     
+
+
+
+
 
 
 
