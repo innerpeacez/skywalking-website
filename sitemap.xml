@@ -3847,6 +3847,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-python/next/en/contribution/claude-code-skills/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/guides/claude-code-skills/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -4988,6 +4994,12 @@
   
   <url>
     <loc>/docs/skywalking-banyandb/next/operation/disk-management/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/concept/distributed-measure-aggregation/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
