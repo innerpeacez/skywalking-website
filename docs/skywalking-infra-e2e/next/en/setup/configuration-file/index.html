@@ -42,7 +42,7 @@ There is a quick view about the configuration file, and using the yaml format.
 setup:# set up the environmentcleanup:# clean up the environmenttrigger:# generate trafficverify:# test casesSetup Support two kinds of the environment to set up the system.
 KinD setup:env:kindfile:path/to/kind.">
 
-<meta itemprop="wordCount" content="1696">
+<meta itemprop="wordCount" content="1873">
 
 
 
@@ -411,7 +411,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: e26033e</div>
+                  <div class="commit-id">Commit Id: 530f997</div>
                 
 
 
@@ -433,7 +433,7 @@ if (!doNotTrack) {
 
 	<h1 id="skywalking-infra-e2e-configuration-guide">SkyWalking Infra E2E Configuration Guide</h1>
 <p>The configuration file is used to integrate all the step configuration content.
-You can see the sample configuration files for different environments in the <a href="https://github.com/apache/skywalking-infra-e2e/tree/e26033e1faaf865899c486ffe17dabdf17b90aae/examples">examples directory</a>.</p>
+You can see the sample configuration files for different environments in the <a href="https://github.com/apache/skywalking-infra-e2e/tree/530f9976e4bf12b65a6604ea0efbeafabeeea2a3/examples">examples directory</a>.</p>
 <p>There is a quick view about the configuration file, and using the <code>yaml</code> format.</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">setup</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># set up the environment</span><span style="color:#bbb">
@@ -589,7 +589,7 @@ Each line of the file content is an environment variable, and the key value is s
 <h3 id="excepted-verify-template">Excepted verify template</h3>
 <p>After clarifying the content that needs to be verified, you need to write content to verify the real content and ensure that the data is correct.</p>
 <p>You need to use the form of <a href="https://pkg.go.dev/text/template#pkg-overview">Go Template</a> to write the verification file, and the data content to be rendered comes from the real data. By verifying whether the rendered data is consistent with the real data, it is verified whether the content is consistent.
-You could see <a href="https://github.com/apache/skywalking-infra-e2e/tree/e26033e1faaf865899c486ffe17dabdf17b90aae/test/verify">many test cases in this directory</a>.</p>
+You could see <a href="https://github.com/apache/skywalking-infra-e2e/tree/530f9976e4bf12b65a6604ea0efbeafabeeea2a3/test/verify">many test cases in this directory</a>.</p>
 <p>We use <a href="https://pkg.go.dev/github.com/google/go-cmp/cmp#Diff">go-cmp</a> to show the parts where excepted do not match the actual data. <code>-</code> prefix represents the expected data content, <code>+</code> prefix represents the actual data content.</p>
 <p>We have done a lot of extension functions for verification functions on the original Go Template.</p>
 <h4 id="extension-functions">Extension functions</h4>
@@ -666,13 +666,33 @@ You could see <a href="https://github.com/apache/skywalking-infra-e2e/tree/e2603
 </tbody>
 </table>
 <h5 id="list-matches">List Matches</h5>
-<p>Verify the data in the condition list, Currently, it is only supported when all the conditions in the list are executed, it is considered as successful.</p>
-<p>Here is an example, It&rsquo;s means the list values must have value is greater than 0, also have value greater than 1, Otherwise verify is failure.</p>
+<p>Two keywords are available for verifying lists: <code>contains</code> and <code>containsOnce</code>.</p>
+<p><strong><code>contains</code></strong> checks that each expected entry matches a distinct actual item using greedy matching (first-come, first-served order).
+Each expected entry can only claim one actual item, and each actual item can only be claimed once.
+Extra actual items beyond the expected entries are allowed.</p>
+<p>Here is an example, it means the list values must have an item with value greater than 0 and another item with value greater than 1. Otherwise verification fails.</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">{{- contains .list }}<span style="color:#bbb">
 </span><span style="color:#bbb"></span>- <span style="color:#000080">key</span>:<span style="color:#bbb"> </span>{{<span style="color:#bbb"> </span>gt .value 0 }}<span style="color:#bbb">
 </span><span style="color:#bbb"></span>- <span style="color:#000080">key</span>:<span style="color:#bbb"> </span>{{<span style="color:#bbb"> </span>gt .value 1 }}<span style="color:#bbb">
 </span><span style="color:#bbb">        </span>{{- end }}<span style="color:#bbb">
-</span></code></pre></div><h5 id="encoding">Encoding</h5>
+</span></code></pre></div><p><strong><code>containsOnce</code></strong> provides the same semantics as <code>contains</code> but uses backtracking to find a valid assignment.
+This is useful when the greedy order of <code>contains</code> cannot find a valid match but one exists.
+For example, if a generic expected entry (e.g., <code>notEmpty</code>) appears before a specific one (e.g., a hardcoded value),
+<code>contains</code> might greedily claim the wrong actual item, while <code>containsOnce</code> will try all combinations to find a valid assignment.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">{{- containsOnce .list }}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>- <span style="color:#000080">name</span>:<span style="color:#bbb"> </span>{{<span style="color:#bbb"> </span>notEmpty .name }}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">language</span>:<span style="color:#bbb"> </span>{{<span style="color:#bbb"> </span>notEmpty .language }}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>- <span style="color:#000080">name</span>:<span style="color:#bbb"> </span>{{<span style="color:#bbb"> </span>notEmpty .name }}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">language</span>:<span style="color:#bbb"> </span>JAVA<span style="color:#bbb">
+</span><span style="color:#bbb"></span>{{- end }}<span style="color:#bbb">
+</span></code></pre></div><h5 id="duplicate-detection">Duplicate Detection</h5>
+<p><code>noDuplicates</code> is a pipe function that verifies a list contains no duplicate items. Two items are considered duplicates when all their fields are equal. It can be combined with <code>contains</code>, <code>containsOnce</code>, or <code>range</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">{{- contains (.metrics | noDuplicates) }}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>- <span style="color:#000080">name</span>:<span style="color:#bbb"> </span>{{<span style="color:#bbb"> </span>notEmpty .name }}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">value</span>:<span style="color:#bbb"> </span>{{<span style="color:#bbb"> </span>notEmpty .value }}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>{{- end }}<span style="color:#bbb">
+</span></code></pre></div><p>When duplicates exist in the actual data, verification will fail with an error indicating the duplicated item.</p>
+<h5 id="encoding">Encoding</h5>
 <p>In order to make the program easier for users to read and use, some code conversions are provided.</p>
 <table>
 <thead>
@@ -940,6 +960,8 @@ will be set to <code>success</code>, so the testing environment can be preserved
 
     </div>
     
+
+
 
 
 
