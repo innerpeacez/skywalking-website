@@ -3215,6 +3215,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/setup/backend/backend-alipay-mini-program-monitoring/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/skywalking-satellite/next/en/setup/performance/als-load-balance/readme/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -11096,6 +11102,12 @@
   
   <url>
     <loc>/docs/skywalking-java/next/en/setup/service-agent/java-agent/application-toolkit-webflux/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/main/next/en/setup/backend/backend-wechat-mini-program-monitoring/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
