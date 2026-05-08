@@ -32,13 +32,13 @@
 <meta property="og:description" content="Runtime Rule Hot-Update API The runtime rule receiver plugin lets operators add, override, inactivate, and delete MAL and LAL rule files at runtime without restarting OAP. Changes are saved in the configured storage backend (JDBC, Elasticsearch, or BanyanDB) and propagate across every node in an OAP cluster within 30 s by default.
  For the consistency contract, the three workflows (boot / on-demand / periodic scan), the lifecycle, and how cluster failures are handled, see Runtime Rule Hot-Update — Architecture." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/main/next/en/setup/backend/backend-runtime-rule-api/" />
+<meta property="og:url" content="/docs/main/next/en/setup/backend/admin-api/runtime-rule/" />
 
 <meta itemprop="name" content="Runtime Rule Hot-Update API">
 <meta itemprop="description" content="Runtime Rule Hot-Update API The runtime rule receiver plugin lets operators add, override, inactivate, and delete MAL and LAL rule files at runtime without restarting OAP. Changes are saved in the configured storage backend (JDBC, Elasticsearch, or BanyanDB) and propagate across every node in an OAP cluster within 30 s by default.
  For the consistency contract, the three workflows (boot / on-demand / periodic scan), the lifecycle, and how cluster failures are handled, see Runtime Rule Hot-Update — Architecture.">
 
-<meta itemprop="wordCount" content="4292">
+<meta itemprop="wordCount" content="4419">
 
 
 
@@ -2177,9 +2177,82 @@ if (!doNotTrack) {
 
     
 
+</ul>
+
+        
+    </li>
+    
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-runtime-rule-api">Runtime Rule Hot-Update</a>
+            
+            <a href="#">Admin API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/readme">Introduction</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/runtime-rule">Runtime Rule Hot-Update API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">DSL Debug API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/dsl-debugging">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/dsl-debugging-mal">MAL</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/dsl-debugging-oal">OAL</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/dsl-debugging-lal">LAL</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -2799,7 +2872,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 67160de</div>
+                  <div class="commit-id">Commit Id: 4890024</div>
                 
 
 
@@ -2852,25 +2925,43 @@ every node in an OAP cluster within 30 s by default.</p>
 <blockquote>
 <p>For the consistency contract, the three workflows (boot / on-demand / periodic scan),
 the lifecycle, and how cluster failures are handled, see
-<a href="../../../concepts-and-designs/runtime-rule-hot-update">Runtime Rule Hot-Update — Architecture</a>.
+<a href="../../../../concepts-and-designs/runtime-rule-hot-update">Runtime Rule Hot-Update — Architecture</a>.
 This page focuses on the REST API surface.</p>
 </blockquote>
-<h2 id="-security-notice">⚠️ Security notice</h2>
-<p>The admin port has <strong>no authentication</strong> in this release. The module is therefore
-<strong>disabled by default</strong>; enabling it opens an HTTP endpoint that can change metric and
-log-processing rules while OAP is running.</p>
-<p>Operators enabling the module MUST:</p>
-<ol>
-<li>Gateway-protect the port with an IP allow-list and separate authentication rules.</li>
-<li>Never expose port 17128 to the public internet.</li>
-<li>Bind the HTTP server to <code>localhost</code> or a private network interface if remote access is
-not required.</li>
-</ol>
+<h2 id="security-notice">Security notice</h2>
+<p>The unified security notice for <code>admin-server</code> and every endpoint hosted on it
+(including this one) lives in <a href="../readme#-security-notice">Admin API → Introduction</a>.
+Read it before enabling this module — it covers gateway protection, private-interface
+binding, the public-internet posture, and access auditing.</p>
 <h2 id="enabling-the-module">Enabling the module</h2>
-<p>Set the selector to <code>default</code> in <code>application.yml</code> or via env var:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#008080">SW_RECEIVER_RUNTIME_RULE</span><span style="color:#000;font-weight:bold">=</span>default
-</code></pre></div><p>Default port is <code>17128</code>. All config knobs are in <code>application.yml</code> under the
-<code>receiver-runtime-rule</code> block — host, port, periodic-scan interval, self-heal threshold.</p>
+<p>Set the selectors to <code>default</code> in <code>application.yml</code> or via env vars (the runtime-rule
+routes mount on the shared <code>admin-server</code> HTTP host, so both modules must be enabled):</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#008080">SW_ADMIN_SERVER</span><span style="color:#000;font-weight:bold">=</span>default
+<span style="color:#008080">SW_RECEIVER_RUNTIME_RULE</span><span style="color:#000;font-weight:bold">=</span>default
+</code></pre></div><p>The runtime-rule module uses <strong>two ports</strong> owned by <code>admin-server</code>:</p>
+<ul>
+<li><code>17128</code> (HTTP REST) — operator-facing admin surface; what your <code>curl</code> /
+scripts call.</li>
+<li><code>17129</code> (admin-internal gRPC) — peer-to-peer cluster RPCs only; carries
+the Suspend / Resume / Forward fan-out between OAP nodes during a
+STRUCTURAL apply or a non-main forward. NEVER expose to operators or
+to the agent network.</li>
+</ul>
+<p>Both are configured under the <code>admin-server.default:</code> block in
+<code>application.yml</code> (<code>host</code>/<code>port</code> for HTTP, <code>gRPCHost</code>/<code>gRPCPort</code> for the
+admin gRPC bus). The <code>receiver-runtime-rule</code> block keeps the
+runtime-rule-specific knobs only — periodic-scan interval and self-heal
+threshold.</p>
+<blockquote>
+<p><strong>Why a dedicated <code>17129</code> port for cluster RPCs.</strong> Privileged admin
+RPCs (Suspend / Resume / Forward) used to ride the public agent /
+cluster gRPC port (<code>core.gRPCPort</code>, default <code>11800</code>). That port is
+reachable from the agent network for legitimate telemetry submission,
+which means an attacker on the agent network could in principle invoke
+Suspend/Forward. <code>admin-server.gRPCPort</code> is bound to a private
+peer-to-peer interface only, so the admin RPCs no longer share a blast
+radius with agent telemetry.</p>
+</blockquote>
 <h2 id="http-surface">HTTP surface</h2>
 <p><code>/addOrUpdate</code> takes the rule file as the raw request body and identifies the rule with
 the <code>catalog</code> and <code>name</code> query parameters. <code>/inactivate</code> and <code>/delete</code> use the same
@@ -3585,7 +3676,7 @@ override; the next <code>/list</code> will show the row served by the bundled fa
 (<code>loaderKind=BUNDLED</code>).</p>
 <h2 id="consistency-model--at-a-glance">Consistency model — at a glance</h2>
 <p>The full contract is in the
-<a href="../../../concepts-and-designs/runtime-rule-hot-update#the-consistency-contract">architecture doc</a>.
+<a href="../../../../concepts-and-designs/runtime-rule-hot-update#the-consistency-contract">architecture doc</a>.
 The headline:</p>
 <ul>
 <li><strong>Persist is commit.</strong> Once <code>/addOrUpdate</code> returns 200, the cluster will converge on
@@ -3639,7 +3730,7 @@ design — the schema is moving and in-flight samples have no valid landing.</li
   <ul>
     <li><a href="#runtime-rule-hot-update-api">Runtime Rule Hot-Update API</a>
       <ul>
-        <li><a href="#-security-notice">⚠️ Security notice</a></li>
+        <li><a href="#security-notice">Security notice</a></li>
         <li><a href="#enabling-the-module">Enabling the module</a></li>
         <li><a href="#http-surface">HTTP surface</a>
           <ul>
@@ -3777,6 +3868,18 @@ design — the schema is moving and in-flight samples have no valid landing.</li
 
     </div>
     
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

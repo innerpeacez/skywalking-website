@@ -29,21 +29,21 @@
 <meta name="theme-color" content="#ffffff">
 
 <title>10.5.0 | Apache SkyWalking</title><meta property="og:title" content="10.5.0" />
-<meta property="og:description" content="10.5.0 Project  Runtime rule hot-update for MAL and LAL. Operators can now ship metric (MAL) and log (LAL) rule changes without restarting OAP. A push to a new admin endpoint persists the rule to the configured storage backend, and every node in the cluster converges to the new content within ~30 seconds. Common workflows:  addOrUpdate — create or replace a rule. Body is the raw YAML you would normally ship with OAP&rsquo;s static rule files." />
+<meta property="og:description" content="10.5.0 Project  New admin-server module — shared host for admin / on-demand write APIs. Runs on two ports: an HTTP REST surface (default 17128) for operator-facing endpoints, and an admin-internal gRPC bus (default 17129) for peer-to-peer cluster RPCs (runtime-rule Suspend / Resume / Forward; DSL debug install / collect / stop / stopByClientId). The admin-internal bus is a dedicated transport separate from the public agent / cluster gRPC port (core." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/main/next/en/changes/changes/" />
 
 <meta itemprop="name" content="10.5.0">
-<meta itemprop="description" content="10.5.0 Project  Runtime rule hot-update for MAL and LAL. Operators can now ship metric (MAL) and log (LAL) rule changes without restarting OAP. A push to a new admin endpoint persists the rule to the configured storage backend, and every node in the cluster converges to the new content within ~30 seconds. Common workflows:  addOrUpdate — create or replace a rule. Body is the raw YAML you would normally ship with OAP&rsquo;s static rule files.">
+<meta itemprop="description" content="10.5.0 Project  New admin-server module — shared host for admin / on-demand write APIs. Runs on two ports: an HTTP REST surface (default 17128) for operator-facing endpoints, and an admin-internal gRPC bus (default 17129) for peer-to-peer cluster RPCs (runtime-rule Suspend / Resume / Forward; DSL debug install / collect / stop / stopByClientId). The admin-internal bus is a dedicated transport separate from the public agent / cluster gRPC port (core.">
 
-<meta itemprop="wordCount" content="1798">
+<meta itemprop="wordCount" content="2362">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="10.5.0"/>
-<meta name="twitter:description" content="10.5.0 Project  Runtime rule hot-update for MAL and LAL. Operators can now ship metric (MAL) and log (LAL) rule changes without restarting OAP. A push to a new admin endpoint persists the rule to the configured storage backend, and every node in the cluster converges to the new content within ~30 seconds. Common workflows:  addOrUpdate — create or replace a rule. Body is the raw YAML you would normally ship with OAP&rsquo;s static rule files."/>
+<meta name="twitter:description" content="10.5.0 Project  New admin-server module — shared host for admin / on-demand write APIs. Runs on two ports: an HTTP REST surface (default 17128) for operator-facing endpoints, and an admin-internal gRPC bus (default 17129) for peer-to-peer cluster RPCs (runtime-rule Suspend / Resume / Forward; DSL debug install / collect / stop / stopByClientId). The admin-internal bus is a dedicated transport separate from the public agent / cluster gRPC port (core."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -2174,9 +2174,82 @@ if (!doNotTrack) {
 
     
 
+</ul>
+
+        
+    </li>
+    
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-runtime-rule-api">Runtime Rule Hot-Update</a>
+            
+            <a href="#">Admin API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/readme">Introduction</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/runtime-rule">Runtime Rule Hot-Update API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">DSL Debug API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/dsl-debugging">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/dsl-debugging-mal">MAL</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/dsl-debugging-oal">OAL</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/dsl-debugging-lal">LAL</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -2796,7 +2869,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 67160de</div>
+                  <div class="commit-id">Commit Id: 4890024</div>
                 
 
 
@@ -2844,6 +2917,26 @@ if (!doNotTrack) {
 	<h2 id="1050">10.5.0</h2>
 <h4 id="project">Project</h4>
 <ul>
+<li><strong>New <code>admin-server</code> module — shared host for admin / on-demand write APIs.</strong> Runs on
+<strong>two ports</strong>: an HTTP REST surface (default <code>17128</code>) for operator-facing endpoints,
+and an <strong>admin-internal gRPC bus</strong> (default <code>17129</code>) for peer-to-peer cluster RPCs
+(runtime-rule Suspend / Resume / Forward; DSL debug install / collect / stop /
+stopByClientId). The admin-internal bus is a dedicated transport separate from the
+public agent / cluster gRPC port (<code>core.gRPCPort</code>, default <code>11800</code>) so privileged
+admin RPCs stay out of the agent network&rsquo;s blast radius — operators bind <code>gRPCHost</code>
+to a private peer-to-peer interface only. Both the runtime-rule plugin and the new
+DSL Debug API (below) mount onto this shared host. Disabled by default
+(<code>SW_ADMIN_SERVER=default</code> to enable); has no built-in authentication and <strong>must</strong> be
+gateway-protected with IP allow-lists, never exposed to the public internet (see the
+<a href="../../setup/backend/admin-api/readme">Admin API security notice</a>). The runtime-rule
+config block loses its <code>restHost</code>/<code>restPort</code>/<code>restContextPath</code>/<code>restIdleTimeOut</code>/
+<code>restAcceptQueueSize</code>/<code>httpMaxRequestHeaderSize</code> keys (and the matching
+<code>SW_RECEIVER_RUNTIME_RULE_REST_*</code> env vars); host-level knobs move under the new
+<code>admin-server</code> block (<code>SW_ADMIN_SERVER_HOST</code> / <code>SW_ADMIN_SERVER_PORT</code> /
+<code>SW_ADMIN_SERVER_GRPC_HOST</code> / <code>SW_ADMIN_SERVER_GRPC_PORT</code> /
+<code>SW_ADMIN_SERVER_INTERNAL_COMM_TIMEOUT</code> etc.). Operators upgrading to 10.5.0 with
+<code>SW_RECEIVER_RUNTIME_RULE=default</code> must also set <code>SW_ADMIN_SERVER=default</code>; OAP
+fails fast at startup otherwise.</li>
 <li><strong>Runtime rule hot-update for MAL and LAL.</strong> Operators can now ship metric (MAL) and log
 (LAL) rule changes without restarting OAP. A push to a new admin endpoint persists the rule
 to the configured storage backend, and every node in the cluster converges to the new
@@ -2877,11 +2970,46 @@ so a UI can render override badges without a second roundtrip), and exporting al
 as a tar.gz for backup / DR.
 Hot-updates survive OAP restart: at boot OAP merges bundled rule files with persisted
 runtime rules, so the cluster never silently regresses to the bundled defaults.
-<strong>The endpoint is disabled by default and listens on port <code>17128</code> when enabled. It has
-no built-in authentication — operators must gateway-protect it with IP allow-lists and
-never expose it to the public internet.</strong></li>
+All admin writes for a runtime-rule cluster serialize on a single &ldquo;main&rdquo; OAP
+(deterministic sorted-first peer, no leader election) — non-main nodes that receive
+an HTTP write transparently forward it to the main over the admin-internal gRPC bus,
+so an L7 load balancer in front of the admin port can route any operator request to
+any OAP. Cluster convergence on the periodic refresh tick is configurable via
+<code>receiver-runtime-rule.refreshRulesPeriod</code> (default <code>30</code> s). <strong>The endpoint is
+disabled by default and listens on port <code>17128</code> (HTTP) when enabled. It has no
+built-in authentication — operators must gateway-protect it with IP allow-lists and
+never expose it to the public internet.</strong> Routes mount on the new <code>admin-server</code>
+HTTP host, so enabling the runtime-rule API requires both <code>SW_ADMIN_SERVER=default</code>
+and <code>SW_RECEIVER_RUNTIME_RULE=default</code>.</li>
 </ul>
 </li>
+<li><strong>Live debugger for MAL / LAL / OAL</strong> — implements <a href="../../swip/swip-13">SWIP-13 Live Debugger for MAL / LAL / OAL</a>.
+Sample-based runtime debugger that captures per-stage inputs/outputs as the three DSLs
+process live ingest. Idle-path cost is one volatile-bool read per probe call site that
+JIT eliminates after warm-up; active sessions fan out to every cluster peer over the
+admin-internal gRPC bus so each peer captures its own slice. The fan-out is LB-safe:
+any node can serve any verb (POST mints <code>sessionId</code> on the receiving node, broadcasts
+install to peers, returns <code>404 rule_not_found</code> only when no node owns the rule), so an
+L7 load balancer in front of the admin port routes operator requests freely. Mounts on
+the shared <code>admin-server</code> host (<code>/dsl-debugging/*</code> for session control plane,
+<code>/runtime/oal/*</code> for the OAL rule picker). Disabled by default; enable with
+<code>SW_DSL_DEBUGGING=default</code> <em>and</em> <code>SW_ADMIN_SERVER=default</code>. <code>injectionEnabled</code> is a
+boot-time codegen switch defaulting to <code>true</code> — once the module is enabled, probes
+fire and sessions record samples; set <code>false</code> only if the REST surface is wanted but
+no codegen-side probe overhead is acceptable. Per-session limits enforce hard caps
+(<code>recordCap</code> ≤ 10000, <code>retentionMillis</code> ≤ 1 hour) — out-of-range requests return
+<code>400 invalid_limits</code>. LAL sessions accept a per-session <code>granularity=block|statement</code>
+flag — block mode captures the parser/extractor/sink stages; statement mode
+additionally records one <code>line</code> entry per individual extractor statement, carrying
+the source-line number and verbatim DSL text so the UI can highlight which statement
+fired. MAL captures render the file-level filter&rsquo;s surviving SampleFamily map
+(<code>{&quot;families&quot;: N, &quot;items&quot;: [...]}</code>), so multi-metric expressions show cross-family
+filter narrowing in the captured payload. Capture payloads include raw log bodies and
+parsed maps — treat the admin port as authenticated infrastructure per the
+<a href="../../setup/backend/admin-api/readme">Admin API security notice</a>. Per-DSL operator
+references: <a href="../../setup/backend/admin-api/dsl-debugging-mal">MAL</a>,
+<a href="../../setup/backend/admin-api/dsl-debugging-oal">OAL</a>,
+<a href="../../setup/backend/admin-api/dsl-debugging-lal">LAL</a>.</li>
 <li><strong>BanyanDB schema mismatches are now visible at boot, not silent.</strong> If BanyanDB already
 holds a resource whose shape doesn&rsquo;t match what the current rule declares (e.g., a rule
 was edited on disk while OAP was offline), OAP now skips that resource, logs an ERROR
@@ -3102,6 +3230,18 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 
     </div>
     
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

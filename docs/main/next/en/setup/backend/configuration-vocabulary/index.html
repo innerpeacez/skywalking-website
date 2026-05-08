@@ -40,7 +40,7 @@ Main Configuration The main configuration is provided by application.yml. It div
 Main Configuration The main configuration is provided by application.yml. It divided into several modules, each of which has its own settings. The following table lists the modules and their settings.
    Module Provider Settings Value(s) and Explanation System Environment Variable¹ Default     core default role Option values: Mixed/Receiver/Aggregator. Receiver mode OAP opens the service to the agents, then analyzes and aggregates the results, and forwards the results for distributed aggregation.">
 
-<meta itemprop="wordCount" content="7823">
+<meta itemprop="wordCount" content="8343">
 
 
 
@@ -2180,9 +2180,82 @@ if (!doNotTrack) {
 
     
 
+</ul>
+
+        
+    </li>
+    
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-runtime-rule-api">Runtime Rule Hot-Update</a>
+            
+            <a href="#">Admin API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/readme">Introduction</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/runtime-rule">Runtime Rule Hot-Update API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">DSL Debug API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/dsl-debugging">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/dsl-debugging-mal">MAL</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/dsl-debugging-oal">OAL</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/dsl-debugging-lal">LAL</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -2802,7 +2875,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 67160de</div>
+                  <div class="commit-id">Commit Id: 4890024</div>
                 
 
 
@@ -5585,67 +5658,155 @@ It divided into several modules, each of which has its own settings. The followi
 <td></td>
 </tr>
 <tr>
-<td>receiver-runtime-rule</td>
+<td>admin-server</td>
 <td>default</td>
 <td>-</td>
-<td>Hot-update admin endpoint for MAL / LAL rule files. <strong>Disabled by default</strong>: leave the selector empty to keep the provider unloaded; set <code>SW_RECEIVER_RUNTIME_RULE=default</code> to enable. The endpoint has <strong>no authentication</strong> in this iteration — gateway-protect with IP allow-lists and never expose it to the public internet. See <a href="../backend-runtime-rule-api">Runtime Rule Hot-Update API</a>.</td>
-<td>SW_RECEIVER_RUNTIME_RULE</td>
+<td>Shared HTTP host for admin / on-demand write APIs (runtime-rule hot-update, DSL debug session). <strong>Disabled by default</strong>: leave the selector empty to keep the host closed; set <code>SW_ADMIN_SERVER=default</code> to enable. The host has <strong>no built-in authentication</strong> — gateway-protect with an IP allow-list and an authenticating reverse proxy, bind to a private interface, and never expose it to the public internet. See <a href="../admin-api/readme">Admin API</a>.</td>
+<td>SW_ADMIN_SERVER</td>
 <td>(empty — disabled)</td>
 </tr>
 <tr>
 <td>-</td>
 <td>-</td>
-<td>restHost</td>
-<td>Binding IP of the runtime-rule admin endpoint.</td>
-<td>SW_RECEIVER_RUNTIME_RULE_REST_HOST</td>
+<td>host</td>
+<td>Binding IP of the admin HTTP host.</td>
+<td>SW_ADMIN_SERVER_HOST</td>
 <td>0.0.0.0</td>
 </tr>
 <tr>
 <td>-</td>
 <td>-</td>
-<td>restPort</td>
-<td>Binding port of the runtime-rule admin endpoint.</td>
-<td>SW_RECEIVER_RUNTIME_RULE_REST_PORT</td>
+<td>port</td>
+<td>Binding port of the admin HTTP host.</td>
+<td>SW_ADMIN_SERVER_PORT</td>
 <td>17128</td>
 </tr>
 <tr>
 <td>-</td>
 <td>-</td>
-<td>restContextPath</td>
-<td>Web context path of the runtime-rule admin endpoint.</td>
-<td>SW_RECEIVER_RUNTIME_RULE_REST_CONTEXT_PATH</td>
+<td>contextPath</td>
+<td>Web context path of the admin HTTP host.</td>
+<td>SW_ADMIN_SERVER_CONTEXT_PATH</td>
 <td>/</td>
 </tr>
 <tr>
 <td>-</td>
 <td>-</td>
-<td>restIdleTimeOut</td>
-<td>Connector idle timeout of the runtime-rule admin endpoint (in milliseconds).</td>
-<td>SW_RECEIVER_RUNTIME_RULE_REST_IDLE_TIMEOUT</td>
+<td>idleTimeOut</td>
+<td>Connector idle timeout of the admin HTTP host (in milliseconds).</td>
+<td>SW_ADMIN_SERVER_IDLE_TIMEOUT</td>
 <td>30000</td>
 </tr>
 <tr>
 <td>-</td>
 <td>-</td>
-<td>restAcceptQueueSize</td>
-<td>ServerSocketChannel backlog of the runtime-rule admin endpoint.</td>
-<td>SW_RECEIVER_RUNTIME_RULE_REST_QUEUE_SIZE</td>
+<td>acceptQueueSize</td>
+<td>ServerSocketChannel backlog of the admin HTTP host.</td>
+<td>SW_ADMIN_SERVER_QUEUE_SIZE</td>
 <td>0</td>
 </tr>
 <tr>
 <td>-</td>
 <td>-</td>
 <td>httpMaxRequestHeaderSize</td>
-<td>Maximum length of all HTTP/1 request headers accepted by the admin endpoint (bytes).</td>
-<td>SW_RECEIVER_RUNTIME_RULE_HTTP_MAX_REQUEST_HEADER_SIZE</td>
+<td>Maximum length of all HTTP/1 request headers accepted by the admin host (bytes).</td>
+<td>SW_ADMIN_SERVER_HTTP_MAX_REQUEST_HEADER_SIZE</td>
 <td>8192</td>
 </tr>
 <tr>
 <td>-</td>
 <td>-</td>
-<td>reconcilerIntervalSeconds</td>
-<td>Period (seconds) of the cluster reconcile tick. Each node periodically re-reads stored rules and reconciles its local state against the DAO.</td>
-<td>SW_RECEIVER_RUNTIME_RULE_RECONCILER_INTERVAL_SECONDS</td>
+<td>gRPCHost</td>
+<td>Binding IP of the admin-internal gRPC bus. Carries peer-to-peer cluster RPCs for runtime-rule (Suspend/Resume/Forward) and dsl-debugging (install/collect/stop). MUST be a private peer-to-peer interface — NEVER expose to operators or to the agent network. Separate from the public agent / cluster gRPC port (<code>core.gRPCPort</code>, default 11800) so privileged admin RPCs stay out of the agent network&rsquo;s blast radius.</td>
+<td>SW_ADMIN_SERVER_GRPC_HOST</td>
+<td>0.0.0.0</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>gRPCPort</td>
+<td>Binding port of the admin-internal gRPC bus. Every OAP node in the cluster MUST use the same value — peers are dialed at the LOCAL config&rsquo;s port, uniform across the cluster by convention.</td>
+<td>SW_ADMIN_SERVER_GRPC_PORT</td>
+<td>17129</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>gRPCMaxConcurrentCallsPerConnection</td>
+<td>Max concurrent RPCs per peer connection (0 = gRPC default).</td>
+<td>SW_ADMIN_SERVER_GRPC_MAX_CONCURRENT_CALL</td>
+<td>0</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>gRPCMaxMessageSize</td>
+<td>Max single RPC message size (bytes).</td>
+<td>SW_ADMIN_SERVER_GRPC_MAX_MSG_SIZE</td>
+<td>52428800</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>gRPCThreadPoolSize</td>
+<td>Server-side worker pool size for the admin gRPC bus (0 = derive from CPU count).</td>
+<td>SW_ADMIN_SERVER_GRPC_THREAD_POOL_SIZE</td>
+<td>0</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>gRPCSslEnabled</td>
+<td>TLS for the admin-internal gRPC bus.</td>
+<td>SW_ADMIN_SERVER_GRPC_SSL_ENABLED</td>
+<td>false</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>gRPCSslKeyPath</td>
+<td>Server private key path (PEM).</td>
+<td>SW_ADMIN_SERVER_GRPC_SSL_KEY_PATH</td>
+<td></td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>gRPCSslCertChainPath</td>
+<td>Server certificate chain path (PEM).</td>
+<td>SW_ADMIN_SERVER_GRPC_SSL_CERT_CHAIN_PATH</td>
+<td></td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>gRPCSslTrustedCAsPath</td>
+<td>CA bundle path (PEM); used by the admin gRPC client to validate peer certs.</td>
+<td>SW_ADMIN_SERVER_GRPC_SSL_TRUSTED_CAS_PATH</td>
+<td></td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>internalCommunicationTimeout</td>
+<td>Default per-call timeout (ms) for admin-internal RPCs between OAP nodes — dsl-debugging install / collect / stop fan-outs and any other admin-internal RPC that doesn&rsquo;t override its own deadline. Workflow-specific call sites (runtime-rule Suspend, Forward) keep their own tuned values because their latency budgets are determined by the workflow, not by this generic timeout.</td>
+<td>SW_ADMIN_SERVER_INTERNAL_COMM_TIMEOUT</td>
+<td>5000</td>
+</tr>
+<tr>
+<td>receiver-runtime-rule</td>
+<td>default</td>
+<td>-</td>
+<td>Hot-update admin endpoint for MAL / LAL rule files. REST routes mount on the <code>admin-server</code> HTTP host (port 17128); cluster Suspend/Resume/Forward RPCs ride the <code>admin-server</code> gRPC bus (port 17129). <strong>Disabled by default</strong>: leave the selector empty to keep the provider unloaded; set <code>SW_RECEIVER_RUNTIME_RULE=default</code> <em>and</em> <code>SW_ADMIN_SERVER=default</code> to enable. The endpoint has <strong>no authentication</strong> — gateway-protect with IP allow-lists and never expose it to the public internet. See <a href="../admin-api/runtime-rule">Runtime Rule Hot-Update API</a>.</td>
+<td>SW_RECEIVER_RUNTIME_RULE</td>
+<td>(empty — disabled)</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>refreshRulesPeriod</td>
+<td>Period (seconds) of the runtime-rule refresh tick on each OAP node. Every tick the node re-reads the stored rule rows from the storage DAO and reconciles its local state — catch-up for nodes that missed a Suspend/Resume/Forward broadcast (network glitch, restart, late-joining peer), and static fall-over reload when a runtime row was deleted.</td>
+<td>SW_RECEIVER_RUNTIME_RULE_REFRESH_RULES_PERIOD</td>
 <td>30</td>
 </tr>
 <tr>
@@ -5655,6 +5816,22 @@ It divided into several modules, each of which has its own settings. The followi
 <td>Time (seconds) a SUSPENDED rule waits before the self-heal backstop forces it back to RUNNING.</td>
 <td>SW_RECEIVER_RUNTIME_RULE_SELF_HEAL_THRESHOLD_SECONDS</td>
 <td>60</td>
+</tr>
+<tr>
+<td>dsl-debugging</td>
+<td>default</td>
+<td>-</td>
+<td>DSL debug API (sampling debugger for MAL / LAL / OAL rules). REST routes mount on the <code>admin-server</code> HTTP host (port 17128) — read-only OAL listing under <code>/runtime/oal/*</code>, session control plane under <code>/dsl-debugging/*</code>; cluster install/collect/stop RPCs ride the <code>admin-server</code> gRPC bus (port 17129). <strong>Disabled by default</strong>: set <code>SW_DSL_DEBUGGING=default</code> <em>and</em> <code>SW_ADMIN_SERVER=default</code> to enable. See <a href="../admin-api/dsl-debugging">DSL Debug API</a> and <a href="../../../swip/swip-13">SWIP-13</a>.</td>
+<td>SW_DSL_DEBUGGING</td>
+<td>(empty — disabled)</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>injectionEnabled</td>
+<td>Boot-time switch for capture-probe emission in the OAL / MAL / LAL code generators. Default <code>true</code> — once the operator has enabled the <code>dsl-debugging</code> module (which is itself disabled by default via <code>SW_DSL_DEBUGGING</code>), probes fire and capture sessions record samples. Set <code>false</code> for the rare case where the REST surface is wanted but absolutely no codegen-side probe overhead is acceptable; with <code>false</code> the generated bytecode is byte-identical to a build without SWIP-13. Flipping requires an OAP restart.</td>
+<td>SW_DSL_DEBUGGING_INJECTION_ENABLED</td>
+<td>true</td>
 </tr>
 <tr>
 <td>ai-pipeline</td>
@@ -7324,6 +7501,18 @@ provided in the default <code>application.yml/bydb.yaml</code> file.</p>
 
     </div>
     
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
