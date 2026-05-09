@@ -40,7 +40,7 @@ import ( commonv1 &#34;github.com/apache/skywalking-banyandb/api/proto/banyandb/
 The scenarios assume the following short-form imports:
 import ( commonv1 &#34;github.com/apache/skywalking-banyandb/api/proto/banyandb/common/v1&#34; databasev1 &#34;github.com/apache/skywalking-banyandb/api/proto/banyandb/database/v1&#34; measurev1 &#34;github.com/apache/skywalking-banyandb/api/proto/banyandb/measure/v1&#34; modelv1 &#34;github.com/apache/skywalking-banyandb/api/proto/banyandb/model/v1&#34; schemav1 &#34;github.com/apache/skywalking-banyandb/api/proto/banyandb/schema/v1&#34; &#34;google.golang.org/protobuf/types/known/durationpb&#34; )  1. Read-your-writes after a fresh Create Problem: A test or migration creates a measure and immediately writes data points.">
 
-<meta itemprop="wordCount" content="1428">
+<meta itemprop="wordCount" content="1425">
 
 
 
@@ -1213,7 +1213,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 8f0033a</div>
+                  <div class="commit-id">Commit Id: d2cb7da</div>
                 
 
 
@@ -1353,7 +1353,7 @@ _, _ = barrier.<span style="color:#900;font-weight:bold">AwaitRevisionApplied</s
     TimeRange: trange,  <span style="color:#998;font-style:italic">// start may predate the recreate; the server clamps to created_at
 </span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">...</span>
 })
-</code></pre></div><p>The integration suite §6.8 (<code>shape-break: delete+apply new shape creates the new measure</code>) is the canonical regression for this pattern.</p>
+</code></pre></div><p>The integration suite  (<code>shape-break: delete+apply new shape creates the new measure</code>) is the canonical regression for this pattern.</p>
 <p><strong>Pitfall:</strong> Issuing queries without <code>group_mod_revisions</code> opts out of the clamp. After a shape-break, ungated queries can return mixed-shape elements until TTL eventually expires the old data. Either gate the query or wait for TTL.</p>
 <hr>
 <h2 id="5-multi-group-cross-cutting-query">5. Multi-group cross-cutting query</h2>
@@ -1389,7 +1389,7 @@ resp, err <span style="color:#000;font-weight:bold">:=</span> measureClient.<spa
     <span style="color:#d14">&#34;sw_metric&#34;</span>: rev1,
     <span style="color:#998;font-style:italic">// &#34;sw_metric_minute&#34; intentionally absent — caller does not gate it
 </span><span style="color:#998;font-style:italic"></span>},
-</code></pre></div><p>The §4.5.4 and §4.5.5 integration tests in <code>test/cases/schema/query_gate.go</code> exercise the mixed-status and partial-coverage variants.</p>
+</code></pre></div><p>The  and  integration tests in <code>test/cases/schema/query_gate.go</code> exercise the mixed-status and partial-coverage variants.</p>
 <p><strong>Pitfall:</strong> Building <code>group_mod_revisions</code> from a single global watermark forces every group to wait for the slowest. Either populate per-group revisions or omit the slow group from the map entirely.</p>
 <hr>
 <h2 id="6-bulk-schema-bootstrap">6. Bulk schema bootstrap</h2>
