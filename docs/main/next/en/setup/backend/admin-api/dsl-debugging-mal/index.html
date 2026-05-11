@@ -38,7 +38,7 @@
 <meta itemprop="description" content="DSL Debug API — MAL  Status: shipped. Operator reference for the MAL slice of the DSL Debug API. Design: SWIP-13. Index of related pages: DSL Debug API overview.
  What it captures A MAL session attaches to one metric rule. Every scrape window that survives the rule&rsquo;s file-level filter produces one record in the response; within a record, each probe stage the expression executes appends one sample. The wire shape is:">
 
-<meta itemprop="wordCount" content="1033">
+<meta itemprop="wordCount" content="1076">
 
 
 
@@ -2872,7 +2872,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 4890024</div>
+                  <div class="commit-id">Commit Id: 0cec0de</div>
                 
 
 
@@ -3101,7 +3101,17 @@ appear in the captures.</p>
         { <span style="color:#000080">&#34;type&#34;</span>: <span style="color:#d14">&#34;output&#34;</span>,
           <span style="color:#000080">&#34;sourceText&#34;</span>: <span style="color:#d14">&#34;e2e_demo_filtered_requests&#34;</span>,
           <span style="color:#000080">&#34;continueOn&#34;</span>: <span style="color:#000;font-weight:bold">true</span>,
-          <span style="color:#000080">&#34;payload&#34;</span>: { <span style="color:#a61717;background-color:#e3d2d2">/*</span> <span style="color:#a61717;background-color:#e3d2d2">terminal</span> <span style="color:#a61717;background-color:#e3d2d2">meter</span> <span style="color:#a61717;background-color:#e3d2d2">sample</span> <span style="color:#a61717;background-color:#e3d2d2">—</span> <span style="color:#a61717;background-color:#e3d2d2">metric,</span> <span style="color:#a61717;background-color:#e3d2d2">entity,</span> <span style="color:#a61717;background-color:#e3d2d2">value,</span> <span style="color:#a61717;background-color:#e3d2d2">timeBucket</span> <span style="color:#a61717;background-color:#e3d2d2">*/</span> } }
+          <span style="color:#000080">&#34;payload&#34;</span>: {
+            <span style="color:#000080">&#34;metric&#34;</span>: <span style="color:#d14">&#34;e2e_demo_filtered_requests&#34;</span>,
+            <span style="color:#000080">&#34;entity&#34;</span>: <span style="color:#d14">&#34;MeterEntity(scopeType=SERVICE, serviceName=my-svc, …)&#34;</span>,
+            <span style="color:#000080">&#34;valueType&#34;</span>: <span style="color:#d14">&#34;sum&#34;</span>,
+            <span style="color:#000080">&#34;timeBucket&#34;</span>: <span style="color:#099">202605091036</span>,
+            <span style="color:#000080">&#34;value&#34;</span>: <span style="color:#099">42</span>                <span style="color:#a61717;background-color:#e3d2d2">/*</span> <span style="color:#a61717;background-color:#e3d2d2">shape</span> <span style="color:#a61717;background-color:#e3d2d2">depends</span> <span style="color:#a61717;background-color:#e3d2d2">on</span> <span style="color:#a61717;background-color:#e3d2d2">valueType</span>:
+                                          <span style="color:#a61717;background-color:#e3d2d2">number</span> <span style="color:#a61717;background-color:#e3d2d2">for</span> <span style="color:#a61717;background-color:#e3d2d2">Sum/Avg/Max/Min/CPM/Latest…</span>,
+                                          <span style="color:#a61717;background-color:#e3d2d2">object</span> <span style="color:#a61717;background-color:#e3d2d2">{bucket:</span> <span style="color:#a61717;background-color:#e3d2d2">count</span>} <span style="color:#a61717;background-color:#e3d2d2">for</span> <span style="color:#a61717;background-color:#e3d2d2">histograms</span> <span style="color:#a61717;background-color:#e3d2d2">/</span>
+                                          <span style="color:#a61717;background-color:#e3d2d2">*Labeled</span> <span style="color:#a61717;background-color:#e3d2d2">functions</span>, <span style="color:#a61717;background-color:#e3d2d2">omitted</span> <span style="color:#a61717;background-color:#e3d2d2">for</span> <span style="color:#a61717;background-color:#e3d2d2">non-scalar</span>
+                                          <span style="color:#a61717;background-color:#e3d2d2">holders.</span> <span style="color:#a61717;background-color:#e3d2d2">NaN/±Infinity</span> <span style="color:#a61717;background-color:#e3d2d2">render</span> <span style="color:#a61717;background-color:#e3d2d2">as</span> <span style="color:#a61717;background-color:#e3d2d2">strings.</span> <span style="color:#a61717;background-color:#e3d2d2">*/</span>
+          } <span style="color:#a61717;background-color:#e3d2d2">}</span>
       ]
     }]
   }]
@@ -3159,24 +3169,28 @@ omitted.</li>
 <tr>
 <th>Field</th>
 <th>Default</th>
+<th>Hard cap</th>
 <th>Purpose</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>recordCap</code></td>
-<td><code>1000</code></td>
+<td><code>100</code></td>
+<td><code>100</code></td>
 <td>Max records before the recorder marks itself <code>captured</code> and refuses appends.</td>
 </tr>
 <tr>
 <td><code>retentionMillis</code></td>
 <td><code>300000</code> (5m)</td>
+<td><code>3600000</code> (1h)</td>
 <td>Wall-clock retention; the session is reaped after the deadline whether or not it was explicitly stopped.</td>
 </tr>
 </tbody>
 </table>
-<p>Override per-session in the <code>POST /dsl-debugging/session</code> body:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{ <span style="color:#000080">&#34;recordCap&#34;</span>: <span style="color:#099">200</span>, <span style="color:#000080">&#34;retentionMillis&#34;</span>: <span style="color:#099">600000</span> }
+<p>Out-of-range values return <code>400 invalid_limits</code> from <code>POST /dsl-debugging/session</code>.
+Override per-session (within the caps above) in the request body:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{ <span style="color:#000080">&#34;recordCap&#34;</span>: <span style="color:#099">50</span>, <span style="color:#000080">&#34;retentionMillis&#34;</span>: <span style="color:#099">600000</span> }
 </code></pre></div><h2 id="see-also">See also</h2>
 <ul>
 <li><a href="../dsl-debugging-oal">DSL Debug API — OAL</a></li>

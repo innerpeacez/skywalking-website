@@ -38,7 +38,7 @@
 <meta itemprop="description" content="DSL Debug API — LAL  Status: shipped. Operator reference for the LAL slice of the DSL Debug API. Design: SWIP-13. Index of related pages: DSL Debug API overview.
  What it captures A LAL session attaches to one compiled rule (one entry in a LAL YAML&rsquo;s rules: list). Every log routed through that rule produces one record in the response; within a record, each probe stage in the rule&rsquo;s pipeline appends one sample.">
 
-<meta itemprop="wordCount" content="1352">
+<meta itemprop="wordCount" content="1367">
 
 
 
@@ -2872,7 +2872,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 4890024</div>
+                  <div class="commit-id">Commit Id: 0cec0de</div>
                 
 
 
@@ -3241,29 +3241,34 @@ recorder on its own holder.</li>
 <tr>
 <th>Field</th>
 <th>Default</th>
+<th>Hard cap</th>
 <th>Purpose</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>recordCap</code></td>
-<td><code>1000</code></td>
+<td><code>100</code></td>
+<td><code>100</code></td>
 <td>Max records before the recorder refuses appends.</td>
 </tr>
 <tr>
 <td><code>retentionMillis</code></td>
 <td><code>300000</code> (5m)</td>
+<td><code>3600000</code> (1h)</td>
 <td>Wall-clock retention.</td>
 </tr>
 <tr>
 <td><code>granularity</code></td>
 <td><code>block</code></td>
+<td>n/a</td>
 <td><code>block</code> or <code>statement</code> (LAL only).</td>
 </tr>
 </tbody>
 </table>
-<p>Override per-session in the install body:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{ <span style="color:#000080">&#34;recordCap&#34;</span>: <span style="color:#099">200</span>, <span style="color:#000080">&#34;retentionMillis&#34;</span>: <span style="color:#099">600000</span>, <span style="color:#000080">&#34;granularity&#34;</span>: <span style="color:#d14">&#34;statement&#34;</span> }
+<p>Out-of-range values return <code>400 invalid_limits</code>. Override per-session (within
+the caps above) in the install body:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{ <span style="color:#000080">&#34;recordCap&#34;</span>: <span style="color:#099">50</span>, <span style="color:#000080">&#34;retentionMillis&#34;</span>: <span style="color:#099">600000</span>, <span style="color:#000080">&#34;granularity&#34;</span>: <span style="color:#d14">&#34;statement&#34;</span> }
 </code></pre></div><h2 id="see-also">See also</h2>
 <ul>
 <li><a href="../dsl-debugging-mal">DSL Debug API — MAL</a></li>

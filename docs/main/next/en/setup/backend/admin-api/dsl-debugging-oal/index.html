@@ -40,7 +40,7 @@ A session against (catalog=oal, name=&lt;file&gt;, ruleName=&lt;metric&gt;) capt
  What it captures OAL&rsquo;s gate is per-metric: each generated metric (e.g. service_relation_server_cpm) has its own gate holder, and a debug session attaches to one metric. Sibling rules under the same source dispatcher stay silent.
 A session against (catalog=oal, name=&lt;file&gt;, ruleName=&lt;metric&gt;) captures every source event walked through that one metric&rsquo;s pipeline.">
 
-<meta itemprop="wordCount" content="980">
+<meta itemprop="wordCount" content="994">
 
 
 
@@ -2875,7 +2875,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 4890024</div>
+                  <div class="commit-id">Commit Id: 0cec0de</div>
                 
 
 
@@ -3154,24 +3154,28 @@ recorder to its dispatcher.</li>
 <tr>
 <th>Field</th>
 <th>Default</th>
+<th>Hard cap</th>
 <th>Purpose</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>recordCap</code></td>
-<td><code>1000</code></td>
+<td><code>100</code></td>
+<td><code>100</code></td>
 <td>Max records before the recorder refuses appends.</td>
 </tr>
 <tr>
 <td><code>retentionMillis</code></td>
 <td><code>300000</code> (5m)</td>
+<td><code>3600000</code> (1h)</td>
 <td>Wall-clock retention.</td>
 </tr>
 </tbody>
 </table>
-<p>Override per-session in the install body:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{ <span style="color:#000080">&#34;recordCap&#34;</span>: <span style="color:#099">200</span>, <span style="color:#000080">&#34;retentionMillis&#34;</span>: <span style="color:#099">600000</span> }
+<p>Out-of-range values return <code>400 invalid_limits</code>. Override per-session (within
+the caps above) in the install body:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{ <span style="color:#000080">&#34;recordCap&#34;</span>: <span style="color:#099">50</span>, <span style="color:#000080">&#34;retentionMillis&#34;</span>: <span style="color:#099">600000</span> }
 </code></pre></div><h2 id="see-also">See also</h2>
 <ul>
 <li><a href="../dsl-debugging-mal">DSL Debug API — MAL</a></li>
