@@ -40,7 +40,7 @@ Main Configuration The main configuration is provided by application.yml. It div
 Main Configuration The main configuration is provided by application.yml. It divided into several modules, each of which has its own settings. The following table lists the modules and their settings.
    Module Provider Settings Value(s) and Explanation System Environment Variable¹ Default     core default role Option values: Mixed/Receiver/Aggregator. Receiver mode OAP opens the service to the agents, then analyzes and aggregates the results, and forwards the results for distributed aggregation.">
 
-<meta itemprop="wordCount" content="8343">
+<meta itemprop="wordCount" content="8441">
 
 
 
@@ -2005,72 +2005,6 @@ if (!doNotTrack) {
 
     
 
-    <li>
-        
-
-            
-            <a href="#">Status APIs<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/status_apis">Introduction</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/config_dump">Dump Effective Initial Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/query-tracing">Tracing Query Execution</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_ttl_setup">Get Effective TTL Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_cluster_nodes">Get Node List in the Cluster</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_alarm_runtime_status">Get Alarm Runtime Status</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
 </ul>
 
         
@@ -2256,6 +2190,64 @@ if (!doNotTrack) {
 
 </ul>
 
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Status API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/status">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/debugging/config_dump">Dump Effective Initial Configurations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/debugging/query-tracing">Tracing Query Execution</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/inspect">Inspect API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/admin-ui">Admin UI (Community)</a>
         
     </li>
 
@@ -2875,7 +2867,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 0cec0de</div>
+                  <div class="commit-id">Commit Id: dc77df6</div>
                 
 
 
@@ -5546,12 +5538,12 @@ It divided into several modules, each of which has its own settings. The followi
 <td>5</td>
 </tr>
 <tr>
-<td>status-query</td>
+<td>status</td>
 <td>default</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>(selector; relocated from status-query-plugin in 10.5.0)</td>
+<td>Status feature module — hosts /status/* and /debugging/* routes. Dual-bound: always on the public REST register, plus on the admin-server port. Both <code>status</code> and <code>admin-server</code> are enabled by default; set SW_STATUS empty to disable.</td>
+<td>SW_STATUS</td>
+<td>default</td>
 </tr>
 <tr>
 <td>-</td>
@@ -5560,6 +5552,14 @@ It divided into several modules, each of which has its own settings. The followi
 <td>Include the list of keywords to filter configurations including secrets. Separate keywords by a comma.</td>
 <td>SW_DEBUGGING_QUERY_KEYWORDS_FOR_MASKING_SECRETS</td>
 <td>user,password,token,accessKey,secretKey,authentication</td>
+</tr>
+<tr>
+<td>inspect</td>
+<td>default</td>
+<td>(selector)</td>
+<td>Inspect API on admin-server — /inspect/metrics (catalog) and /inspect/entities (entity enumeration with MQE-ready output). Routes only on the admin-server register. <strong>Enabled by default</strong> (admin-server is on by default too); set SW_INSPECT empty to disable.</td>
+<td>SW_INSPECT</td>
+<td>default</td>
 </tr>
 <tr>
 <td>configuration-discovery</td>
@@ -5661,9 +5661,9 @@ It divided into several modules, each of which has its own settings. The followi
 <td>admin-server</td>
 <td>default</td>
 <td>-</td>
-<td>Shared HTTP host for admin / on-demand write APIs (runtime-rule hot-update, DSL debug session). <strong>Disabled by default</strong>: leave the selector empty to keep the host closed; set <code>SW_ADMIN_SERVER=default</code> to enable. The host has <strong>no built-in authentication</strong> — gateway-protect with an IP allow-list and an authenticating reverse proxy, bind to a private interface, and never expose it to the public internet. See <a href="../admin-api/readme">Admin API</a>.</td>
+<td>Shared HTTP host for admin / on-demand write APIs (status, inspect, runtime-rule hot-update, DSL debug session). <strong>Enabled by default</strong> so the bundled status / inspect feature modules are reachable out of the box; set <code>SW_ADMIN_SERVER=</code> empty to keep the host closed. The host has <strong>no built-in authentication</strong> — gateway-protect with an IP allow-list and an authenticating reverse proxy, bind to a private interface, and never expose it to the public internet. See <a href="../admin-api/readme">Admin API</a>.</td>
 <td>SW_ADMIN_SERVER</td>
-<td>(empty — disabled)</td>
+<td>default</td>
 </tr>
 <tr>
 <td>-</td>
@@ -5797,7 +5797,7 @@ It divided into several modules, each of which has its own settings. The followi
 <td>receiver-runtime-rule</td>
 <td>default</td>
 <td>-</td>
-<td>Hot-update admin endpoint for MAL / LAL rule files. REST routes mount on the <code>admin-server</code> HTTP host (port 17128); cluster Suspend/Resume/Forward RPCs ride the <code>admin-server</code> gRPC bus (port 17129). <strong>Disabled by default</strong>: leave the selector empty to keep the provider unloaded; set <code>SW_RECEIVER_RUNTIME_RULE=default</code> <em>and</em> <code>SW_ADMIN_SERVER=default</code> to enable. The endpoint has <strong>no authentication</strong> — gateway-protect with IP allow-lists and never expose it to the public internet. See <a href="../admin-api/runtime-rule">Runtime Rule Hot-Update API</a>.</td>
+<td>Hot-update admin endpoint for MAL / LAL rule files. REST routes mount on the <code>admin-server</code> HTTP host (port 17128); cluster Suspend/Resume/Forward RPCs ride the <code>admin-server</code> gRPC bus (port 17129). <strong>Disabled by default</strong>: leave the selector empty to keep the provider unloaded; set <code>SW_RECEIVER_RUNTIME_RULE=default</code> to enable (admin-server itself is on by default). The endpoint has <strong>no authentication</strong> — gateway-protect with IP allow-lists and never expose it to the public internet. See <a href="../admin-api/runtime-rule">Runtime Rule Hot-Update API</a>.</td>
 <td>SW_RECEIVER_RUNTIME_RULE</td>
 <td>(empty — disabled)</td>
 </tr>
@@ -5821,7 +5821,7 @@ It divided into several modules, each of which has its own settings. The followi
 <td>dsl-debugging</td>
 <td>default</td>
 <td>-</td>
-<td>DSL debug API (sampling debugger for MAL / LAL / OAL rules). REST routes mount on the <code>admin-server</code> HTTP host (port 17128) — read-only OAL listing under <code>/runtime/oal/*</code>, session control plane under <code>/dsl-debugging/*</code>; cluster install/collect/stop RPCs ride the <code>admin-server</code> gRPC bus (port 17129). <strong>Disabled by default</strong>: set <code>SW_DSL_DEBUGGING=default</code> <em>and</em> <code>SW_ADMIN_SERVER=default</code> to enable. See <a href="../admin-api/dsl-debugging">DSL Debug API</a> and <a href="../../../swip/swip-13">SWIP-13</a>.</td>
+<td>DSL debug API (sampling debugger for MAL / LAL / OAL rules). REST routes mount on the <code>admin-server</code> HTTP host (port 17128) — read-only OAL listing under <code>/runtime/oal/*</code>, session control plane under <code>/dsl-debugging/*</code>; cluster install/collect/stop RPCs ride the <code>admin-server</code> gRPC bus (port 17129). <strong>Disabled by default</strong>: set <code>SW_DSL_DEBUGGING=default</code> to enable (admin-server itself is on by default). See <a href="../admin-api/dsl-debugging">DSL Debug API</a> and <a href="../../../swip/swip-13">SWIP-13</a>.</td>
 <td>SW_DSL_DEBUGGING</td>
 <td>(empty — disabled)</td>
 </tr>
@@ -7501,6 +7501,10 @@ provided in the default <code>application.yml/bydb.yaml</code> file.</p>
 
     </div>
     
+
+
+
+
 
 
 

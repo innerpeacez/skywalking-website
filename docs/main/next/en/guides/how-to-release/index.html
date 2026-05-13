@@ -2005,72 +2005,6 @@ if (!doNotTrack) {
 
     
 
-    <li>
-        
-
-            
-            <a href="#">Status APIs<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/status_apis">Introduction</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/config_dump">Dump Effective Initial Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/query-tracing">Tracing Query Execution</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_ttl_setup">Get Effective TTL Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_cluster_nodes">Get Node List in the Cluster</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_alarm_runtime_status">Get Alarm Runtime Status</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
 </ul>
 
         
@@ -2256,6 +2190,64 @@ if (!doNotTrack) {
 
 </ul>
 
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Status API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/status">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/debugging/config_dump">Dump Effective Initial Configurations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/debugging/query-tracing">Tracing Query Execution</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/inspect">Inspect API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/admin-ui">Admin UI (Community)</a>
         
     </li>
 
@@ -2875,7 +2867,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 0cec0de</div>
+                  <div class="commit-id">Commit Id: dc77df6</div>
                 
 
 
@@ -3021,7 +3013,7 @@ SkyWalking Resources:
 
 - Apache SkyWalking Team
 </code></pre><h2 id="publish-the-docker-images">Publish the Docker images</h2>
-<p>We have a <a href="https://github.com/apache/skywalking/tree/0cec0de68b6767a5328418ecf1115d09458517d7/.github/workflows/publish-docker.yaml">GitHub workflow</a> to automatically publish the Docker images to
+<p>We have a <a href="https://github.com/apache/skywalking/tree/dc77df696afb5d97cca79ec123d0e93f7ae84939/.github/workflows/publish-docker.yaml">GitHub workflow</a> to automatically publish the Docker images to
 Docker Hub after you set the version from <code>pre-release</code> to <code>release</code>, all you need to do is to watch that workflow and see
 whether it succeeds, if it fails, you can use the following steps to publish the Docker images in your local machine.</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#0086b3">export</span> <span style="color:#008080">SW_VERSION</span><span style="color:#000;font-weight:bold">=</span>x.y.z
@@ -3211,6 +3203,10 @@ The versions of OAP and BanyanDB are hard-coded in the script, so you need to up
 
     </div>
     
+
+
+
+
 
 
 

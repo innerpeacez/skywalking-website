@@ -38,7 +38,7 @@
 <meta itemprop="description" content="DSL Debug API — MAL  Status: shipped. Operator reference for the MAL slice of the DSL Debug API. Design: SWIP-13. Index of related pages: DSL Debug API overview.
  What it captures A MAL session attaches to one metric rule. Every scrape window that survives the rule&rsquo;s file-level filter produces one record in the response; within a record, each probe stage the expression executes appends one sample. The wire shape is:">
 
-<meta itemprop="wordCount" content="1076">
+<meta itemprop="wordCount" content="1074">
 
 
 
@@ -2002,72 +2002,6 @@ if (!doNotTrack) {
 
     
 
-    <li>
-        
-
-            
-            <a href="#">Status APIs<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/status_apis">Introduction</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/config_dump">Dump Effective Initial Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/query-tracing">Tracing Query Execution</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_ttl_setup">Get Effective TTL Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_cluster_nodes">Get Node List in the Cluster</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_alarm_runtime_status">Get Alarm Runtime Status</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
 </ul>
 
         
@@ -2253,6 +2187,64 @@ if (!doNotTrack) {
 
 </ul>
 
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Status API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/status">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/debugging/config_dump">Dump Effective Initial Configurations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/debugging/query-tracing">Tracing Query Execution</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/inspect">Inspect API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/admin-ui">Admin UI (Community)</a>
         
     </li>
 
@@ -2872,7 +2864,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 0cec0de</div>
+                  <div class="commit-id">Commit Id: dc77df6</div>
                 
 
 
@@ -2993,10 +2985,9 @@ present; truncated at <code>maxSamplesPerCapture</code> (default 64) with a
 volatile-bool reads that JIT eliminates after warm-up — idle cost is
 effectively free.</p>
 <h2 id="enabling">Enabling</h2>
-<p>Two selectors must be enabled — the shared admin HTTP host (<code>admin-server</code>)
-and the DSL-debug feature on top of it:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#008080">SW_ADMIN_SERVER</span><span style="color:#000;font-weight:bold">=</span>default
-<span style="color:#008080">SW_DSL_DEBUGGING</span><span style="color:#000;font-weight:bold">=</span>default
+<p>The shared admin HTTP host (<code>admin-server</code>) is enabled by default; turn on the
+DSL-debug feature on top of it:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#008080">SW_DSL_DEBUGGING</span><span style="color:#000;font-weight:bold">=</span>default
 </code></pre></div><p><code>injectionEnabled</code> is a <strong>boot-time codegen switch</strong>, default <code>true</code> once the
 <code>dsl-debugging</code> module is enabled — the MAL generator emits per-rule
 <code>GateHolder</code> fields and probe call sites, so debug sessions actually capture
@@ -3367,6 +3358,10 @@ Override per-session (within the caps above) in the request body:</p>
 
     </div>
     
+
+
+
+
 
 
 

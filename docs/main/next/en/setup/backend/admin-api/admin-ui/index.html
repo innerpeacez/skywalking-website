@@ -28,25 +28,28 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>Get Effective TTL Configurations | Apache SkyWalking</title><meta property="og:title" content="Get Effective TTL Configurations" />
-<meta property="og:description" content="Get Effective TTL Configurations Time To Live (TTL) mechanism has different behaviors according to different storage implementations. By default, the core module provides two TTL configurations: recordDataTTL and metricsDataTTL. But some storage implementations could override these settings and provide its own TTL configurations, for example, BanyanDB provides its native TTL mechanism to support progressive TTL feature and Data Lifecycle Stages(Hot/Warm/Cold) feature.
-This API is used to get the unified and effective TTL configurations." />
+<title>Admin UI | Apache SkyWalking</title><meta property="og:title" content="Admin UI" />
+<meta property="og:description" content="Admin UI The Admin API is a set of HTTP endpoints (Runtime Rule Hot-Update, DSL Debug, Status, Inspect) — operators drive them with curl, swctl, or a front-end of their choice. SkyWalking does not ship an official admin UI.
+Vantage Studio (community) Vantage Studio is a community-built web UI that consumes SkyWalking&rsquo;s Admin API surface. It provides a visual driver for the same endpoints documented in this section.
+ Project: https://github." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/main/next/en/status/query_ttl_setup/" />
+<meta property="og:url" content="/docs/main/next/en/setup/backend/admin-api/admin-ui/" />
 
-<meta itemprop="name" content="Get Effective TTL Configurations">
-<meta itemprop="description" content="Get Effective TTL Configurations Time To Live (TTL) mechanism has different behaviors according to different storage implementations. By default, the core module provides two TTL configurations: recordDataTTL and metricsDataTTL. But some storage implementations could override these settings and provide its own TTL configurations, for example, BanyanDB provides its native TTL mechanism to support progressive TTL feature and Data Lifecycle Stages(Hot/Warm/Cold) feature.
-This API is used to get the unified and effective TTL configurations.">
+<meta itemprop="name" content="Admin UI">
+<meta itemprop="description" content="Admin UI The Admin API is a set of HTTP endpoints (Runtime Rule Hot-Update, DSL Debug, Status, Inspect) — operators drive them with curl, swctl, or a front-end of their choice. SkyWalking does not ship an official admin UI.
+Vantage Studio (community) Vantage Studio is a community-built web UI that consumes SkyWalking&rsquo;s Admin API surface. It provides a visual driver for the same endpoints documented in this section.
+ Project: https://github.">
 
-<meta itemprop="wordCount" content="321">
+<meta itemprop="wordCount" content="144">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Get Effective TTL Configurations"/>
-<meta name="twitter:description" content="Get Effective TTL Configurations Time To Live (TTL) mechanism has different behaviors according to different storage implementations. By default, the core module provides two TTL configurations: recordDataTTL and metricsDataTTL. But some storage implementations could override these settings and provide its own TTL configurations, for example, BanyanDB provides its native TTL mechanism to support progressive TTL feature and Data Lifecycle Stages(Hot/Warm/Cold) feature.
-This API is used to get the unified and effective TTL configurations."/>
+<meta name="twitter:title" content="Admin UI"/>
+<meta name="twitter:description" content="Admin UI The Admin API is a set of HTTP endpoints (Runtime Rule Hot-Update, DSL Debug, Status, Inspect) — operators drive them with curl, swctl, or a front-end of their choice. SkyWalking does not ship an official admin UI.
+Vantage Studio (community) Vantage Studio is a community-built web UI that consumes SkyWalking&rsquo;s Admin API surface. It provides a visual driver for the same endpoints documented in this section.
+ Project: https://github."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -75,7 +78,7 @@ if (!doNotTrack) {
 
 
 
-    <title>Get Effective TTL Configurations | Apache SkyWalking</title>
+    <title>Admin UI | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -2002,72 +2005,6 @@ if (!doNotTrack) {
 
     
 
-    <li>
-        
-
-            
-            <a href="#">Status APIs<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/status_apis">Introduction</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/config_dump">Dump Effective Initial Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/query-tracing">Tracing Query Execution</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_ttl_setup">Get Effective TTL Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_cluster_nodes">Get Node List in the Cluster</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_alarm_runtime_status">Get Alarm Runtime Status</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
 </ul>
 
         
@@ -2253,6 +2190,64 @@ if (!doNotTrack) {
 
 </ul>
 
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Status API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/status">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/debugging/config_dump">Dump Effective Initial Configurations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/debugging/query-tracing">Tracing Query Execution</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/inspect">Inspect API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/admin-ui">Admin UI (Community)</a>
         
     </li>
 
@@ -2872,7 +2867,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 0cec0de</div>
+                  <div class="commit-id">Commit Id: dc77df6</div>
                 
 
 
@@ -2917,78 +2912,29 @@ if (!doNotTrack) {
 
 
 
-	<h1 id="get-effective-ttl-configurations">Get Effective TTL Configurations</h1>
-<p>Time To Live (TTL) mechanism has different behaviors according to different storage implementations. By default, the
-core module provides two TTL configurations: <a href="../../setup/backend/ttl"><code>recordDataTTL</code> and <code>metricsDataTTL</code></a>.
-But some storage implementations could override these settings and provide its own TTL configurations, for example,
-BanyanDB provides its native TTL mechanism to support <a href="../../banyandb/ttl">progressive TTL</a> feature and <a href="../../banyandb/stages">Data Lifecycle Stages(Hot/Warm/Cold)</a> feature.</p>
-<p>This API is used to get the unified and effective TTL configurations.</p>
+	<h1 id="admin-ui">Admin UI</h1>
+<p>The Admin API is a set of HTTP endpoints (Runtime Rule Hot-Update, DSL
+Debug, Status, Inspect) — operators drive them with <code>curl</code>, <code>swctl</code>, or a
+front-end of their choice. SkyWalking does not ship an official admin UI.</p>
+<h2 id="vantage-studio-community">Vantage Studio (community)</h2>
+<p><a href="https://github.com/SkyAPM/vantage-studio"><strong>Vantage Studio</strong></a> is a
+community-built web UI that consumes SkyWalking&rsquo;s Admin API surface. It
+provides a visual driver for the same endpoints documented in this
+section.</p>
 <ul>
-<li>URL, <code>http://{core restHost}:{core restPort}/status/config/ttl</code></li>
-<li>HTTP GET method.</li>
+<li>Project: <a href="https://github.com/SkyAPM/vantage-studio">https://github.com/SkyAPM/vantage-studio</a></li>
+<li>Author: <a href="https://github.com/wu-sheng">Sheng Wu</a></li>
+<li>Status: Community project under the SkyAPM organization — not an Apache
+SkyWalking release artifact. License, release cadence, and support
+follow that project&rsquo;s repository.</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&gt; curl -X GET <span style="color:#d14">&#34;http://127.0.0.1:12800/status/config/ttl&#34;</span>
-<span style="color:#998;font-style:italic"># Metrics TTL includes the definition of the TTL of the metrics-ish data in the storage,</span>
-<span style="color:#998;font-style:italic"># Metrics TTL includes the definition of the TTL of the metrics-ish data in the storage,</span>
-<span style="color:#998;font-style:italic"># e.g.</span>
-<span style="color:#998;font-style:italic"># 1. The metadata of the service, instance, endpoint, topology map, etc.</span>
-<span style="color:#998;font-style:italic"># 2. Generated metrics data from OAL and MAL engines.</span>
-<span style="color:#998;font-style:italic"># 3. Banyandb storage provides Data Lifecycle Stages(Hot/Warm/Cold).</span>
-<span style="color:#998;font-style:italic">#</span>
-<span style="color:#998;font-style:italic"># TTLs for each granularity metrics are listed separately.</span>
-<span style="color:#998;font-style:italic">#</span>
-<span style="color:#998;font-style:italic"># Cover hot and warm data for BanyanDB.</span>
-metrics.minute<span style="color:#000;font-weight:bold">=</span><span style="color:#099">7</span>
-metrics.hour<span style="color:#000;font-weight:bold">=</span><span style="color:#099">15</span>
-metrics.day<span style="color:#000;font-weight:bold">=</span><span style="color:#099">15</span>
-<span style="color:#998;font-style:italic"># Cold data, &#39;-1&#39; represents no cold stage data.</span>
-metrics.minute.cold<span style="color:#000;font-weight:bold">=</span>-1
-metrics.hour.cold<span style="color:#000;font-weight:bold">=</span>-1
-metrics.day.cold<span style="color:#000;font-weight:bold">=</span>-1
+<p>Operators looking for a UI in front of <code>/runtime/rule/*</code>,
+<code>/dsl-debugging/*</code>, <code>/status/*</code>, and <code>/inspect/*</code> can adopt it the same
+way they would any third-party tool — install separately, point it at the
+admin port (default <code>17128</code>) behind the same gateway / authenticating
+reverse proxy the <a href="../readme#security-notice">admin-server security
+notice</a> requires.</p>
 
-<span style="color:#998;font-style:italic"># Records TTL includes the definition of the TTL of the records data in the storage,</span>
-<span style="color:#998;font-style:italic"># Records include traces, logs, sampled slow SQL statements, HTTP requests(by Rover), alarms, etc.</span>
-<span style="color:#998;font-style:italic"># Super dataset of records are traces and logs, which volume should be much larger.</span>
-<span style="color:#998;font-style:italic">#</span>
-<span style="color:#998;font-style:italic"># Cover hot and warm data for BanyanDB.</span>
-records.normal<span style="color:#000;font-weight:bold">=</span><span style="color:#099">3</span>
-records.trace<span style="color:#000;font-weight:bold">=</span><span style="color:#099">10</span>
-records.zipkinTrace<span style="color:#000;font-weight:bold">=</span><span style="color:#099">3</span>
-records.log<span style="color:#000;font-weight:bold">=</span><span style="color:#099">3</span>
-records.browserErrorLog<span style="color:#000;font-weight:bold">=</span><span style="color:#099">3</span>
-<span style="color:#998;font-style:italic"># Cold data, &#39;-1&#39; represents no cold stage data.</span>
-records.normal.cold<span style="color:#000;font-weight:bold">=</span>-1
-records.trace.cold<span style="color:#000;font-weight:bold">=</span><span style="color:#099">30</span>
-records.zipkinTrace.cold<span style="color:#000;font-weight:bold">=</span>-1
-records.log.cold<span style="color:#000;font-weight:bold">=</span>-1
-records.browserErrorLog.cold<span style="color:#000;font-weight:bold">=</span>-1
-</code></pre></div><p>This API also provides the response in JSON format, which is more friendly for programmatic usage.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&gt; curl -X GET <span style="color:#d14">&#34;http://127.0.0.1:12800/status/config/ttl&#34;</span> <span style="color:#d14">\
-</span><span style="color:#d14"></span>       -H <span style="color:#d14">&#34;Accept: application/json&#34;</span>
-
-<span style="color:#000;font-weight:bold">{</span>
-  <span style="color:#d14">&#34;metrics&#34;</span>: <span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#d14">&#34;minute&#34;</span>: 7,
-    <span style="color:#d14">&#34;hour&#34;</span>: 15,
-    <span style="color:#d14">&#34;day&#34;</span>: 15,
-    <span style="color:#d14">&#34;coldMinute&#34;</span>: -1,
-    <span style="color:#d14">&#34;coldHour&#34;</span>: -1,
-    <span style="color:#d14">&#34;coldDay&#34;</span>: -1
-  <span style="color:#000;font-weight:bold">}</span>,
-  <span style="color:#d14">&#34;records&#34;</span>: <span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#d14">&#34;normal&#34;</span>: 3,
-    <span style="color:#d14">&#34;trace&#34;</span>: 10,
-    <span style="color:#d14">&#34;zipkinTrace&#34;</span>: 3,
-    <span style="color:#d14">&#34;log&#34;</span>: 3,
-    <span style="color:#d14">&#34;browserErrorLog&#34;</span>: 3,
-    <span style="color:#d14">&#34;coldNormal&#34;</span>: -1,
-    <span style="color:#d14">&#34;coldTrace&#34;</span>: 30,
-    <span style="color:#d14">&#34;coldZipkinTrace&#34;</span>: -1,
-    <span style="color:#d14">&#34;coldLog&#34;</span>: -1,
-    <span style="color:#d14">&#34;coldBrowserErrorLog&#34;</span>: -1
-  <span style="color:#000;font-weight:bold">}</span>
-<span style="color:#000;font-weight:bold">}</span>
-</code></pre></div>
 
 
 
@@ -3020,6 +2966,16 @@ records.browserErrorLog.cold<span style="color:#000;font-weight:bold">=</span>-1
 
 
 
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#admin-ui">Admin UI</a>
+      <ul>
+        <li><a href="#vantage-studio-community">Vantage Studio (community)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
 
 
 
@@ -3133,6 +3089,10 @@ records.browserErrorLog.cold<span style="color:#000;font-weight:bold">=</span>-1
 
     </div>
     
+
+
+
+
 
 
 

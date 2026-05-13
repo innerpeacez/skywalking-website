@@ -29,24 +29,27 @@
 <meta name="theme-color" content="#ffffff">
 
 <title>Status APIs | Apache SkyWalking</title><meta property="og:title" content="Status APIs" />
-<meta property="og:description" content="Status APIs Status APIs are a set of APIs that allow you to get the status of the OAP status and measurements of queries. They are useful for monitoring the health of the OAP server and to diagnose and troubleshoot issues caused by configurations and performance bottlenecks.
-Since v10, we begin to add status APIs to help users to understand the status of the OAP server, besides looking the raw logs and self-observability solutions." />
+<meta property="og:description" content="Status APIs  Moved. As of 10.5.0 the Status API documentation has consolidated under admin-api/status.md, alongside the rest of the admin-server endpoints (Inspect, Runtime Rule, DSL Debug).
+Per-endpoint pages that previously lived here:
+ Dump Effective Initial Configurations API — see /debugging/config/dump in the new consolidated page. Tracing Query Execution APIs — see /debugging/query/... in the new consolidated page. Get Effective TTL Configurations API — see /status/config/ttl. Query Cluster Nodes API — see /status/cluster/nodes." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/main/next/en/status/status_apis/" />
 
 <meta itemprop="name" content="Status APIs">
-<meta itemprop="description" content="Status APIs Status APIs are a set of APIs that allow you to get the status of the OAP status and measurements of queries. They are useful for monitoring the health of the OAP server and to diagnose and troubleshoot issues caused by configurations and performance bottlenecks.
-Since v10, we begin to add status APIs to help users to understand the status of the OAP server, besides looking the raw logs and self-observability solutions.">
+<meta itemprop="description" content="Status APIs  Moved. As of 10.5.0 the Status API documentation has consolidated under admin-api/status.md, alongside the rest of the admin-server endpoints (Inspect, Runtime Rule, DSL Debug).
+Per-endpoint pages that previously lived here:
+ Dump Effective Initial Configurations API — see /debugging/config/dump in the new consolidated page. Tracing Query Execution APIs — see /debugging/query/... in the new consolidated page. Get Effective TTL Configurations API — see /status/config/ttl. Query Cluster Nodes API — see /status/cluster/nodes.">
 
-<meta itemprop="wordCount" content="214">
+<meta itemprop="wordCount" content="111">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Status APIs"/>
-<meta name="twitter:description" content="Status APIs Status APIs are a set of APIs that allow you to get the status of the OAP status and measurements of queries. They are useful for monitoring the health of the OAP server and to diagnose and troubleshoot issues caused by configurations and performance bottlenecks.
-Since v10, we begin to add status APIs to help users to understand the status of the OAP server, besides looking the raw logs and self-observability solutions."/>
+<meta name="twitter:description" content="Status APIs  Moved. As of 10.5.0 the Status API documentation has consolidated under admin-api/status.md, alongside the rest of the admin-server endpoints (Inspect, Runtime Rule, DSL Debug).
+Per-endpoint pages that previously lived here:
+ Dump Effective Initial Configurations API — see /debugging/config/dump in the new consolidated page. Tracing Query Execution APIs — see /debugging/query/... in the new consolidated page. Get Effective TTL Configurations API — see /status/config/ttl. Query Cluster Nodes API — see /status/cluster/nodes."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -2002,72 +2005,6 @@ if (!doNotTrack) {
 
     
 
-    <li>
-        
-
-            
-            <a href="#">Status APIs<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/status_apis">Introduction</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/config_dump">Dump Effective Initial Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/query-tracing">Tracing Query Execution</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_ttl_setup">Get Effective TTL Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_cluster_nodes">Get Node List in the Cluster</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_alarm_runtime_status">Get Alarm Runtime Status</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
 </ul>
 
         
@@ -2253,6 +2190,64 @@ if (!doNotTrack) {
 
 </ul>
 
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Status API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/status">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/debugging/config_dump">Dump Effective Initial Configurations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/debugging/query-tracing">Tracing Query Execution</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/inspect">Inspect API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/admin-ui">Admin UI (Community)</a>
         
     </li>
 
@@ -2872,7 +2867,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 0cec0de</div>
+                  <div class="commit-id">Commit Id: dc77df6</div>
                 
 
 
@@ -2918,34 +2913,32 @@ if (!doNotTrack) {
 
 
 	<h1 id="status-apis">Status APIs</h1>
-<p>Status APIs are a set of APIs that allow you to get the status of the OAP status and measurements of queries.
-They are useful for monitoring the health of the OAP server and to diagnose and troubleshoot issues caused by
-configurations and performance bottlenecks.</p>
-<p>Since v10, we begin to add status APIs to help users to understand the status of the OAP server, besides looking the raw
-logs and self-observability solutions.</p>
+<blockquote>
+<p><strong>Moved.</strong> As of 10.5.0 the Status API documentation has consolidated under
+<a href="../../setup/backend/admin-api/status">admin-api/status.md</a>, alongside the
+rest of the admin-server endpoints (Inspect, Runtime Rule, DSL Debug).</p>
+<p>Per-endpoint pages that previously lived here:</p>
 <ul>
-<li><a href="../../debugging/config_dump">Dump Effective Initial Configurations API</a></li>
-<li><a href="../../debugging/query-tracing">Tracing Query Execution APIs</a></li>
-<li><a href="../query_ttl_setup">Get Effective TTL Configurations API</a></li>
-<li><a href="../query_cluster_nodes">Query Cluster Nodes API</a></li>
-<li><a href="../query_alarm_runtime_status">Get Alarm Runtime Status API</a></li>
+<li><strong>Dump Effective Initial Configurations API</strong> — see
+<a href="../../setup/backend/admin-api/status#debuggingconfigdump"><code>/debugging/config/dump</code></a>
+in the new consolidated page.</li>
+<li><strong>Tracing Query Execution APIs</strong> — see
+<a href="../../setup/backend/admin-api/status#debuggingquery"><code>/debugging/query/...</code></a>
+in the new consolidated page.</li>
+<li><strong>Get Effective TTL Configurations API</strong> — see
+<a href="../../setup/backend/admin-api/status#statusconfigttl"><code>/status/config/ttl</code></a>.</li>
+<li><strong>Query Cluster Nodes API</strong> — see
+<a href="../../setup/backend/admin-api/status#statusclusternodes"><code>/status/cluster/nodes</code></a>.</li>
+<li><strong>Get Alarm Runtime Status API</strong> — see
+<a href="../../setup/backend/admin-api/status#statusalarmrules"><code>/status/alarm/rules</code></a>
+and the per-rule / per-entity drill-downs.</li>
 </ul>
-<p>If you have a proposal about new status API, please don&rsquo;t hesitate
-to <a href="https://github.com/apache/skywalking/discussions/new?category=ideas">create a discussion</a>.
-The basic principles for a status API are</p>
-<ol>
-<li>It should be useful for users to understand the status of the OAP server or the reason of the performance behavior,
-rather than a function feature.</li>
-<li>It should be on-demand and not impact the performance of the OAP server too much, especially in the production
-environment.</li>
-<li>HTTP APIs are preferred unless there is a special reason to use other.</li>
-</ol>
-<h2 id="disable-status-apis">Disable Status APIs</h2>
-<p>By default, this service is open for helping users to debug and diagnose. If you want to disable it, you need to disable
-the whole <code>status-query</code> module through setting <code>selector=-</code>.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">status-query</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#000080">selector</span>:<span style="color:#bbb"> </span>${SW_STATUS_QUERY:default}<span style="color:#bbb">
-</span></code></pre></div>
+<p>The new Inspect API (10.5.0) is documented
+at <a href="../../setup/backend/admin-api/inspect">admin-api/inspect.md</a>.</p>
+</blockquote>
+<p>This stub will be removed in a future minor release. Please update any
+links pointing here.</p>
+
 
 
 
@@ -2977,16 +2970,6 @@ the whole <code>status-query</code> module through setting <code>selector=-</cod
 
 
 
-
-<nav id="TableOfContents">
-  <ul>
-    <li><a href="#status-apis">Status APIs</a>
-      <ul>
-        <li><a href="#disable-status-apis">Disable Status APIs</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
 
 
 
@@ -3100,6 +3083,10 @@ the whole <code>status-query</code> module through setting <code>selector=-</cod
 
     </div>
     
+
+
+
+
 
 
 

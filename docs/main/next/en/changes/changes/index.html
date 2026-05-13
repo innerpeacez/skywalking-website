@@ -36,7 +36,7 @@
 <meta itemprop="name" content="10.5.0">
 <meta itemprop="description" content="10.5.0 Project  New admin-server module — shared host for admin / on-demand write APIs. Runs on two ports: an HTTP REST surface (default 17128) for operator-facing endpoints, and an admin-internal gRPC bus (default 17129) for peer-to-peer cluster RPCs (runtime-rule Suspend / Resume / Forward; DSL debug install / collect / stop / stopByClientId). The admin-internal bus is a dedicated transport separate from the public agent / cluster gRPC port (core.">
 
-<meta itemprop="wordCount" content="2430">
+<meta itemprop="wordCount" content="2729">
 
 
 
@@ -1999,72 +1999,6 @@ if (!doNotTrack) {
 
     
 
-    <li>
-        
-
-            
-            <a href="#">Status APIs<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/status_apis">Introduction</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/config_dump">Dump Effective Initial Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/query-tracing">Tracing Query Execution</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_ttl_setup">Get Effective TTL Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_cluster_nodes">Get Node List in the Cluster</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_alarm_runtime_status">Get Alarm Runtime Status</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
 </ul>
 
         
@@ -2250,6 +2184,64 @@ if (!doNotTrack) {
 
 </ul>
 
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Status API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/status">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/debugging/config_dump">Dump Effective Initial Configurations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/debugging/query-tracing">Tracing Query Execution</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/inspect">Inspect API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/admin-ui">Admin UI (Community)</a>
         
     </li>
 
@@ -2869,7 +2861,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 0cec0de</div>
+                  <div class="commit-id">Commit Id: dc77df6</div>
                 
 
 
@@ -2925,18 +2917,18 @@ stopByClientId). The admin-internal bus is a dedicated transport separate from t
 public agent / cluster gRPC port (<code>core.gRPCPort</code>, default <code>11800</code>) so privileged
 admin RPCs stay out of the agent network&rsquo;s blast radius — operators bind <code>gRPCHost</code>
 to a private peer-to-peer interface only. Both the runtime-rule plugin and the new
-DSL Debug API (below) mount onto this shared host. Disabled by default
-(<code>SW_ADMIN_SERVER=default</code> to enable); has no built-in authentication and <strong>must</strong> be
+DSL Debug API (below) mount onto this shared host. <strong>Enabled by default</strong> so the
+status feature module is reachable out of the box; the host binds to
+<code>0.0.0.0:17128</code> and has no built-in authentication and <strong>must</strong> be
 gateway-protected with IP allow-lists, never exposed to the public internet (see the
-<a href="../../setup/backend/admin-api/readme">Admin API security notice</a>). The runtime-rule
+<a href="../../setup/backend/admin-api/readme">Admin API security notice</a>). Set
+<code>SW_ADMIN_SERVER=</code> (empty) to disable entirely. The runtime-rule
 config block loses its <code>restHost</code>/<code>restPort</code>/<code>restContextPath</code>/<code>restIdleTimeOut</code>/
 <code>restAcceptQueueSize</code>/<code>httpMaxRequestHeaderSize</code> keys (and the matching
 <code>SW_RECEIVER_RUNTIME_RULE_REST_*</code> env vars); host-level knobs move under the new
 <code>admin-server</code> block (<code>SW_ADMIN_SERVER_HOST</code> / <code>SW_ADMIN_SERVER_PORT</code> /
 <code>SW_ADMIN_SERVER_GRPC_HOST</code> / <code>SW_ADMIN_SERVER_GRPC_PORT</code> /
-<code>SW_ADMIN_SERVER_INTERNAL_COMM_TIMEOUT</code> etc.). Operators upgrading to 10.5.0 with
-<code>SW_RECEIVER_RUNTIME_RULE=default</code> must also set <code>SW_ADMIN_SERVER=default</code>; OAP
-fails fast at startup otherwise.</li>
+<code>SW_ADMIN_SERVER_INTERNAL_COMM_TIMEOUT</code> etc.).</li>
 <li><strong>Runtime rule hot-update for MAL and LAL.</strong> Operators can now ship metric (MAL) and log
 (LAL) rule changes without restarting OAP. A push to a new admin endpoint persists the rule
 to the configured storage backend, and every node in the cluster converges to the new
@@ -2979,8 +2971,8 @@ any OAP. Cluster convergence on the periodic refresh tick is configurable via
 disabled by default and listens on port <code>17128</code> (HTTP) when enabled. It has no
 built-in authentication — operators must gateway-protect it with IP allow-lists and
 never expose it to the public internet.</strong> Routes mount on the new <code>admin-server</code>
-HTTP host, so enabling the runtime-rule API requires both <code>SW_ADMIN_SERVER=default</code>
-and <code>SW_RECEIVER_RUNTIME_RULE=default</code>.</li>
+HTTP host, which is on by default; enable the runtime-rule feature with
+<code>SW_RECEIVER_RUNTIME_RULE=default</code>.</li>
 </ul>
 </li>
 <li><strong>Live debugger for MAL / LAL / OAL</strong> — implements <a href="../../swip/swip-13">SWIP-13 Live Debugger for MAL / LAL / OAL</a>.
@@ -2993,7 +2985,8 @@ install to peers, returns <code>404 rule_not_found</code> only when no node owns
 L7 load balancer in front of the admin port routes operator requests freely. Mounts on
 the shared <code>admin-server</code> host (<code>/dsl-debugging/*</code> for session control plane,
 <code>/runtime/oal/*</code> for the OAL rule picker). Disabled by default; enable with
-<code>SW_DSL_DEBUGGING=default</code> <em>and</em> <code>SW_ADMIN_SERVER=default</code>. <code>injectionEnabled</code> is a
+<code>SW_DSL_DEBUGGING=default</code> (admin-server itself is on by default).
+<code>injectionEnabled</code> is a
 boot-time codegen switch defaulting to <code>true</code> — once the module is enabled, probes
 fire and sessions record samples; set <code>false</code> only if the REST surface is wanted but
 no codegen-side probe overhead is acceptable. Per-session limits enforce hard caps
@@ -3028,6 +3021,39 @@ proceeds anyway so a single slow node doesn&rsquo;t wedge the apply.</li>
 <code>4.2.10.Final</code> → <code>4.2.12.Final</code>, Netty-tcnative <code>2.0.75</code> → <code>2.0.77</code>, pgv (protoc-gen-validate)
 <code>1.2.1</code> → <code>1.3.0</code>. Driven by the new BanyanDB schema-consistency RPCs whose generated
 validation code requires the <code>protobuf-java 4.x</code> runtime.</li>
+<li><strong>Inspect API on admin-server.</strong> Two new admin-only HTTP endpoints for
+browsing the live metric catalog and the entities currently emitting
+values for a given metric. <code>GET /inspect/metrics</code> lists every registered
+metric with its type / scope / catalog / value-column name / supported
+downsamplings (pure metadata, no I/O). <code>GET /inspect/entities</code> runs the
+storage backend&rsquo;s entity scan for a metric over a time range + step
+(capped at 300 rows) and returns each entity decoded into an MQE-ready
+payload — the response includes a <code>mqeEntity</code> block the operator pastes
+verbatim into the public GraphQL <code>execExpression</code> mutation, plus the
+source service&rsquo;s layer(s) (multi-layer services emit one row per layer).
+Restricted to <code>REGULAR_VALUE</code> / <code>LABELED_VALUE</code> metrics and to non-Process
+scopes; <code>HEATMAP</code> / <code>SAMPLED_RECORD</code> / <code>Process</code> / <code>ProcessRelation</code>
+return 400. Adds <code>IMetricsQueryDAO.listEntityIdsInRange</code> as an abstract
+method on the interface — any 3rd party storage backend must explicitly
+override or the build fails. <strong>Enabled by default</strong> (both <code>SW_INSPECT</code> and
+<code>SW_ADMIN_SERVER</code> are on by default); set <code>SW_INSPECT=</code> empty to disable.
+Operator reference: <a href="../../setup/backend/admin-api/inspect">Inspect API</a>.</li>
+<li><strong>Status API relocated onto <code>server-admin/</code>.</strong> The legacy
+<code>status-query-plugin</code> is replaced by a new <code>status</code> feature module under
+<code>server-admin/</code>. Every existing route — <code>/status/cluster/nodes</code>,
+<code>/status/alarm/*</code>, <code>/status/config/ttl</code>, <code>/debugging/config/dump</code>,
+<code>/debugging/query/*</code> — keeps its URI and payload unchanged. The module
+dual-binds the handlers: always on the public REST register (preserving
+the <code>core.restPort</code> binding <code>skywalking-ui</code> consumes) and additionally
+on the admin-server register when admin-server is enabled, so operators
+driving the admin host get the same surface alongside <code>/inspect/*</code> /
+<code>/dsl-debugging/*</code> / <code>/runtime/rule/*</code>. The selector renames from the
+QUERY-plugin form (<code>SW_QUERY=…,status-query-plugin</code>) to a top-level
+<code>SW_STATUS=default</code> (on by default); custom <code>application.yml</code> overrides
+referencing <code>status-query</code> need to repoint to <code>status</code>. Default
+deployments need no change. Status docs move from <code>docs/en/status/</code> to
+<a href="../../setup/backend/admin-api/status">admin-api/status.md</a>; the legacy
+<code>docs/en/status/status_apis.md</code> keeps a one-cycle redirect stub.</li>
 </ul>
 <h4 id="oap-server">OAP Server</h4>
 <ul>
@@ -3231,6 +3257,10 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 
     </div>
     
+
+
+
+
 
 
 

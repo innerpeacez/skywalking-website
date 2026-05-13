@@ -28,22 +28,25 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>Get Node List in the Cluster | Apache SkyWalking</title><meta property="og:title" content="Get Node List in the Cluster" />
-<meta property="og:description" content="Get Node List in the Cluster The OAP cluster is a set of OAP servers that work together to provide a scalable and reliable service. The OAP cluster supports various cluster coordinator to manage the cluster membership and the communication. This API provides capability to query the node list in the cluster from every OAP node perspective. If the cluster coordinator doesn&rsquo;t work properly, the node list may be incomplete or incorrect." />
+<title>Status API | Apache SkyWalking</title><meta property="og:title" content="Status API" />
+<meta property="og:description" content="Status API The Status API is a set of read-only HTTP endpoints for inspecting cluster membership, alarm runtime state, effective configuration / TTL settings, and per-query debug traces. Hosted by the status feature module.
+Status API is bi-host: every route is published on both the public REST surface (core.restPort, default 12800 — where skywalking-ui and any existing operator scripts already reach it) and the admin-server surface (default 17128) when admin-server is enabled." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/main/next/en/status/query_cluster_nodes/" />
+<meta property="og:url" content="/docs/main/next/en/setup/backend/admin-api/status/" />
 
-<meta itemprop="name" content="Get Node List in the Cluster">
-<meta itemprop="description" content="Get Node List in the Cluster The OAP cluster is a set of OAP servers that work together to provide a scalable and reliable service. The OAP cluster supports various cluster coordinator to manage the cluster membership and the communication. This API provides capability to query the node list in the cluster from every OAP node perspective. If the cluster coordinator doesn&rsquo;t work properly, the node list may be incomplete or incorrect.">
+<meta itemprop="name" content="Status API">
+<meta itemprop="description" content="Status API The Status API is a set of read-only HTTP endpoints for inspecting cluster membership, alarm runtime state, effective configuration / TTL settings, and per-query debug traces. Hosted by the status feature module.
+Status API is bi-host: every route is published on both the public REST surface (core.restPort, default 12800 — where skywalking-ui and any existing operator scripts already reach it) and the admin-server surface (default 17128) when admin-server is enabled.">
 
-<meta itemprop="wordCount" content="195">
+<meta itemprop="wordCount" content="490">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Get Node List in the Cluster"/>
-<meta name="twitter:description" content="Get Node List in the Cluster The OAP cluster is a set of OAP servers that work together to provide a scalable and reliable service. The OAP cluster supports various cluster coordinator to manage the cluster membership and the communication. This API provides capability to query the node list in the cluster from every OAP node perspective. If the cluster coordinator doesn&rsquo;t work properly, the node list may be incomplete or incorrect."/>
+<meta name="twitter:title" content="Status API"/>
+<meta name="twitter:description" content="Status API The Status API is a set of read-only HTTP endpoints for inspecting cluster membership, alarm runtime state, effective configuration / TTL settings, and per-query debug traces. Hosted by the status feature module.
+Status API is bi-host: every route is published on both the public REST surface (core.restPort, default 12800 — where skywalking-ui and any existing operator scripts already reach it) and the admin-server surface (default 17128) when admin-server is enabled."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -72,7 +75,7 @@ if (!doNotTrack) {
 
 
 
-    <title>Get Node List in the Cluster | Apache SkyWalking</title>
+    <title>Status API | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -1999,72 +2002,6 @@ if (!doNotTrack) {
 
     
 
-    <li>
-        
-
-            
-            <a href="#">Status APIs<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/status_apis">Introduction</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/config_dump">Dump Effective Initial Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/query-tracing">Tracing Query Execution</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_ttl_setup">Get Effective TTL Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_cluster_nodes">Get Node List in the Cluster</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_alarm_runtime_status">Get Alarm Runtime Status</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
 </ul>
 
         
@@ -2250,6 +2187,64 @@ if (!doNotTrack) {
 
 </ul>
 
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Status API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/status">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/debugging/config_dump">Dump Effective Initial Configurations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/debugging/query-tracing">Tracing Query Execution</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/inspect">Inspect API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/admin-ui">Admin UI (Community)</a>
         
     </li>
 
@@ -2869,7 +2864,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 0cec0de</div>
+                  <div class="commit-id">Commit Id: dc77df6</div>
                 
 
 
@@ -2914,40 +2909,130 @@ if (!doNotTrack) {
 
 
 
-	<h1 id="get-node-list-in-the-cluster">Get Node List in the Cluster</h1>
-<p>The OAP cluster is a set of OAP servers that work together to provide a scalable and reliable service. The OAP cluster
-supports <a href="../../setup/backend/backend-cluster">various cluster coordinator</a> to manage the cluster membership and the
-communication.
-This API provides capability to query the node list in the cluster from every OAP node perspective. If the cluster
-coordinator doesn&rsquo;t work properly, the node list may be incomplete or incorrect. So, we recommend you to check the
-node list when set up a cluster.</p>
-<p>This API is used to get the unified and effective TTL configurations.</p>
+	<h1 id="status-api">Status API</h1>
+<p>The Status API is a set of read-only HTTP endpoints for inspecting cluster
+membership, alarm runtime state, effective configuration / TTL settings,
+and per-query debug traces. Hosted by the <code>status</code> feature module.</p>
+<p>Status API is <strong>bi-host</strong>: every route is published on <strong>both</strong> the public
+REST surface (<code>core.restPort</code>, default <code>12800</code> — where <code>skywalking-ui</code> and
+any existing operator scripts already reach it) and the admin-server
+surface (default <code>17128</code>) when admin-server is enabled. Operators can drive
+status from whichever surface their network policy allows; URIs and
+payloads are identical on both hosts. See <a href="#hosting">Hosting</a> for the
+selector and the dual-bind contract.</p>
+<blockquote>
+<p>The legacy <code>status-query-plugin</code> was relocated into
+<code>server-admin/status</code> in 10.5.0. URI paths and response payloads are
+unchanged. See the <a href="../../../../changes/changes">10.5.0 changelog</a>.</p>
+</blockquote>
+<h2 id="hosting">Hosting</h2>
+<p>The <code>status</code> feature module <strong>dual-binds</strong> every handler:</p>
 <ul>
-<li>URL, <code>http://{core restHost}:{core restPort}/status/cluster/nodes</code></li>
-<li>HTTP GET method.</li>
+<li><strong>Always on the public REST surface</strong> (<code>core.restPort</code>, default <code>12800</code>,
+or the sharing-server REST port if configured). This preserves the
+binding <code>skywalking-ui</code> and any existing operator scripts already use.</li>
+<li><strong>Additionally on the admin-server surface</strong> (default <code>17128</code>).
+<code>admin-server</code> is enabled by default, and the admin port is
+gateway-protected per the <a href="../readme#security-notice">admin-server security notice</a>,
+so operators that lock down their public REST surface can drive status
+from the same private host as <code>/inspect/*</code>, <code>/dsl-debugging/*</code>, and
+<code>/runtime/rule/*</code>. Set <code>SW_ADMIN_SERVER=</code> (empty) to close the admin
+port — the public REST binding still serves <code>/status/*</code>.</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-  <span style="color:#000080">&#34;nodes&#34;</span>: [
-    {
-      <span style="color:#000080">&#34;host&#34;</span>: <span style="color:#d14">&#34;10.0.12.23&#34;</span>,
-      <span style="color:#000080">&#34;port&#34;</span>: <span style="color:#099">11800</span>,
-      <span style="color:#000080">&#34;self&#34;</span>: <span style="color:#000;font-weight:bold">true</span>
-    },
-    {
-      <span style="color:#000080">&#34;host&#34;</span>: <span style="color:#d14">&#34;10.0.12.25&#34;</span>,
-      <span style="color:#000080">&#34;port&#34;</span>: <span style="color:#099">11800</span>,
-      <span style="color:#000080">&#34;self&#34;</span>: <span style="color:#000;font-weight:bold">false</span>
-    },
-    {
-      <span style="color:#000080">&#34;host&#34;</span>: <span style="color:#d14">&#34;10.0.12.37&#34;</span>,
-      <span style="color:#000080">&#34;port&#34;</span>: <span style="color:#099">11800</span>,
-      <span style="color:#000080">&#34;self&#34;</span>: <span style="color:#000;font-weight:bold">false</span>
-    }
-  ]
-}
-</code></pre></div><p>The <code>nodes</code> list all the nodes in the cluster. The size of the list should be exactly same as your cluster setup.
-The <code>host</code> and <code>port</code> are the address of the OAP node, which are used for OAP nodes communicating with each other. The
-<code>self</code> is a flag to indicate whether the node is the current node, others are remote nodes.</p>
+<p>The module is enabled by default — the legacy posture is preserved. To
+disable explicitly, unset <code>SW_STATUS</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#0086b3">export</span> <span style="color:#008080">SW_STATUS</span><span style="color:#000;font-weight:bold">=</span>                       <span style="color:#998;font-style:italic"># disable</span>
+<span style="color:#0086b3">export</span> <span style="color:#008080">SW_STATUS</span><span style="color:#000;font-weight:bold">=</span>default                <span style="color:#998;font-style:italic"># default (enabled)</span>
+</code></pre></div><h2 id="configuration">Configuration</h2>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">status</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">selector</span>:<span style="color:#bbb"> </span>${SW_STATUS:default}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">default</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">keywords4MaskingSecretsOfConfig</span>:<span style="color:#bbb"> </span>${SW_DEBUGGING_QUERY_KEYWORDS_FOR_MASKING_SECRETS:user,password,token,accessKey,secretKey,authentication}<span style="color:#bbb">
+</span></code></pre></div><p><code>keywords4MaskingSecretsOfConfig</code> is consumed by <code>/debugging/config/dump</code>
+to redact configuration values whose key contains any listed substring.</p>
+<h2 id="endpoints">Endpoints</h2>
+<h3 id="statusclusternodes"><code>/status/cluster/nodes</code></h3>
+<p>Returns the OAP cluster peer list as the cluster module sees it. Useful
+for confirming that every node has joined and is reporting back.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl http://oap:12800/status/cluster/nodes
+</code></pre></div><h3 id="statusalarmrules"><code>/status/alarm/rules</code></h3>
+<p>Lists registered alarm rules.</p>
+<h3 id="statusalarmruleid"><code>/status/alarm/{ruleId}</code></h3>
+<p>Per-rule runtime status — current window state, last evaluation, the
+entities the rule has triggered against.</p>
+<h3 id="statusalarmruleidentityname"><code>/status/alarm/{ruleId}/{entityName}</code></h3>
+<p>Drill-down: status of one specific entity under a given rule.</p>
+<h3 id="statusconfigttl"><code>/status/config/ttl</code></h3>
+<p>Returns the effective TTL configuration the OAP loaded at boot.</p>
+<h3 id="debuggingconfigdump"><code>/debugging/config/dump</code></h3>
+<p>Dumps the effective configuration that was applied at boot. Values whose
+key contains any substring listed in <code>keywords4MaskingSecretsOfConfig</code> are
+redacted. Output is YAML-shaped key=value lines.</p>
+<p>The Inspect API uses this endpoint as its REST-URL discovery primitive —
+clients parse the dump for <code>core.restHost</code> / <code>core.restPort</code> (or the
+sharing-server overrides) once at session start to learn where the public
+GraphQL / MQE surface lives.</p>
+<h3 id="debuggingquery"><code>/debugging/query/...</code></h3>
+<p>Runs a named query path with debug tracing enabled and returns the
+captured DAO / storage spans alongside the result. Useful for diagnosing
+why a query is slow or returning unexpected data.</p>
+<table>
+<thead>
+<tr>
+<th>URI</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/debugging/query/mqe</code></td>
+<td>Run an MQE expression with tracing.</td>
+</tr>
+<tr>
+<td><code>/debugging/query/trace/queryBasicTraces</code></td>
+<td>Trace search brief.</td>
+</tr>
+<tr>
+<td><code>/debugging/query/trace/queryTrace</code></td>
+<td>Trace detail.</td>
+</tr>
+<tr>
+<td><code>/debugging/query/zipkin/api/v2/traces</code></td>
+<td>Zipkin compat brief.</td>
+</tr>
+<tr>
+<td><code>/debugging/query/zipkin/api/v2/trace</code></td>
+<td>Zipkin compat detail.</td>
+</tr>
+<tr>
+<td><code>/debugging/query/topology/getGlobalTopology</code></td>
+<td>Global topology debug.</td>
+</tr>
+<tr>
+<td><code>/debugging/query/topology/getServicesTopology</code></td>
+<td>Per-service topology debug.</td>
+</tr>
+<tr>
+<td><code>/debugging/query/topology/getServiceInstanceTopology</code></td>
+<td>Per-instance topology debug.</td>
+</tr>
+<tr>
+<td><code>/debugging/query/topology/getEndpointDependencies</code></td>
+<td>Endpoint dependencies debug.</td>
+</tr>
+<tr>
+<td><code>/debugging/query/topology/getProcessTopology</code></td>
+<td>Process topology debug.</td>
+</tr>
+<tr>
+<td><code>/debugging/query/log/queryLogs</code></td>
+<td>Log query debug.</td>
+</tr>
+</tbody>
+</table>
+<p>The query parameters mirror the corresponding GraphQL inputs (consult the
+schema definitions under
+<code>oap-server/server-query-plugin/query-graphql-plugin/src/main/resources/query-protocol</code>).</p>
 
 
 
@@ -2980,6 +3065,28 @@ The <code>host</code> and <code>port</code> are the address of the OAP node, whi
 
 
 
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#status-api">Status API</a>
+      <ul>
+        <li><a href="#hosting">Hosting</a></li>
+        <li><a href="#configuration">Configuration</a></li>
+        <li><a href="#endpoints">Endpoints</a>
+          <ul>
+            <li><a href="#statusclusternodes"><code>/status/cluster/nodes</code></a></li>
+            <li><a href="#statusalarmrules"><code>/status/alarm/rules</code></a></li>
+            <li><a href="#statusalarmruleid"><code>/status/alarm/{ruleId}</code></a></li>
+            <li><a href="#statusalarmruleidentityname"><code>/status/alarm/{ruleId}/{entityName}</code></a></li>
+            <li><a href="#statusconfigttl"><code>/status/config/ttl</code></a></li>
+            <li><a href="#debuggingconfigdump"><code>/debugging/config/dump</code></a></li>
+            <li><a href="#debuggingquery"><code>/debugging/query/...</code></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
 
 
 
@@ -3093,6 +3200,10 @@ The <code>host</code> and <code>port</code> are the address of the OAP node, whi
 
     </div>
     
+
+
+
+
 
 
 

@@ -28,28 +28,28 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>Get Alarm Runtime Status | Apache SkyWalking</title><meta property="og:title" content="Get Alarm Runtime Status" />
-<meta property="og:description" content="Get Alarm Runtime Status OAP calculates the alarm conditions in the memory based on the alarm rules and the metrics data. If the OAP cluster has multiple instances, each instance will calculate the alarm conditions independently. You can query from any OAP instance to get the all instances&#39; alarm running status.
-The following APIs are exposed to make the alerting running kernel visible.
-Get Alarm Running Rules Return the list of alarm running rules." />
+<title>Inspect API | Apache SkyWalking</title><meta property="og:title" content="Inspect API" />
+<meta property="og:description" content="Inspect API  Available since 10.5.0.
+ The Inspect API lives on admin-server and exposes two browse endpoints that let operators answer two questions without writing exploratory MQE:
+ Which metrics has OAP registered, and at what downsampling? For metric X in time range T, which entities currently hold values?  The output of (2) carries a ready-to-paste mqeEntity payload, so the follow-up MQE call against the public GraphQL execExpression mutation is copy-paste from the inspect response." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/main/next/en/status/query_alarm_runtime_status/" />
+<meta property="og:url" content="/docs/main/next/en/setup/backend/admin-api/inspect/" />
 
-<meta itemprop="name" content="Get Alarm Runtime Status">
-<meta itemprop="description" content="Get Alarm Runtime Status OAP calculates the alarm conditions in the memory based on the alarm rules and the metrics data. If the OAP cluster has multiple instances, each instance will calculate the alarm conditions independently. You can query from any OAP instance to get the all instances&#39; alarm running status.
-The following APIs are exposed to make the alerting running kernel visible.
-Get Alarm Running Rules Return the list of alarm running rules.">
+<meta itemprop="name" content="Inspect API">
+<meta itemprop="description" content="Inspect API  Available since 10.5.0.
+ The Inspect API lives on admin-server and exposes two browse endpoints that let operators answer two questions without writing exploratory MQE:
+ Which metrics has OAP registered, and at what downsampling? For metric X in time range T, which entities currently hold values?  The output of (2) carries a ready-to-paste mqeEntity payload, so the follow-up MQE call against the public GraphQL execExpression mutation is copy-paste from the inspect response.">
 
-<meta itemprop="wordCount" content="732">
+<meta itemprop="wordCount" content="871">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Get Alarm Runtime Status"/>
-<meta name="twitter:description" content="Get Alarm Runtime Status OAP calculates the alarm conditions in the memory based on the alarm rules and the metrics data. If the OAP cluster has multiple instances, each instance will calculate the alarm conditions independently. You can query from any OAP instance to get the all instances&#39; alarm running status.
-The following APIs are exposed to make the alerting running kernel visible.
-Get Alarm Running Rules Return the list of alarm running rules."/>
+<meta name="twitter:title" content="Inspect API"/>
+<meta name="twitter:description" content="Inspect API  Available since 10.5.0.
+ The Inspect API lives on admin-server and exposes two browse endpoints that let operators answer two questions without writing exploratory MQE:
+ Which metrics has OAP registered, and at what downsampling? For metric X in time range T, which entities currently hold values?  The output of (2) carries a ready-to-paste mqeEntity payload, so the follow-up MQE call against the public GraphQL execExpression mutation is copy-paste from the inspect response."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -78,7 +78,7 @@ if (!doNotTrack) {
 
 
 
-    <title>Get Alarm Runtime Status | Apache SkyWalking</title>
+    <title>Inspect API | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -2005,72 +2005,6 @@ if (!doNotTrack) {
 
     
 
-    <li>
-        
-
-            
-            <a href="#">Status APIs<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/status_apis">Introduction</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/config_dump">Dump Effective Initial Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/query-tracing">Tracing Query Execution</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_ttl_setup">Get Effective TTL Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_cluster_nodes">Get Node List in the Cluster</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_alarm_runtime_status">Get Alarm Runtime Status</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
 </ul>
 
         
@@ -2256,6 +2190,64 @@ if (!doNotTrack) {
 
 </ul>
 
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Status API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/status">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/debugging/config_dump">Dump Effective Initial Configurations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/debugging/query-tracing">Tracing Query Execution</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/inspect">Inspect API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/admin-ui">Admin UI (Community)</a>
         
     </li>
 
@@ -2875,7 +2867,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 0cec0de</div>
+                  <div class="commit-id">Commit Id: dc77df6</div>
                 
 
 
@@ -2920,266 +2912,248 @@ if (!doNotTrack) {
 
 
 
-	<h1 id="get-alarm-runtime-status">Get Alarm Runtime Status</h1>
-<p>OAP calculates the alarm conditions in the memory based on the alarm rules and the metrics data.
-If the OAP cluster has multiple instances, each instance will calculate the alarm conditions independently.
-You can query from any OAP instance to get the all instances' alarm running status.</p>
-<p>The following APIs are exposed to make the alerting running kernel visible.</p>
-<h2 id="get-alarm-running-rules">Get Alarm Running Rules</h2>
-<p>Return the list of alarm running rules.</p>
+	<h1 id="inspect-api">Inspect API</h1>
+<blockquote>
+<p>Available since 10.5.0.</p>
+</blockquote>
+<p>The Inspect API lives on <code>admin-server</code> and exposes two browse endpoints that
+let operators answer two questions without writing exploratory MQE:</p>
+<ol>
+<li><em>Which metrics has OAP registered, and at what downsampling?</em></li>
+<li><em>For metric <code>X</code> in time range <code>T</code>, which entities currently hold values?</em></li>
+</ol>
+<p>The output of (2) carries a ready-to-paste <code>mqeEntity</code> payload, so the
+follow-up MQE call against the public GraphQL <code>execExpression</code> mutation is
+copy-paste from the inspect response.</p>
+<h2 id="enabling">Enabling</h2>
+<p>Enabled by default. Both <code>SW_ADMIN_SERVER=default</code> and <code>SW_INSPECT=default</code>
+are on out of the box; no opt-in required. To disable:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#0086b3">export</span> <span style="color:#008080">SW_INSPECT</span><span style="color:#000;font-weight:bold">=</span>                          <span style="color:#998;font-style:italic"># disable inspect only</span>
+<span style="color:#0086b3">export</span> <span style="color:#008080">SW_ADMIN_SERVER</span><span style="color:#000;font-weight:bold">=</span>                     <span style="color:#998;font-style:italic"># close the admin host entirely</span>
+</code></pre></div><p>If <code>SW_INSPECT=default</code> is explicitly kept while <code>SW_ADMIN_SERVER=</code> is set
+empty, OAP fails fast at startup with a <code>ModuleNotFoundException: admin-server</code>
+— same gate that protects every other admin feature module.</p>
+<h2 id="security">Security</h2>
+<p>Inspect routes bind on the <strong>admin port</strong> only (default <code>17128</code>). They do
+<strong>not</strong> mirror onto the public REST port — the entity-enumeration scan in
+<code>/inspect/entities</code> competes with user-facing query traffic for storage and
+is intentionally gated behind the private admin surface.</p>
+<p>The general admin-port security guidance applies: gateway-protect with an
+IP allow-list and an authenticating reverse proxy, bind only to a private
+interface, never expose to the public internet. See the
+<a href="../readme#security-notice">admin-server security notice</a>.</p>
+<h2 id="endpoints">Endpoints</h2>
+<h3 id="get-inspectmetrics"><code>GET /inspect/metrics</code></h3>
+<p>Lists registered metrics with type, scope, catalog, value-column name, and
+the downsamplings each metric is materialised at.</p>
+<p>Internal-only entries are filtered:</p>
 <ul>
-<li>URL, <code>http://{core restHost}:{core restPort}/status/alarm/rules</code></li>
-<li>HTTP GET method.</li>
+<li><code>Column.ValueDataType.NOT_VALUE</code> columns (topology lines, service
+entries — persisted but not queryable) are skipped silently.</li>
+<li><code>Scope.All</code>-scoped entries (deprecated, not routable through MQE) are
+skipped silently.</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-  <span style="color:#000080">&#34;oapInstances&#34;</span>: [
+<p>Query parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>regex</code></td>
+<td>no</td>
+<td>Java regex over metric name. Default <code>.*</code>.</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>no</td>
+<td>Filter by <code>REGULAR_VALUE</code> / <code>LABELED_VALUE</code> / <code>HEATMAP</code> / <code>SAMPLED_RECORD</code>. Repeatable.</td>
+</tr>
+<tr>
+<td><code>catalog</code></td>
+<td>no</td>
+<td>Filter by catalog (<code>SERVICE</code>, <code>SERVICE_INSTANCE</code>, <code>ENDPOINT</code>, <code>SERVICE_RELATION</code>, <code>SERVICE_INSTANCE_RELATION</code>, <code>ENDPOINT_RELATION</code>). Repeatable.</td>
+</tr>
+<tr>
+<td><code>mqeQueryable</code></td>
+<td>no</td>
+<td>If <code>true</code>, return only metrics that <code>/inspect/entities</code> accepts (<code>REGULAR_VALUE</code>, <code>LABELED_VALUE</code>). Default <code>false</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl <span style="color:#d14">&#39;http://oap-admin:17128/inspect/metrics?regex=service_cpm&#39;</span>
+</code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;metrics&#34;</span>: [
     {
-      <span style="color:#000080">&#34;address&#34;</span>: <span style="color:#d14">&#34;127.0.0.1_11800&#34;</span>,
-      <span style="color:#000080">&#34;status&#34;</span>: {
-        <span style="color:#000080">&#34;ruleList&#34;</span>: [
-          {
-            <span style="color:#000080">&#34;id&#34;</span>: <span style="color:#d14">&#34;service_percentile_rule&#34;</span>
-          },
-          {
-            <span style="color:#000080">&#34;id&#34;</span>: <span style="color:#d14">&#34;service_resp_time_rule&#34;</span>
-          }
-        ]
+      <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;service_cpm&#34;</span>,
+      <span style="color:#000080">&#34;type&#34;</span>: <span style="color:#d14">&#34;REGULAR_VALUE&#34;</span>,
+      <span style="color:#000080">&#34;catalog&#34;</span>: <span style="color:#d14">&#34;SERVICE&#34;</span>,
+      <span style="color:#000080">&#34;scopeId&#34;</span>: <span style="color:#099">1</span>,
+      <span style="color:#000080">&#34;scope&#34;</span>: <span style="color:#d14">&#34;Service&#34;</span>,
+      <span style="color:#000080">&#34;valueColumnName&#34;</span>: <span style="color:#d14">&#34;value&#34;</span>,
+      <span style="color:#000080">&#34;downsamplings&#34;</span>: [<span style="color:#d14">&#34;MINUTE&#34;</span>, <span style="color:#d14">&#34;HOUR&#34;</span>, <span style="color:#d14">&#34;DAY&#34;</span>]
+    }
+  ]
+}
+</code></pre></div><h3 id="get-inspectentities"><code>GET /inspect/entities</code></h3>
+<p>For a metric + time range + step, returns the entities holding values, each
+decoded into a human-readable shape and an MQE-ready <code>mqeEntity</code> payload.</p>
+<p>Restricted to <code>REGULAR_VALUE</code> and <code>LABELED_VALUE</code> metrics. The non-MQE
+metric types (<code>HEATMAP</code> / <code>SAMPLED_RECORD</code>) and the out-of-scope scopes
+(<code>Process</code> / <code>ProcessRelation</code>) are rejected with <code>400</code>.</p>
+<p>Query parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>metric</code></td>
+<td>yes</td>
+<td>Metric name. Must resolve in <code>ValueColumnMetadata</code>.</td>
+</tr>
+<tr>
+<td><code>start</code></td>
+<td>yes</td>
+<td>Time-range start. Same format as MQE <code>Duration.start</code>: <code>yyyy-MM-dd</code> (DAY), <code>yyyy-MM-dd HH</code> (HOUR), <code>yyyy-MM-dd HHmm</code> (MINUTE), <code>yyyy-MM-dd HHmmss</code> (SECOND). Note <code>HHmm</code> is no-separator — use <code>1230</code>, not <code>12:30</code>.</td>
+</tr>
+<tr>
+<td><code>end</code></td>
+<td>yes</td>
+<td>Time-range end. Format mirrors <code>start</code>.</td>
+</tr>
+<tr>
+<td><code>step</code></td>
+<td>yes</td>
+<td>One of <code>MINUTE</code> / <code>HOUR</code> / <code>DAY</code>. Must be one of the metric&rsquo;s <code>downsamplings</code>.</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>no</td>
+<td>Server-side cap. Default 300, hard-capped at 300.</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>limit</code> is applied as <code>LIMIT N</code> at the storage layer — it bounds the
+total rows scanned (300 ≈ 10 buckets × 30 entities), not 300 distinct
+entities. Backends dedup on <code>entity_id</code> before returning.</p>
+<p>Multi-layer services emit <strong>one row per layer</strong>. The <code>mqeEntity</code> block is
+identical across layer rows (MQE itself does not take a layer parameter);
+the duplication exists so the operator can pick any single layer as the
+investigation entry point. An empty result is <code>{ &quot;rows&quot;: [] }</code> — not an
+error.</p>
+<p>Example — <code>service_cpm</code> over the last 10 minutes, with <code>payment</code> registered
+under both <code>MESH</code> and <code>GENERAL</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl <span style="color:#d14">&#39;http://oap-admin:17128/inspect/entities?metric=service_cpm&amp;start=2026-05-10%201230&amp;end=2026-05-10%201240&amp;step=MINUTE&#39;</span>
+</code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;metric&#34;</span>: <span style="color:#d14">&#34;service_cpm&#34;</span>,
+  <span style="color:#000080">&#34;scope&#34;</span>: <span style="color:#d14">&#34;Service&#34;</span>,
+  <span style="color:#000080">&#34;step&#34;</span>: <span style="color:#d14">&#34;MINUTE&#34;</span>,
+  <span style="color:#000080">&#34;start&#34;</span>: <span style="color:#d14">&#34;2026-05-10 1230&#34;</span>,
+  <span style="color:#000080">&#34;end&#34;</span>:   <span style="color:#d14">&#34;2026-05-10 1240&#34;</span>,
+  <span style="color:#000080">&#34;rows&#34;</span>: [
+    {
+      <span style="color:#000080">&#34;entityId&#34;</span>: <span style="color:#d14">&#34;cGF5bWVudA==.1&#34;</span>,
+      <span style="color:#000080">&#34;decoded&#34;</span>: { <span style="color:#000080">&#34;serviceName&#34;</span>: <span style="color:#d14">&#34;payment&#34;</span>, <span style="color:#000080">&#34;isReal&#34;</span>: <span style="color:#000;font-weight:bold">true</span> },
+      <span style="color:#000080">&#34;layer&#34;</span>: <span style="color:#d14">&#34;GENERAL&#34;</span>,
+      <span style="color:#000080">&#34;mqeEntity&#34;</span>: {
+        <span style="color:#000080">&#34;scope&#34;</span>: <span style="color:#d14">&#34;Service&#34;</span>,
+        <span style="color:#000080">&#34;serviceName&#34;</span>: <span style="color:#d14">&#34;payment&#34;</span>,
+        <span style="color:#000080">&#34;normal&#34;</span>: <span style="color:#000;font-weight:bold">true</span>
       }
     },
     {
-      <span style="color:#000080">&#34;address&#34;</span>: <span style="color:#d14">&#34;127.0.0.1_11801&#34;</span>,
-      <span style="color:#000080">&#34;status&#34;</span>: {
-        <span style="color:#000080">&#34;ruleList&#34;</span>: [
-          {
-            <span style="color:#000080">&#34;id&#34;</span>: <span style="color:#d14">&#34;service_percentile_rule&#34;</span>
-          },
-          {
-            <span style="color:#000080">&#34;id&#34;</span>: <span style="color:#d14">&#34;service_resp_time_rule&#34;</span>
-          }
-        ]
+      <span style="color:#000080">&#34;entityId&#34;</span>: <span style="color:#d14">&#34;cGF5bWVudA==.1&#34;</span>,
+      <span style="color:#000080">&#34;decoded&#34;</span>: { <span style="color:#000080">&#34;serviceName&#34;</span>: <span style="color:#d14">&#34;payment&#34;</span>, <span style="color:#000080">&#34;isReal&#34;</span>: <span style="color:#000;font-weight:bold">true</span> },
+      <span style="color:#000080">&#34;layer&#34;</span>: <span style="color:#d14">&#34;MESH&#34;</span>,
+      <span style="color:#000080">&#34;mqeEntity&#34;</span>: {
+        <span style="color:#000080">&#34;scope&#34;</span>: <span style="color:#d14">&#34;Service&#34;</span>,
+        <span style="color:#000080">&#34;serviceName&#34;</span>: <span style="color:#d14">&#34;payment&#34;</span>,
+        <span style="color:#000080">&#34;normal&#34;</span>: <span style="color:#000;font-weight:bold">true</span>
+      }
+    },
+    {
+      <span style="color:#000080">&#34;entityId&#34;</span>: <span style="color:#d14">&#34;bXlzcWw=.0&#34;</span>,
+      <span style="color:#000080">&#34;decoded&#34;</span>: { <span style="color:#000080">&#34;serviceName&#34;</span>: <span style="color:#d14">&#34;mysql&#34;</span>, <span style="color:#000080">&#34;isReal&#34;</span>: <span style="color:#000;font-weight:bold">false</span> },
+      <span style="color:#000080">&#34;layer&#34;</span>: <span style="color:#d14">&#34;VIRTUAL_DATABASE&#34;</span>,
+      <span style="color:#000080">&#34;mqeEntity&#34;</span>: {
+        <span style="color:#000080">&#34;scope&#34;</span>: <span style="color:#d14">&#34;Service&#34;</span>,
+        <span style="color:#000080">&#34;serviceName&#34;</span>: <span style="color:#d14">&#34;mysql&#34;</span>,
+        <span style="color:#000080">&#34;normal&#34;</span>: <span style="color:#000;font-weight:bold">false</span>
       }
     }
   ]
 }
-</code></pre></div><h2 id="get-alarm-running-rule-info">Get Alarm Running Rule Info</h2>
-<p>Return the detailed information of the alarm running rule.</p>
+</code></pre></div><h2 id="discovering-the-oap-rest-url-for-the-mqe-follow-up">Discovering the OAP REST URL for the MQE follow-up</h2>
+<p>To keep the surface minimal, the inspect API does not introduce a separate
+discovery endpoint. Clients that need to learn which host:port serves the
+public GraphQL / MQE surface parse the response of the existing
+<a href="../status#debuggingconfigdump"><code>/debugging/config/dump</code></a> — also hosted by
+the relocated status feature module — for <code>core.restHost</code> / <code>core.restPort</code>
+(or the sharing-server overrides if configured). One curl + <code>jq</code> once at
+session start is enough.</p>
+<h2 id="errors">Errors</h2>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Body</th>
+<th>Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>400</td>
+<td><code>{&quot;error&quot;:&quot;unknown metric: foo&quot;}</code></td>
+<td>Metric not in <code>ValueColumnMetadata</code>.</td>
+</tr>
+<tr>
+<td>400</td>
+<td><code>{&quot;error&quot;:&quot;step DAY not supported by metric foo (MINUTE,HOUR)&quot;}</code></td>
+<td>Metric not materialised at the requested downsampling.</td>
+</tr>
+<tr>
+<td>400</td>
+<td><code>{&quot;error&quot;:&quot;metric type HEATMAP is not MQE-queryable; /inspect/entities only accepts REGULAR_VALUE and LABELED_VALUE&quot;}</code></td>
+<td>Metric is <code>HEATMAP</code> (<code>HISTOGRAM</code> <code>dataType</code>).</td>
+</tr>
+<tr>
+<td>400</td>
+<td><code>{&quot;error&quot;:&quot;metric type SAMPLED_RECORD is out of scope for /inspect/entities&quot;}</code></td>
+<td>Metric is <code>SAMPLED_RECORD</code>.</td>
+</tr>
+<tr>
+<td>400</td>
+<td><code>{&quot;error&quot;:&quot;process scope is out of scope&quot;}</code></td>
+<td>Scope is <code>Process</code> / <code>ProcessRelation</code>.</td>
+</tr>
+<tr>
+<td>400</td>
+<td><code>{&quot;error&quot;:&quot;limit must be between 1 and 300&quot;}</code></td>
+<td><code>limit</code> out of range.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="limits">Limits</h2>
 <ul>
-<li>URL, <code>http://{core restHost}:{core restPort}/status/alarm/rules/{ruleId}</code></li>
-<li>HTTP GET method.</li>
+<li>Per-call cap is <strong>300 rows scanned</strong> at the storage layer, not relaxable
+via parameter. The 300 envelope tracks 10 buckets × 30 entities.</li>
+<li>No caching layer in v1. The endpoints are intended for human-driven
+exploration, not high-frequency polling.</li>
+<li><code>Process</code> and <code>ProcessRelation</code> scopes are skipped because <code>ProcessID</code> is
+a SHA-256 hash with no decoder; readable rendering would require a
+<code>ProcessTraffic</code> join, deferred to a future revision.</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-  <span style="color:#000080">&#34;oapInstances&#34;</span>: [
-    {
-      <span style="color:#000080">&#34;address&#34;</span>: <span style="color:#d14">&#34;127.0.0.1_11800&#34;</span>,
-      <span style="color:#000080">&#34;status&#34;</span>: {
-        <span style="color:#000080">&#34;ruleId&#34;</span>: <span style="color:#d14">&#34;service_resp_time_rule&#34;</span>,
-        <span style="color:#000080">&#34;expression&#34;</span>: <span style="color:#d14">&#34;sum(service_resp_time &gt; 1000) &gt;= 1&#34;</span>,
-        <span style="color:#000080">&#34;period&#34;</span>: <span style="color:#099">10</span>,
-        <span style="color:#000080">&#34;silencePeriod&#34;</span>: <span style="color:#099">10</span>,
-        <span style="color:#000080">&#34;recoveryObservationPeriod&#34;</span>: <span style="color:#099">2</span>,
-        <span style="color:#000080">&#34;additionalPeriod&#34;</span>: <span style="color:#099">0</span>,
-        <span style="color:#000080">&#34;includeEntityNames&#34;</span>: [],
-        <span style="color:#000080">&#34;excludeEntityNames&#34;</span>: [],
-        <span style="color:#000080">&#34;includeEntityNamesRegex&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-        <span style="color:#000080">&#34;excludeEntityNamesRegex&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-        <span style="color:#000080">&#34;runningEntities&#34;</span>: [
-          {
-            <span style="color:#000080">&#34;scope&#34;</span>: <span style="color:#d14">&#34;SERVICE&#34;</span>,
-            <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;mock_b_service&#34;</span>,
-            <span style="color:#000080">&#34;formattedMessage&#34;</span>: <span style="color:#d14">&#34;Service mock_b_service response time is more than 1000ms of last 10 minutes&#34;</span>
-          }
-        ],
-        <span style="color:#000080">&#34;tags&#34;</span>: [
-          {
-            <span style="color:#000080">&#34;key&#34;</span>: <span style="color:#d14">&#34;level&#34;</span>,
-            <span style="color:#000080">&#34;value&#34;</span>: <span style="color:#d14">&#34;WARNING&#34;</span>
-          }
-        ],
-        <span style="color:#000080">&#34;hooks&#34;</span>: [
-          <span style="color:#d14">&#34;webhook.default&#34;</span>,
-          <span style="color:#d14">&#34;wechat.default&#34;</span>
-        ],
-        <span style="color:#000080">&#34;includeMetrics&#34;</span>: [
-          <span style="color:#d14">&#34;service_resp_time&#34;</span>
-        ]
-      }
-    },
-    {
-      <span style="color:#000080">&#34;address&#34;</span>: <span style="color:#d14">&#34;127.0.0.1_11801&#34;</span>,
-      <span style="color:#000080">&#34;status&#34;</span>: {
-        <span style="color:#000080">&#34;ruleId&#34;</span>: <span style="color:#d14">&#34;service_resp_time_rule&#34;</span>,
-        <span style="color:#000080">&#34;expression&#34;</span>: <span style="color:#d14">&#34;sum(service_resp_time &gt; 1000) &gt;= 1&#34;</span>,
-        <span style="color:#000080">&#34;period&#34;</span>: <span style="color:#099">10</span>,
-        <span style="color:#000080">&#34;silencePeriod&#34;</span>: <span style="color:#099">10</span>,
-        <span style="color:#000080">&#34;recoveryObservationPeriod&#34;</span>: <span style="color:#099">2</span>,
-        <span style="color:#000080">&#34;additionalPeriod&#34;</span>: <span style="color:#099">0</span>,
-        <span style="color:#000080">&#34;includeEntityNames&#34;</span>: [],
-        <span style="color:#000080">&#34;excludeEntityNames&#34;</span>: [],
-        <span style="color:#000080">&#34;includeEntityNamesRegex&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-        <span style="color:#000080">&#34;excludeEntityNamesRegex&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-        <span style="color:#000080">&#34;runningEntities&#34;</span>: [
-          {
-            <span style="color:#000080">&#34;scope&#34;</span>: <span style="color:#d14">&#34;SERVICE&#34;</span>,
-            <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;mock_a_service&#34;</span>,
-            <span style="color:#000080">&#34;formattedMessage&#34;</span>: <span style="color:#d14">&#34;Service mock_a_service response time is more than 1000ms of last 10 minutes.&#34;</span>
-          },
-          {
-            <span style="color:#000080">&#34;scope&#34;</span>: <span style="color:#d14">&#34;SERVICE&#34;</span>,
-            <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;mock_c_service&#34;</span>,
-            <span style="color:#000080">&#34;formattedMessage&#34;</span>: <span style="color:#d14">&#34;Service mock_c_service response time is more than 1000ms of last 10 minutes.&#34;</span>
-          }
-        ],
-        <span style="color:#000080">&#34;tags&#34;</span>: [
-          {
-            <span style="color:#000080">&#34;key&#34;</span>: <span style="color:#d14">&#34;level&#34;</span>,
-            <span style="color:#000080">&#34;value&#34;</span>: <span style="color:#d14">&#34;WARNING&#34;</span>
-          }
-        ],
-        <span style="color:#000080">&#34;hooks&#34;</span>: [
-          <span style="color:#d14">&#34;webhook.default&#34;</span>,
-          <span style="color:#d14">&#34;wechat.default&#34;</span>
-        ],
-        <span style="color:#000080">&#34;includeMetrics&#34;</span>: [
-          <span style="color:#d14">&#34;service_resp_time&#34;</span>
-        ]
-      }
-    }
-  ]
-}
-</code></pre></div><ul>
-<li><code>additonalPeriod</code> is the additional period if the expression includes the <a href="../../api/metrics-query-expression#trend-operation">increase/rate function</a>.
-This additional period is used to enlarge window size for calculating the trend value.</li>
-<li><code>runningEntities</code> is the entities that have metrics data and being calculated by the alarm rule.</li>
-<li><code>formattedMessages</code> is the result message according to the message template and the affected running entities.</li>
-</ul>
-<h2 id="get-alarm-running-context">Get Alarm Running Context</h2>
-<p>Return the running context of the alarm rule.</p>
-<ul>
-<li>URL, <code>http://{core restHost}:{core restPort}/status/alarm/{ruleId}/{entityName}</code></li>
-<li>HTTP GET method.</li>
-</ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-  <span style="color:#000080">&#34;oapInstances&#34;</span>: [
-    {
-      <span style="color:#000080">&#34;address&#34;</span>: <span style="color:#d14">&#34;127.0.0.1_11800&#34;</span>,
-      <span style="color:#000080">&#34;status&#34;</span>: {
-        <span style="color:#000080">&#34;ruleId&#34;</span>: <span style="color:#d14">&#34;service_resp_time_rule&#34;</span>,
-        <span style="color:#000080">&#34;expression&#34;</span>: <span style="color:#d14">&#34;sum(service_resp_time &gt; 1000) &gt;= 1&#34;</span>,
-        <span style="color:#000080">&#34;endTime&#34;</span>: <span style="color:#d14">&#34;2025-11-19T15:20:00.000&#34;</span>,
-        <span style="color:#000080">&#34;additionalPeriod&#34;</span>: <span style="color:#099">0</span>,
-        <span style="color:#000080">&#34;size&#34;</span>: <span style="color:#099">10</span>,
-        <span style="color:#000080">&#34;silencePeriod&#34;</span>: <span style="color:#099">10</span>,
-        <span style="color:#000080">&#34;recoveryObservationPeriod&#34;</span>: <span style="color:#099">0</span>,
-        <span style="color:#000080">&#34;silenceCountdown&#34;</span>: <span style="color:#099">10</span>,
-        <span style="color:#000080">&#34;recoveryObservationCountdown&#34;</span>: <span style="color:#099">0</span>,
-        <span style="color:#000080">&#34;currentState&#34;</span>: <span style="color:#d14">&#34;FIRING&#34;</span>,
-        <span style="color:#000080">&#34;entityName&#34;</span>: <span style="color:#d14">&#34;mock_b_service&#34;</span>,
-        <span style="color:#000080">&#34;windowValues&#34;</span>: [
-          {
-            <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">0</span>,
-            <span style="color:#000080">&#34;metrics&#34;</span>: []
-          },
-          {
-            <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">1</span>,
-            <span style="color:#000080">&#34;metrics&#34;</span>: []
-          },
-          {
-            <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">2</span>,
-            <span style="color:#000080">&#34;metrics&#34;</span>: []
-          },
-          {
-            <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">3</span>,
-            <span style="color:#000080">&#34;metrics&#34;</span>: []
-          },
-          {
-            <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">4</span>,
-            <span style="color:#000080">&#34;metrics&#34;</span>: []
-          },
-          {
-            <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">5</span>,
-            <span style="color:#000080">&#34;metrics&#34;</span>: []
-          },
-          {
-            <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">6</span>,
-            <span style="color:#000080">&#34;metrics&#34;</span>: []
-          },
-          {
-            <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">7</span>,
-            <span style="color:#000080">&#34;metrics&#34;</span>: []
-          },
-          {
-            <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">8</span>,
-            <span style="color:#000080">&#34;metrics&#34;</span>: [
-              {
-                <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;service_resp_time&#34;</span>,
-                <span style="color:#000080">&#34;timeBucket&#34;</span>: <span style="color:#099">202511191519</span>,
-                <span style="color:#000080">&#34;value&#34;</span>: <span style="color:#d14">&#34;6000&#34;</span>
-              }
-            ]
-          },
-          {
-            <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">9</span>,
-            <span style="color:#000080">&#34;metrics&#34;</span>: []
-          }
-        ],
-        <span style="color:#000080">&#34;mqeMetricsSnapshot&#34;</span>: {
-          <span style="color:#000080">&#34;service_resp_time&#34;</span>: <span style="color:#d14">&#34;[{\&#34;metric\&#34;:{\&#34;labels\&#34;:[]},\&#34;values\&#34;:[{\&#34;id\&#34;:\&#34;202511191511\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191512\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191513\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191514\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191515\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191516\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191517\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191518\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191519\&#34;,\&#34;doubleValue\&#34;:6000.0,\&#34;isEmptyValue\&#34;:false},{\&#34;id\&#34;:\&#34;202511191520\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true}]}]&#34;</span>
-        },
-        <span style="color:#000080">&#34;lastAlarmTime&#34;</span>: <span style="color:#d14">&#34;1763536823628&#34;</span>,
-        <span style="color:#000080">&#34;lastAlarmMessage&#34;</span>: <span style="color:#d14">&#34;Service mock_b_service response time is more than 1000ms of last 10 minutes.&#34;</span>,
-        <span style="color:#000080">&#34;lastAlarmMqeMetricsSnapshot&#34;</span>: {
-          <span style="color:#000080">&#34;service_resp_time&#34;</span>: <span style="color:#d14">&#34;[{\&#34;metric\&#34;:{\&#34;labels\&#34;:[]},\&#34;values\&#34;:[{\&#34;id\&#34;:\&#34;202511191511\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191512\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191513\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191514\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191515\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191516\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191517\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191518\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191519\&#34;,\&#34;doubleValue\&#34;:6000.0,\&#34;isEmptyValue\&#34;:false},{\&#34;id\&#34;:\&#34;202511191520\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true}]}]&#34;</span>
-        }
-      }
-    },
-    {
-      <span style="color:#000080">&#34;address&#34;</span>: <span style="color:#d14">&#34;127.0.0.1_11801&#34;</span>,
-      <span style="color:#000080">&#34;status&#34;</span>: {
-        <span style="color:#000080">&#34;ruleId&#34;</span>: <span style="color:#d14">&#34;service_resp_time_rule&#34;</span>,
-        <span style="color:#000080">&#34;expression&#34;</span>: <span style="color:#d14">&#34;sum(service_resp_time &gt; 1000) &gt;= 1&#34;</span>,
-        <span style="color:#000080">&#34;additionalPeriod&#34;</span>: <span style="color:#099">0</span>,
-        <span style="color:#000080">&#34;size&#34;</span>: <span style="color:#099">0</span>,
-        <span style="color:#000080">&#34;silenceCountdown&#34;</span>: <span style="color:#099">0</span>,
-        <span style="color:#000080">&#34;recoveryObservationCountdown&#34;</span>: <span style="color:#099">0</span>,
-        <span style="color:#000080">&#34;windowValues&#34;</span>: [],
-        <span style="color:#000080">&#34;lastAlarmTime&#34;</span>: <span style="color:#099">0</span>
-      }
-    }
-  ]
-}
-</code></pre></div><p><code>size</code> is the window size. Equal to the <code>period + additionalPeriod</code>.
-<code>silenceCountdown</code> is the countdown of the silence period. -1 means silence countdown is not running.
-<code>recoveryObservationCountdown</code> is the countdown of the recovery observation period.
-<code>windowValues</code> is the original metrics data when the metrics come in. The <code>index</code> is the index of the window, starting from 0.
-<code>mqeMetricsSnapshot</code> is the current metrics data in the MQE format which is generated when executing the checking.
-These data will be calculated according to the expression.
-<code>lastAlarmTime</code> is the last time when the alarm is triggered. It will be reset to 0 when the alarm recovers.
-<code>lastAlarmMessage</code> is the last alarm message when the alarm is triggered.
-<code>lastAlarmMqeMetricsSnapshot</code> is the metrics data snapshot in the MQE format when the last alarm is triggered.</p>
-<h2 id="get-errors-when-querying-status-from-oap-instances">Get Errors When Querying Status from OAP Instances</h2>
-<p>If some errors occur when querying the status from OAP instances, the error messages will be returned.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-  <span style="color:#000080">&#34;oapInstances&#34;</span>: [
-    {
-      <span style="color:#000080">&#34;address&#34;</span>: <span style="color:#d14">&#34;127.0.0.1_11800&#34;</span>,
-      <span style="color:#000080">&#34;status&#34;</span>: {
-        <span style="color:#000080">&#34;ruleList&#34;</span>: [
-          {
-            <span style="color:#000080">&#34;id&#34;</span>: <span style="color:#d14">&#34;service_percentile_rule&#34;</span>
-          },
-          {
-            <span style="color:#000080">&#34;id&#34;</span>: <span style="color:#d14">&#34;service_resp_time_rule&#34;</span>
-          }
-        ]
-      }
-    },
-    {
-      <span style="color:#000080">&#34;address&#34;</span>: <span style="color:#d14">&#34;127.0.0.1_11801&#34;</span>,
-      <span style="color:#000080">&#34;errorMsg&#34;</span>: <span style="color:#d14">&#34;UNAVAILABLE: io exception&#34;</span>
-    }
-  ]
-}
-</code></pre></div>
+
 
 
 
@@ -3214,12 +3188,19 @@ These data will be calculated according to the expression.
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#get-alarm-runtime-status">Get Alarm Runtime Status</a>
+    <li><a href="#inspect-api">Inspect API</a>
       <ul>
-        <li><a href="#get-alarm-running-rules">Get Alarm Running Rules</a></li>
-        <li><a href="#get-alarm-running-rule-info">Get Alarm Running Rule Info</a></li>
-        <li><a href="#get-alarm-running-context">Get Alarm Running Context</a></li>
-        <li><a href="#get-errors-when-querying-status-from-oap-instances">Get Errors When Querying Status from OAP Instances</a></li>
+        <li><a href="#enabling">Enabling</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#endpoints">Endpoints</a>
+          <ul>
+            <li><a href="#get-inspectmetrics"><code>GET /inspect/metrics</code></a></li>
+            <li><a href="#get-inspectentities"><code>GET /inspect/entities</code></a></li>
+          </ul>
+        </li>
+        <li><a href="#discovering-the-oap-rest-url-for-the-mqe-follow-up">Discovering the OAP REST URL for the MQE follow-up</a></li>
+        <li><a href="#errors">Errors</a></li>
+        <li><a href="#limits">Limits</a></li>
       </ul>
     </li>
   </ul>
@@ -3337,6 +3318,10 @@ These data will be calculated according to the expression.
 
     </div>
     
+
+
+
+
 
 
 
