@@ -5884,6 +5884,18 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/soak/g5d-phase-d-summary/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/soak/g5d-runbook/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/skywalking-banyandb/next/installation/binaries/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
