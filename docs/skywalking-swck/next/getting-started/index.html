@@ -40,7 +40,7 @@ Prerequisites  docker &gt;= v20.10.6 kubectl &gt;= v1.21.0 kind &gt;= v0.20.0 sw
 Prerequisites  docker &gt;= v20.10.6 kubectl &gt;= v1.21.0 kind &gt;= v0.20.0 swctl &gt;= v0.10.0  Step1: Create a kubernetes cluster locally using kind  Note: If you have a kubernetes cluster (&gt; v1.21.10) already, you can skip this step.
  Here we create a kubernetes cluster with 1 control-plane node and 1 worker nodes.">
 
-<meta itemprop="wordCount" content="972">
+<meta itemprop="wordCount" content="1175">
 
 
 
@@ -473,7 +473,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: b17c2d3</div>
+                  <div class="commit-id">Commit Id: d299bc0</div>
                 
 
 
@@ -613,11 +613,14 @@ skywalking-swck-controller-manager-5f5bbd4fd-9wdw6   2/2     Running   <span sty
 </span><span style="color:#d14">      type: ClusterIP
 </span><span style="color:#d14">---
 </span><span style="color:#d14">apiVersion: operator.skywalking.apache.org/v1alpha1
-</span><span style="color:#d14">kind: UI 
+</span><span style="color:#d14">kind: UI
 </span><span style="color:#d14">metadata:
 </span><span style="color:#d14">  name: skywalking-system
 </span><span style="color:#d14">  namespace: skywalking-system
 </span><span style="color:#d14">spec:
+</span><span style="color:#d14">  # spec.kind selects the UI flavor. Default is &#34;horizon&#34; (next-gen UI).
+</span><span style="color:#d14">  # Use &#34;booster&#34; to deploy the legacy apache/skywalking-ui image.
+</span><span style="color:#d14">  kind: booster
 </span><span style="color:#d14">  version: 9.5.0
 </span><span style="color:#d14">  instances: 1
 </span><span style="color:#d14">  image: apache/skywalking-ui:9.5.0
@@ -628,7 +631,57 @@ skywalking-swck-controller-manager-5f5bbd4fd-9wdw6   2/2     Running   <span sty
 </span><span style="color:#d14">    ingress:
 </span><span style="color:#d14">      host: demo.ui.skywalking
 </span><span style="color:#d14">EOF</span>
-</code></pre></div><p>Check the status of the skywalking components.</p>
+</code></pre></div><h4 id="ui-flavors-speckind">UI flavors (<code>spec.kind</code>)</h4>
+<p>The <code>UI</code> resource supports two flavors via <code>spec.kind</code>:</p>
+<table>
+<thead>
+<tr>
+<th><code>spec.kind</code></th>
+<th>Default image</th>
+<th>Listens on</th>
+<th>OAP wire-up</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>horizon</code> <em>(default)</em></td>
+<td><code>apache/skywalking-horizon-ui:&lt;ver&gt;</code></td>
+<td><code>8081</code></td>
+<td>YAML config mounted at <code>/app/horizon.yaml</code></td>
+</tr>
+<tr>
+<td><code>booster</code></td>
+<td><code>apache/skywalking-ui:&lt;ver&gt;</code></td>
+<td><code>8080</code></td>
+<td><code>SW_OAP_ADDRESS</code> env var</td>
+</tr>
+</tbody>
+</table>
+<p>When <code>spec.kind: horizon</code>, the operator additionally:</p>
+<ul>
+<li>Creates <code>ConfigMap/&lt;name&gt;-ui-horizon</code> with key <code>horizon.yaml</code>, populated from <code>spec.OAPServerAddress</code> (→ <code>oap.queryUrl</code>), <code>spec.OAPServerAdminAddress</code> (default <code>http://&lt;name&gt;-oap.&lt;ns&gt;:17128</code> → <code>oap.adminUrl</code>), and <code>spec.OAPServerZipkinAddress</code> (default <code>&lt;OAPServerAddress&gt;/zipkin</code> → <code>oap.zipkinUrl</code>).</li>
+<li>Mounts that ConfigMap as <code>/app/horizon.yaml</code> (read-only) on the Horizon UI container.</li>
+<li>Mounts an <code>emptyDir</code> at <code>/data</code> for Horizon&rsquo;s writable state (audit log, setup state, alarm state, wire-debug log). State is lost on pod restart.</li>
+</ul>
+<p>Set <code>spec.config</code> to a raw <code>horizon.yaml</code> string to fully override the operator-generated config (e.g. to configure local users, LDAP, RBAC, or session settings). When set, the operator-generated fields above are ignored.</p>
+<p>Note: the <code>OAPServer</code> Service exposes port <code>17128</code> (admin) in addition to <code>12800</code>/<code>11800</code>/<code>1234</code> so Horizon UI can reach runtime-rule, DSL/MQE debug, and inspect endpoints. The admin port must be enabled in your OAP configuration for Horizon&rsquo;s admin features to work.</p>
+<p>Minimal horizon example (defaults pick image, admin URL, and Zipkin URL):</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">apiVersion</span>:<span style="color:#bbb"> </span>operator.skywalking.apache.org/v1alpha1<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000080">kind</span>:<span style="color:#bbb"> </span>UI<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000080">metadata</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">name</span>:<span style="color:#bbb"> </span>skywalking-system<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">namespace</span>:<span style="color:#bbb"> </span>skywalking-system<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000080">spec</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">kind</span>:<span style="color:#bbb"> </span>horizon             <span style="color:#bbb"> </span><span style="color:#998;font-style:italic"># default — can be omitted</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">version</span>:<span style="color:#bbb"> </span><span style="color:#099">9.5.0</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">instances</span>:<span style="color:#bbb"> </span><span style="color:#099">1</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">OAPServerAddress</span>:<span style="color:#bbb"> </span>http://skywalking-system-oap.skywalking-system:12800<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">service</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">template</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">type</span>:<span style="color:#bbb"> </span>ClusterIP<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">ingress</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">host</span>:<span style="color:#bbb"> </span>demo.ui.skywalking<span style="color:#bbb">
+</span></code></pre></div><p>Check the status of the skywalking components.</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ kubectl get pod -n skywalking-system      
 NAME                                     READY   STATUS    RESTARTS   AGE
 skywalking-system-oap-68bd877f57-fhzdz   1/1     Running   <span style="color:#099">0</span>          6m23s
@@ -753,7 +806,7 @@ metadata:
 <p><img src="https://skywalking.apache.org/doc-graph/swck/demo-ui.png" alt="ui"></p>
 </details>
 <p>Also, if you want to expose the external metrics to the kubernetes HPA, you can follow the <a href="./../custom-metrics-adapter">guide</a> to deploy the custom metrics adapter and you may get some inspiration from the
-<a href="https://github.com/apache/skywalking-swck/tree/b17c2d3734e1788f531836d11becfac8bbd3179a/test/e2e/oap-agent-adapter-hpa/e2e.yaml">e2e test</a>.</p>
+<a href="https://github.com/apache/skywalking-swck/tree/d299bc05ee230f5f366584054db5b099ca60166f/test/e2e/oap-agent-adapter-hpa/e2e.yaml">e2e test</a>.</p>
 
 
 
@@ -919,8 +972,6 @@ metadata:
 
     </div>
     
-
-
 
 
 

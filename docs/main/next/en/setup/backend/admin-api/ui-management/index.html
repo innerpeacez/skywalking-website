@@ -28,28 +28,25 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>Problem： Maven compilation failure with error such as `Error： not found： python2` | Apache SkyWalking</title><meta property="og:title" content="Problem： Maven compilation failure with error such as `Error： not found： python2`" />
-<meta property="og:description" content="Problem： Maven compilation failure with error such as Error: not found: python2 When you compile the project via Maven, it fails at module apm-webapp and the following error occurs.
-Pay attention to keywords such as node-sass and Error: not found: python2.
-[INFO] &gt; node-sass@4.11.0 postinstall C:\XXX\skywalking\skywalking-ui\node_modules\node-sass [INFO] &gt; node scripts/build.js [ERROR] gyp verb check python checking for Python executable &quot;python2&quot; in the PATH [ERROR] gyp verb `which` failed Error: not found: python2 [ERROR] gyp verb `which` failed at getNotFoundError (C:\XXX\skywalking\skywalking-ui\node_modules\which\which." />
+<title>UI Management API | Apache SkyWalking</title><meta property="og:title" content="UI Management API" />
+<meta property="og:description" content="UI Management API REST surface for dashboard templates, hosted on the admin-server REST port (default 17128). The official Horizon UI consumes these endpoints to populate the dashboard library, and operators hit them directly with curl or swctl to seed / customize / disable templates.
+The sidebar menu is not served from OAP — Horizon UI ships its own menu config in its bundle and uses listServices(layer:...) on the metadata query surface for dynamic &ldquo;layer has services&rdquo; gating." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/main/next/en/faq/maven-compile-npm-failure/" />
+<meta property="og:url" content="/docs/main/next/en/setup/backend/admin-api/ui-management/" />
 
-<meta itemprop="name" content="Problem： Maven compilation failure with error such as `Error： not found： python2`">
-<meta itemprop="description" content="Problem： Maven compilation failure with error such as Error: not found: python2 When you compile the project via Maven, it fails at module apm-webapp and the following error occurs.
-Pay attention to keywords such as node-sass and Error: not found: python2.
-[INFO] &gt; node-sass@4.11.0 postinstall C:\XXX\skywalking\skywalking-ui\node_modules\node-sass [INFO] &gt; node scripts/build.js [ERROR] gyp verb check python checking for Python executable &quot;python2&quot; in the PATH [ERROR] gyp verb `which` failed Error: not found: python2 [ERROR] gyp verb `which` failed at getNotFoundError (C:\XXX\skywalking\skywalking-ui\node_modules\which\which.">
+<meta itemprop="name" content="UI Management API">
+<meta itemprop="description" content="UI Management API REST surface for dashboard templates, hosted on the admin-server REST port (default 17128). The official Horizon UI consumes these endpoints to populate the dashboard library, and operators hit them directly with curl or swctl to seed / customize / disable templates.
+The sidebar menu is not served from OAP — Horizon UI ships its own menu config in its bundle and uses listServices(layer:...) on the metadata query surface for dynamic &ldquo;layer has services&rdquo; gating.">
 
-<meta itemprop="wordCount" content="361">
+<meta itemprop="wordCount" content="420">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Problem： Maven compilation failure with error such as `Error： not found： python2`"/>
-<meta name="twitter:description" content="Problem： Maven compilation failure with error such as Error: not found: python2 When you compile the project via Maven, it fails at module apm-webapp and the following error occurs.
-Pay attention to keywords such as node-sass and Error: not found: python2.
-[INFO] &gt; node-sass@4.11.0 postinstall C:\XXX\skywalking\skywalking-ui\node_modules\node-sass [INFO] &gt; node scripts/build.js [ERROR] gyp verb check python checking for Python executable &quot;python2&quot; in the PATH [ERROR] gyp verb `which` failed Error: not found: python2 [ERROR] gyp verb `which` failed at getNotFoundError (C:\XXX\skywalking\skywalking-ui\node_modules\which\which."/>
+<meta name="twitter:title" content="UI Management API"/>
+<meta name="twitter:description" content="UI Management API REST surface for dashboard templates, hosted on the admin-server REST port (default 17128). The official Horizon UI consumes these endpoints to populate the dashboard library, and operators hit them directly with curl or swctl to seed / customize / disable templates.
+The sidebar menu is not served from OAP — Horizon UI ships its own menu config in its bundle and uses listServices(layer:...) on the metadata query surface for dynamic &ldquo;layer has services&rdquo; gating."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -78,7 +75,7 @@ if (!doNotTrack) {
 
 
 
-    <title>Problem： Maven compilation failure with error such as `Error： not found： python2` | Apache SkyWalking</title>
+    <title>UI Management API | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -2247,7 +2244,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/admin-api/admin-ui">Admin UI (Community)</a>
+            <a href="/docs/main/next/en/setup/backend/admin-api/ui-management">UI Management API</a>
         
     </li>
 
@@ -2867,7 +2864,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 137935d</div>
+                  <div class="commit-id">Commit Id: 5b481a4</div>
                 
 
 
@@ -2912,57 +2909,99 @@ if (!doNotTrack) {
 
 
 
-	<h3 id="problem-maven-compilation-failure-with-error-such-as-error-not-found-python2">Problem： Maven compilation failure with error such as <code>Error: not found: python2</code></h3>
-<p>When you compile the project via Maven, it fails at module <code>apm-webapp</code> and the following error occurs.</p>
-<p>Pay attention to keywords such as <code>node-sass</code> and <code>Error: not found: python2</code>.</p>
-<pre><code>[INFO] &gt; node-sass@4.11.0 postinstall C:\XXX\skywalking\skywalking-ui\node_modules\node-sass
-[INFO] &gt; node scripts/build.js
-
-[ERROR] gyp verb check python checking for Python executable &quot;python2&quot; in the PATH
-[ERROR] gyp verb `which` failed Error: not found: python2
-[ERROR] gyp verb `which` failed     at getNotFoundError (C:\XXX\skywalking\skywalking-ui\node_modules\which\which.js:13:12)
-[ERROR] gyp verb `which` failed     at F (C:\XXX\skywalking\skywalking-ui\node_modules\which\which.js:68:19)
-[ERROR] gyp verb `which` failed     at E (C:\XXX\skywalking\skywalking-ui\node_modules\which\which.js:80:29)
-[ERROR] gyp verb `which` failed     at C:\XXX\skywalking\skywalking-ui\node_modules\which\which.js:89:16
-[ERROR] gyp verb `which` failed     at C:\XXX\skywalking\skywalking-ui\node_modules\isexe\index.js:42:5
-[ERROR] gyp verb `which` failed     at C:\XXX\skywalking\skywalking-ui\node_modules\isexe\windows.js:36:5
-[ERROR] gyp verb `which` failed     at FSReqWrap.oncomplete (fs.js:152:21)
-
-[ERROR] gyp verb `which` failed   code: 'ENOENT' }
-[ERROR] gyp verb check python checking for Python executable &quot;python&quot; in the PATH
-[ERROR] gyp verb `which` succeeded python C:\Users\XXX\AppData\Local\Programs\Python\Python37\python.EXE
-[ERROR] gyp ERR! configure error 
-[ERROR] gyp ERR! stack Error: Command failed: C:\Users\XXX\AppData\Local\Programs\Python\Python37\python.EXE -c import sys; print &quot;%s.%s.%s&quot; % sys.version_info[:3];
-[ERROR] gyp ERR! stack   File &quot;&lt;string&gt;&quot;, line 1
-[ERROR] gyp ERR! stack     import sys; print &quot;%s.%s.%s&quot; % sys.version_info[:3];
-[ERROR] gyp ERR! stack                                ^
-[ERROR] gyp ERR! stack SyntaxError: invalid syntax
-[ERROR] gyp ERR! stack 
-[ERROR] gyp ERR! stack     at ChildProcess.exithandler (child_process.js:275:12)
-[ERROR] gyp ERR! stack     at emitTwo (events.js:126:13)
-[ERROR] gyp ERR! stack     at ChildProcess.emit (events.js:214:7)
-[ERROR] gyp ERR! stack     at maybeClose (internal/child_process.js:925:16)
-[ERROR] gyp ERR! stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)
-[ERROR] gyp ERR! System Windows_NT 10.0.17134
-......
-[INFO] server-starter-es7 ................................. SUCCESS [ 11.657 s]
-[INFO] apm-webapp ......................................... FAILURE [ 25.857 s]
-[INFO] apache-skywalking-apm .............................. SKIPPED
-[INFO] apache-skywalking-apm-es7 .......................... SKIPPED
-</code></pre><h3 id="reason">Reason</h3>
-<p>The error has nothing to do with SkyWalking.<br>
-According to the issue here (<a href="https://github.com/sass/node-sass/issues/1176),">https://github.com/sass/node-sass/issues/1176),</a> if you live in countries where requesting resources from <code>GitHub</code> and <code>npmjs.org</code> runs slow, some precompiled binaries for dependency <code>node-sass</code> would fail to be downloaded during <code>npm install</code>, and npm would try to compile them itself. That&rsquo;s why <code>python2</code> is needed.</p>
-<h3 id="resolution">Resolution</h3>
-<h4 id="1-use-mirror-for-instance-if-youre-in-china-please-edit-skywalkingapm-webapppomxml-as-follows">1. Use mirror. For instance, if you&rsquo;re in China, please edit <code>skywalking\apm-webapp\pom.xml</code> as follows.</h4>
-<p>Find</p>
-<pre><code>&lt;configuration&gt;  
- &lt;arguments&gt;install --registry=https://registry.npmjs.org/&lt;/arguments&gt;  
-&lt;/configuration&gt;
-</code></pre><p>Replace it with</p>
-<pre><code>&lt;configuration&gt;  
- &lt;arguments&gt;install --registry=https://registry.npmmirror.com/ --sass_binary_site=https://npmmirror.com/mirrors/node-sass/&lt;/arguments&gt;  
-&lt;/configuration&gt;
-</code></pre><h4 id="2-get-a-sufficiently-powerful-vpn">2. Get a sufficiently powerful VPN.</h4>
+	<h1 id="ui-management-api">UI Management API</h1>
+<p>REST surface for dashboard templates, hosted on the admin-server REST port
+(default <code>17128</code>). The official
+<a href="https://github.com/apache/skywalking-horizon-ui">Horizon UI</a> consumes these
+endpoints to populate the dashboard library, and operators hit them
+directly with <code>curl</code> or <code>swctl</code> to seed / customize / disable templates.</p>
+<p>The sidebar menu is <strong>not</strong> served from OAP — Horizon UI ships its own
+menu config in its bundle and uses <code>listServices(layer:...)</code> on the
+metadata query surface for dynamic &ldquo;layer has services&rdquo; gating.</p>
+<h2 id="hosting">Hosting</h2>
+<p>Routes mount on admin-server&rsquo;s REST register only. There is no public-REST
+mirror — write operations are operator-only and gated behind the admin
+gateway, same posture as <code>runtime-rule</code> and <code>dsl-debugging</code>. Admin-server
+ships <strong>enabled by default</strong>; set <code>SW_UI_MANAGEMENT=</code> empty to close the
+UI surface without closing the rest of admin-server.</p>
+<p><strong>Template writes (<code>POST</code> / <code>PUT</code> / <code>POST /disable</code>) are enabled by default.</strong>
+The REST endpoints accept writes unconditionally when the module is
+loaded; the admin host&rsquo;s gateway / IP allow-list is the auth boundary.
+Operators who want to lock writes down disable the entire module
+(<code>SW_UI_MANAGEMENT=</code>).</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">ui-management</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">selector</span>:<span style="color:#bbb"> </span>${SW_UI_MANAGEMENT:default}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">default</span>:<span style="color:#bbb">
+</span></code></pre></div><h2 id="endpoints">Endpoints</h2>
+<h3 id="get-ui-managementtemplates"><code>GET /ui-management/templates</code></h3>
+<p>List all templates. Optional <code>includingDisabled=true</code> returns soft-disabled
+templates too; default skips them.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -s <span style="color:#d14">&#34;http://oap:17128/ui-management/templates&#34;</span> | jq
+</code></pre></div><p>Response: JSON array of template objects:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">[
+  {
+    <span style="color:#000080">&#34;id&#34;</span>: <span style="color:#d14">&#34;8b2f0eb1-...&#34;</span>,
+    <span style="color:#000080">&#34;configuration&#34;</span>: <span style="color:#d14">&#34;{\&#34;name\&#34;:\&#34;General-Service\&#34;,...}&#34;</span>,
+    <span style="color:#000080">&#34;disabled&#34;</span>: <span style="color:#000;font-weight:bold">false</span>
+  }
+]
+</code></pre></div><h3 id="get-ui-managementtemplatesid"><code>GET /ui-management/templates/{id}</code></h3>
+<p>Fetch a single template by ID. Returns <code>404 not_found</code> when the ID is
+unknown.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -s <span style="color:#d14">&#34;http://oap:17128/ui-management/templates/8b2f0eb1-...&#34;</span> | jq
+</code></pre></div><h3 id="post-ui-managementtemplates"><code>POST /ui-management/templates</code></h3>
+<p>Add a new template. Body must include <code>configuration</code> (a JSON-encoded
+template definition); the server allocates the ID.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -s -X POST <span style="color:#d14">&#34;http://oap:17128/ui-management/templates&#34;</span> <span style="color:#d14">\
+</span><span style="color:#d14"></span>  -H <span style="color:#d14">&#39;Content-Type: application/json&#39;</span> <span style="color:#d14">\
+</span><span style="color:#d14"></span>  -d <span style="color:#d14">&#39;{&#34;configuration&#34;:&#34;{\&#34;name\&#34;:\&#34;my-dashboard\&#34;,...}&#34;}&#39;</span>
+</code></pre></div><p>Response body is a <code>TemplateChangeStatus</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;id&#34;</span>: <span style="color:#d14">&#34;&lt;server-generated UUID&gt;&#34;</span>,
+  <span style="color:#000080">&#34;status&#34;</span>: <span style="color:#000;font-weight:bold">true</span>,
+  <span style="color:#000080">&#34;message&#34;</span>: <span style="color:#000;font-weight:bold">null</span>
+}
+</code></pre></div><p>HTTP <code>200 OK</code> on success; <code>409 Conflict</code> when the service layer rejects the
+write (e.g., name collision) — the body still carries the same shape.</p>
+<h3 id="put-ui-managementtemplates"><code>PUT /ui-management/templates</code></h3>
+<p>Update an existing template. Body must include both <code>id</code> and the new
+<code>configuration</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -s -X PUT <span style="color:#d14">&#34;http://oap:17128/ui-management/templates&#34;</span> <span style="color:#d14">\
+</span><span style="color:#d14"></span>  -H <span style="color:#d14">&#39;Content-Type: application/json&#39;</span> <span style="color:#d14">\
+</span><span style="color:#d14"></span>  -d <span style="color:#d14">&#39;{&#34;id&#34;:&#34;&lt;existing-uuid&gt;&#34;,&#34;configuration&#34;:&#34;{\&#34;name\&#34;:\&#34;...\&#34;,...}&#34;}&#39;</span>
+</code></pre></div><h3 id="post-ui-managementtemplatesiddisable"><code>POST /ui-management/templates/{id}/disable</code></h3>
+<p>Soft-disable a template. Idempotent — disabling an already-disabled
+template returns success. The template&rsquo;s row is preserved; only the
+<code>disabled</code> field flips.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -s -X POST <span style="color:#d14">&#34;http://oap:17128/ui-management/templates/&lt;uuid&gt;/disable&#34;</span>
+</code></pre></div><h2 id="configuration">Configuration</h2>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Default</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SW_UI_MANAGEMENT</code></td>
+<td><code>default</code></td>
+<td>Selector. Set empty to disable the UI management surface.</td>
+</tr>
+<tr>
+<td><code>SW_ADMIN_SERVER</code></td>
+<td><code>default</code></td>
+<td>Underlying admin host. Must be on for <code>ui-management</code> to reach its handlers.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="security">Security</h2>
+<p>UI Management writes (<code>POST</code>, <code>PUT</code>, <code>POST /disable</code>) are equivalent to
+mutating the OAP backend&rsquo;s dashboard library — operationally sensitive.
+Gateway-protect the admin port per the
+<a href="../readme#-security-notice">admin-server security notice</a> and never
+expose it to the public internet.</p>
 
 
 
@@ -2998,15 +3037,20 @@ According to the issue here (<a href="https://github.com/sass/node-sass/issues/1
 
 <nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#ui-management-api">UI Management API</a>
       <ul>
-        <li>
+        <li><a href="#hosting">Hosting</a></li>
+        <li><a href="#endpoints">Endpoints</a>
           <ul>
-            <li><a href="#problem-maven-compilation-failure-with-error-such-as-error-not-found-python2">Problem： Maven compilation failure with error such as <code>Error: not found: python2</code></a></li>
-            <li><a href="#reason">Reason</a></li>
-            <li><a href="#resolution">Resolution</a></li>
+            <li><a href="#get-ui-managementtemplates"><code>GET /ui-management/templates</code></a></li>
+            <li><a href="#get-ui-managementtemplatesid"><code>GET /ui-management/templates/{id}</code></a></li>
+            <li><a href="#post-ui-managementtemplates"><code>POST /ui-management/templates</code></a></li>
+            <li><a href="#put-ui-managementtemplates"><code>PUT /ui-management/templates</code></a></li>
+            <li><a href="#post-ui-managementtemplatesiddisable"><code>POST /ui-management/templates/{id}/disable</code></a></li>
           </ul>
         </li>
+        <li><a href="#configuration">Configuration</a></li>
+        <li><a href="#security">Security</a></li>
       </ul>
     </li>
   </ul>
@@ -3124,8 +3168,6 @@ According to the issue here (<a href="https://github.com/sass/node-sass/issues/1
 
     </div>
     
-
-
 
 
 

@@ -40,7 +40,7 @@ Prerequisites Add your GPG public key into the SkyWalking GPG KEYS file.
 Prerequisites Add your GPG public key into the SkyWalking GPG KEYS file.
  If you are a PMC member, use your Apache ID and password to log in this svn, and update the file. Don&rsquo;t override the existing file. If you are a committer, please ask a PMC member to help you.">
 
-<meta itemprop="wordCount" content="811">
+<meta itemprop="wordCount" content="866">
 
 
 
@@ -2247,7 +2247,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/admin-api/admin-ui">Admin UI (Community)</a>
+            <a href="/docs/main/next/en/setup/backend/admin-api/ui-management">UI Management API</a>
         
     </li>
 
@@ -2867,7 +2867,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 137935d</div>
+                  <div class="commit-id">Commit Id: 5b481a4</div>
                 
 
 
@@ -3013,7 +3013,7 @@ SkyWalking Resources:
 
 - Apache SkyWalking Team
 </code></pre><h2 id="publish-the-docker-images">Publish the Docker images</h2>
-<p>We have a <a href="https://github.com/apache/skywalking/tree/137935d364be83d4b4438730540856cc35a2d5c8/.github/workflows/publish-docker.yaml">GitHub workflow</a> to automatically publish the Docker images to
+<p>We have a <a href="https://github.com/apache/skywalking/tree/5b481a41a99861249410118e4cfbf591c4508dae/.github/workflows/publish-docker.yaml">GitHub workflow</a> to automatically publish the Docker images to
 Docker Hub after you set the version from <code>pre-release</code> to <code>release</code>, all you need to do is to watch that workflow and see
 whether it succeeds, if it fails, you can use the following steps to publish the Docker images in your local machine.</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#0086b3">export</span> <span style="color:#008080">SW_VERSION</span><span style="color:#000;font-weight:bold">=</span>x.y.z
@@ -3025,11 +3025,18 @@ svn co https://dist.apache.org/repos/dist/release/skywalking/<span style="color:
 <span style="color:#0086b3">export</span> <span style="color:#008080">CONTEXT</span><span style="color:#000;font-weight:bold">=</span>release
 <span style="color:#0086b3">export</span> <span style="color:#008080">HUB</span><span style="color:#000;font-weight:bold">=</span>apache
 <span style="color:#0086b3">export</span> <span style="color:#008080">OAP_NAME</span><span style="color:#000;font-weight:bold">=</span>skywalking-oap-server
-<span style="color:#0086b3">export</span> <span style="color:#008080">UI_NAME</span><span style="color:#000;font-weight:bold">=</span>skywalking-ui
 <span style="color:#0086b3">export</span> <span style="color:#008080">TAG</span><span style="color:#000;font-weight:bold">=</span><span style="color:#008080">$SW_VERSION</span>
 <span style="color:#0086b3">export</span> <span style="color:#008080">DIST</span><span style="color:#000;font-weight:bold">=</span>&lt;the binary package name inside <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span>, e.g. apache-skywalking-apm-8.8.0.tar.gz&gt;
 make docker.push
-</code></pre></div><h2 id="clean-up-the-old-releases">Clean up the old releases</h2>
+</code></pre></div><blockquote>
+<p>Note: this repository no longer builds the UI Docker image. The official
+web UI ships from <a href="https://github.com/apache/skywalking-horizon-ui"><code>apache/skywalking-horizon-ui</code></a>,
+which has its own release cadence and publishes images independently
+under <code>ghcr.io/apache/skywalking-horizon-ui</code>. The OAP release described
+above is independent of any Horizon UI release — they advance on
+separate schedules and are matched at deploy time, not at release time.</p>
+</blockquote>
+<h2 id="clean-up-the-old-releases">Clean up the old releases</h2>
 <p>Once the latest release has been published, you should clean up the old releases from the mirror system.</p>
 <ol>
 <li>Update the download links (source, dist, asc, and sha512) on the website to the archive repo (<a href="https://archive.apache.org/dist/skywalking)">https://archive.apache.org/dist/skywalking)</a>.</li>
@@ -3203,8 +3210,6 @@ The versions of OAP and BanyanDB are hard-coded in the script, so you need to up
 
     </div>
     
-
-
 
 
 

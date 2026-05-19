@@ -38,7 +38,7 @@ Data flow  Amazon CloudWatch fetches metrics from DynamoDB and pushes metrics to
 <meta itemprop="description" content="AWS DynamoDb monitoring SkyWalking leverages Amazon Kinesis Data Filehose with Amazon CloudWatch to transfer the metrics into the Meter System.
 Data flow  Amazon CloudWatch fetches metrics from DynamoDB and pushes metrics to SkyWalking OAP Server via Amazon Kinesis data firehose. The SkyWalking OAP Server parses the expression with MAL to filter/calculate/aggregate and store the results.  Set up  Create CloudWatch metrics configuration for DynamoDB, refer to DynamoDB metrics configuration Create an Amazon Kinesis Data Firehose Delivery Stream, and set AWS Kinesis Data Firehose receiver&rsquo;s address as HTTP(s) Destination, refer to Create Delivery Stream3.">
 
-<meta itemprop="wordCount" content="460">
+<meta itemprop="wordCount" content="473">
 
 
 
@@ -2244,7 +2244,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/admin-api/admin-ui">Admin UI (Community)</a>
+            <a href="/docs/main/next/en/setup/backend/admin-api/ui-management">UI Management API</a>
         
     </li>
 
@@ -2864,7 +2864,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 137935d</div>
+                  <div class="commit-id">Commit Id: 5b481a4</div>
                 
 
 
@@ -3021,7 +3021,7 @@ Each DynamoDB table is cataloged as an <code>Endpoint</code> in OAP.</p>
 <h3 id="customizations">Customizations</h3>
 <p>You can customize your own metrics/expression/dashboard panel.
 The metrics definition and expression rules are found in <code>/config/otel-rules/aws-dynamodb</code>.
-The DynamoDB dashboard panel configurations are found in <code>/config/ui-initialized-templates/aws_dynamodb</code>.</p>
+The DynamoDB dashboard panel configurations ship from the SkyWalking Horizon UI bundle (apache/skywalking-horizon-ui); the OAP backend no longer hosts UI dashboard JSONs.</p>
 
 
 
@@ -3184,8 +3184,6 @@ The DynamoDB dashboard panel configurations are found in <code>/config/ui-initia
 
     </div>
     
-
-
 
 
 

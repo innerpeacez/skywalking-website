@@ -29,30 +29,27 @@
 <meta name="theme-color" content="#ffffff">
 
 <title>UI | Apache SkyWalking</title><meta property="og:title" content="UI" />
-<meta property="og:description" content="UI SkyWalking UI distribution is already included in our Apache official release.
-Startup Startup script is also in /bin/webappService.sh(.bat). UI runs as a Java process, powered-by Armeria.
-Settings The settings file of UI is webapp/webapp.yml in the distribution package. It has three parts.
- Listening port. Backend connect info.  serverPort:${SW_SERVER_PORT:-8080}# Comma separated list of OAP addresses, with `http://` or `https://` prefix.oapServices:${SW_OAP_ADDRESS:-http://localhost:12800}zipkinServices:${SW_ZIPKIN_ADDRESS:http://localhost:9412}Start with Docker Image Start a container to connect OAP server whose address is http://oap:12800." />
+<meta property="og:description" content="UI The SkyWalking web UI ships from a dedicated project, apache/skywalking-horizon-ui. This OAP distribution does not bundle a UI.
+Horizon UI releases independently of the OAP backend. The two projects advance on separate schedules, are matched at deploy time (not at release time), and the OAP x.y.z tag has no implied Horizon UI counterpart. Pin the UI image tag explicitly in your deployment.
+Run Horizon UI with Docker Container images are published to ghcr." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/main/next/en/setup/backend/ui-setup/" />
 
 <meta itemprop="name" content="UI">
-<meta itemprop="description" content="UI SkyWalking UI distribution is already included in our Apache official release.
-Startup Startup script is also in /bin/webappService.sh(.bat). UI runs as a Java process, powered-by Armeria.
-Settings The settings file of UI is webapp/webapp.yml in the distribution package. It has three parts.
- Listening port. Backend connect info.  serverPort:${SW_SERVER_PORT:-8080}# Comma separated list of OAP addresses, with `http://` or `https://` prefix.oapServices:${SW_OAP_ADDRESS:-http://localhost:12800}zipkinServices:${SW_ZIPKIN_ADDRESS:http://localhost:9412}Start with Docker Image Start a container to connect OAP server whose address is http://oap:12800.">
+<meta itemprop="description" content="UI The SkyWalking web UI ships from a dedicated project, apache/skywalking-horizon-ui. This OAP distribution does not bundle a UI.
+Horizon UI releases independently of the OAP backend. The two projects advance on separate schedules, are matched at deploy time (not at release time), and the OAP x.y.z tag has no implied Horizon UI counterpart. Pin the UI image tag explicitly in your deployment.
+Run Horizon UI with Docker Container images are published to ghcr.">
 
-<meta itemprop="wordCount" content="123">
+<meta itemprop="wordCount" content="195">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="UI"/>
-<meta name="twitter:description" content="UI SkyWalking UI distribution is already included in our Apache official release.
-Startup Startup script is also in /bin/webappService.sh(.bat). UI runs as a Java process, powered-by Armeria.
-Settings The settings file of UI is webapp/webapp.yml in the distribution package. It has three parts.
- Listening port. Backend connect info.  serverPort:${SW_SERVER_PORT:-8080}# Comma separated list of OAP addresses, with `http://` or `https://` prefix.oapServices:${SW_OAP_ADDRESS:-http://localhost:12800}zipkinServices:${SW_ZIPKIN_ADDRESS:http://localhost:9412}Start with Docker Image Start a container to connect OAP server whose address is http://oap:12800."/>
+<meta name="twitter:description" content="UI The SkyWalking web UI ships from a dedicated project, apache/skywalking-horizon-ui. This OAP distribution does not bundle a UI.
+Horizon UI releases independently of the OAP backend. The two projects advance on separate schedules, are matched at deploy time (not at release time), and the OAP x.y.z tag has no implied Horizon UI counterpart. Pin the UI image tag explicitly in your deployment.
+Run Horizon UI with Docker Container images are published to ghcr."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -2250,7 +2247,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/admin-api/admin-ui">Admin UI (Community)</a>
+            <a href="/docs/main/next/en/setup/backend/admin-api/ui-management">UI Management API</a>
         
     </li>
 
@@ -2870,7 +2867,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 137935d</div>
+                  <div class="commit-id">Commit Id: 5b481a4</div>
                 
 
 
@@ -2916,30 +2913,54 @@ if (!doNotTrack) {
 
 
 	<h1 id="ui">UI</h1>
-<p>SkyWalking UI distribution is already included in our Apache official release.</p>
-<h2 id="startup">Startup</h2>
-<p>Startup script is also in <code>/bin/webappService.sh</code>(.bat). UI runs as a Java process, powered-by Armeria.</p>
-<h2 id="settings">Settings</h2>
-<p>The settings file of UI is  <code>webapp/webapp.yml</code> in the distribution package. It has three parts.</p>
-<ol>
-<li>Listening port.</li>
-<li>Backend connect info.</li>
-</ol>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">serverPort</span>:<span style="color:#bbb"> </span>${SW_SERVER_PORT:-8080}<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#998;font-style:italic"># Comma separated list of OAP addresses, with `http://` or `https://` prefix.</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#000080">oapServices</span>:<span style="color:#bbb"> </span>${SW_OAP_ADDRESS:-http://localhost:12800}<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#000080">zipkinServices</span>:<span style="color:#bbb"> </span>${SW_ZIPKIN_ADDRESS:http://localhost:9412}<span style="color:#bbb">
-</span></code></pre></div><h2 id="start-with-docker-image">Start with Docker Image</h2>
-<p>Start a container to connect OAP server whose address is <code>http://oap:12800</code>.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#0086b3">export</span> <span style="color:#008080">version</span><span style="color:#000;font-weight:bold">=</span>9.0.0
-docker run --name oap --restart always -d -e <span style="color:#008080">SW_OAP_ADDRESS</span><span style="color:#000;font-weight:bold">=</span>http://oap:12800 -e <span style="color:#008080">SW_ZIPKIN_ADDRESS</span><span style="color:#000;font-weight:bold">=</span>http://oap:9412 apache/skywalking-ui:<span style="color:#008080">$version</span>
-</code></pre></div><h3 id="configuration">Configuration</h3>
-<p>We could set up environment variables to configure this image.</p>
-<h3 id="sw_oap_address">SW_OAP_ADDRESS</h3>
-<p>The address of your OAP server. The default value is <code>http://127.0.0.1:12800</code>.</p>
-<h3 id="sw_zipkin_address">SW_ZIPKIN_ADDRESS</h3>
-<p>The address of your Zipkin server. The default value is <code>http://127.0.0.1:9412</code>.</p>
+<p>The SkyWalking web UI ships from a dedicated project,
+<a href="https://github.com/apache/skywalking-horizon-ui">apache/skywalking-horizon-ui</a>.
+This OAP distribution does not bundle a UI.</p>
+<p>Horizon UI <strong>releases independently</strong> of the OAP backend. The two projects
+advance on separate schedules, are matched at deploy time (not at release
+time), and the OAP <code>x.y.z</code> tag has no implied Horizon UI counterpart. Pin
+the UI image tag explicitly in your deployment.</p>
+<h2 id="run-horizon-ui-with-docker">Run Horizon UI with Docker</h2>
+<p>Container images are published to
+<a href="https://github.com/apache/skywalking-horizon-ui/pkgs/container/skywalking-horizon-ui"><code>ghcr.io/apache/skywalking-horizon-ui</code></a>.
+Operators pin to a commit SHA for reproducibility, or use <code>latest</code> for tracking.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">docker run --name skywalking-ui --restart always -d <span style="color:#d14">\
+</span><span style="color:#d14"></span>  -p 8080:8080 <span style="color:#d14">\
+</span><span style="color:#d14"></span>  -e <span style="color:#008080">SW_OAP_ADDRESS</span><span style="color:#000;font-weight:bold">=</span>http://oap:12800 <span style="color:#d14">\
+</span><span style="color:#d14"></span>  -e <span style="color:#008080">SW_ADMIN_ADDRESS</span><span style="color:#000;font-weight:bold">=</span>http://oap:17128 <span style="color:#d14">\
+</span><span style="color:#d14"></span>  -e <span style="color:#008080">SW_ZIPKIN_ADDRESS</span><span style="color:#000;font-weight:bold">=</span>http://oap:9412 <span style="color:#d14">\
+</span><span style="color:#d14"></span>  ghcr.io/apache/skywalking-horizon-ui:latest
+</code></pre></div><h3 id="environment-variables">Environment variables</h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SW_OAP_ADDRESS</code></td>
+<td><code>http://127.0.0.1:12800</code></td>
+<td>OAP public GraphQL / REST surface — read-side queries (services, metrics, traces, logs, alarms, MQE).</td>
+</tr>
+<tr>
+<td><code>SW_ADMIN_ADDRESS</code></td>
+<td><code>http://127.0.0.1:17128</code></td>
+<td>OAP admin host — <code>/ui-management/templates/*</code> (dashboard templates; menu is owned by Horizon UI client-side), <code>/status/*</code>, <code>/inspect/*</code>, <code>/dsl-debugging/*</code>, <code>/runtime/rule/*</code>.</td>
+</tr>
+<tr>
+<td><code>SW_ZIPKIN_ADDRESS</code></td>
+<td><code>http://127.0.0.1:9412</code></td>
+<td>OAP Zipkin v2 query endpoint, for trace ingestion paths that target the Zipkin compatibility layer.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="building-ui-assets">Building UI assets</h2>
+<p>The Horizon UI repository owns its own build, release, and CI workflow. To
+contribute dashboards, menus, widgets, or i18n, see the
+<a href="https://github.com/apache/skywalking-horizon-ui#contributing">Horizon UI contributing guide</a>.</p>
 
 
 
@@ -2977,15 +2998,12 @@ docker run --name oap --restart always -d -e <span style="color:#008080">SW_OAP_
   <ul>
     <li><a href="#ui">UI</a>
       <ul>
-        <li><a href="#startup">Startup</a></li>
-        <li><a href="#settings">Settings</a></li>
-        <li><a href="#start-with-docker-image">Start with Docker Image</a>
+        <li><a href="#run-horizon-ui-with-docker">Run Horizon UI with Docker</a>
           <ul>
-            <li><a href="#configuration">Configuration</a></li>
-            <li><a href="#sw_oap_address">SW_OAP_ADDRESS</a></li>
-            <li><a href="#sw_zipkin_address">SW_ZIPKIN_ADDRESS</a></li>
+            <li><a href="#environment-variables">Environment variables</a></li>
           </ul>
         </li>
+        <li><a href="#building-ui-assets">Building UI assets</a></li>
       </ul>
     </li>
   </ul>
@@ -3103,8 +3121,6 @@ docker run --name oap --restart always -d -e <span style="color:#008080">SW_OAP_
 
     </div>
     
-
-
 
 
 

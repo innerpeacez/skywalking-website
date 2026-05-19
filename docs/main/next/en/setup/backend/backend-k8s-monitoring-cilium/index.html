@@ -40,7 +40,7 @@ API Requirements  Peers API: Listen the hubble node in the cluster, OAP would co
 Data flow SkyWalking fetches Cilium Node and Observability Data from gRPC API, analysis to generate entity and using OAL to generating metrics.
 API Requirements  Peers API: Listen the hubble node in the cluster, OAP would communicate with Hubble node to obtain Observe data.">
 
-<meta itemprop="wordCount" content="724">
+<meta itemprop="wordCount" content="737">
 
 
 
@@ -2247,7 +2247,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/admin-api/admin-ui">Admin UI (Community)</a>
+            <a href="/docs/main/next/en/setup/backend/admin-api/ui-management">UI Management API</a>
         
     </li>
 
@@ -2867,7 +2867,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 137935d</div>
+                  <div class="commit-id">Commit Id: 5b481a4</div>
                 
 
 
@@ -3118,7 +3118,7 @@ Moreover, it ensures that a single Cilium node is not monitored by multiple OAP 
 <h2 id="customizations">Customizations</h2>
 <p>You can customize your own metrics/dashboard panel.
 The metrics definition and expression rules are found in <code>/config/oal/cilium.oal</code>, please refer the <a href="../../../concepts-and-designs/scope-definitions#scopes-with-cilium-prefix">Scope Declaration Documentation</a>.
-The Cilium dashboard panel configurations are found in <code>/config/ui-initialized-templates/cilium_service</code>.</p>
+The Cilium dashboard panel configurations ship from the SkyWalking Horizon UI bundle (apache/skywalking-horizon-ui); the OAP backend no longer hosts UI dashboard JSONs.</p>
 
 
 
@@ -3289,8 +3289,6 @@ The Cilium dashboard panel configurations are found in <code>/config/ui-initiali
 
     </div>
     
-
-
 
 
 

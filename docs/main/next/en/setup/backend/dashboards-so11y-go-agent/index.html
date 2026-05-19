@@ -38,7 +38,7 @@ Data flow  SkyWalking go agent reports metrics data internally and automatically
 <meta itemprop="description" content="Go Agent self observability dashboard SkyWalking go agent reports its metrics using Meter APIS to measure tracing performance. it also provides a dashboard to visualize the agent metrics.
 Data flow  SkyWalking go agent reports metrics data internally and automatically. SkyWalking OAP receives these meters through native protocols. The SkyWalking OAP Server parses the expression with MAL to filter/calculate/aggregate and store the results.  Set up Go Agent so11y is a build-in feature, it reports meters automatically after boot.">
 
-<meta itemprop="wordCount" content="231">
+<meta itemprop="wordCount" content="244">
 
 
 
@@ -2244,7 +2244,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/admin-api/admin-ui">Admin UI (Community)</a>
+            <a href="/docs/main/next/en/setup/backend/admin-api/ui-management">UI Management API</a>
         
     </li>
 
@@ -2864,7 +2864,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 137935d</div>
+                  <div class="commit-id">Commit Id: 5b481a4</div>
                 
 
 
@@ -2980,7 +2980,7 @@ it also provides a dashboard to visualize the agent metrics.</p>
 <h2 id="customizations">Customizations</h2>
 <p>You can customize your own metrics/expression/dashboard panel.
 The metrics definition and expression rules are found in <code>/meter-analyzer-config/go-agent.yaml</code>
-The self observability dashboard panel configurations are found in <code>/config/ui-initialized-templates/so11y_go_agent</code>.</p>
+The self observability dashboard panel configurations ship from the SkyWalking Horizon UI bundle (apache/skywalking-horizon-ui); the OAP backend no longer hosts UI dashboard JSONs.</p>
 
 
 
@@ -3143,8 +3143,6 @@ The self observability dashboard panel configurations are found in <code>/config
 
     </div>
     
-
-
 
 
 

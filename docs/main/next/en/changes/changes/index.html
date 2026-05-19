@@ -28,22 +28,22 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>10.5.0 | Apache SkyWalking</title><meta property="og:title" content="10.5.0" />
-<meta property="og:description" content="10.5.0 Project  New admin-server module — shared host for admin / on-demand write APIs. Runs on two ports: an HTTP REST surface (default 17128) for operator-facing endpoints, and an admin-internal gRPC bus (default 17129) for peer-to-peer cluster RPCs (runtime-rule Suspend / Resume / Forward; DSL debug install / collect / stop / stopByClientId). The admin-internal bus is a dedicated transport separate from the public agent / cluster gRPC port (core." />
+<title>11.0.0 | Apache SkyWalking</title><meta property="og:title" content="11.0.0" />
+<meta property="og:description" content="11.0.0 Project  New queryAlarms GraphQL query — entity / layer / rule filters for alarms. Adds a comprehensive alarm query API alongside the legacy getAlarm. The new queryAlarms(condition: AlarmQueryCondition!): Alarms accepts a single input type bundling every filter the alarm record stores: entities: [Entity!] (reuses the MQE Entity shape — pin to specific services / instances / endpoints / processes or their relations, matched against alarm id0 OR id1); layer: String (filter by the alarmed entity&rsquo;s layer — single match, since alarm rows persist one layer); ruleNames: [String!" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/main/next/en/changes/changes/" />
 
-<meta itemprop="name" content="10.5.0">
-<meta itemprop="description" content="10.5.0 Project  New admin-server module — shared host for admin / on-demand write APIs. Runs on two ports: an HTTP REST surface (default 17128) for operator-facing endpoints, and an admin-internal gRPC bus (default 17129) for peer-to-peer cluster RPCs (runtime-rule Suspend / Resume / Forward; DSL debug install / collect / stop / stopByClientId). The admin-internal bus is a dedicated transport separate from the public agent / cluster gRPC port (core.">
+<meta itemprop="name" content="11.0.0">
+<meta itemprop="description" content="11.0.0 Project  New queryAlarms GraphQL query — entity / layer / rule filters for alarms. Adds a comprehensive alarm query API alongside the legacy getAlarm. The new queryAlarms(condition: AlarmQueryCondition!): Alarms accepts a single input type bundling every filter the alarm record stores: entities: [Entity!] (reuses the MQE Entity shape — pin to specific services / instances / endpoints / processes or their relations, matched against alarm id0 OR id1); layer: String (filter by the alarmed entity&rsquo;s layer — single match, since alarm rows persist one layer); ruleNames: [String!">
 
-<meta itemprop="wordCount" content="2804">
+<meta itemprop="wordCount" content="3630">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="10.5.0"/>
-<meta name="twitter:description" content="10.5.0 Project  New admin-server module — shared host for admin / on-demand write APIs. Runs on two ports: an HTTP REST surface (default 17128) for operator-facing endpoints, and an admin-internal gRPC bus (default 17129) for peer-to-peer cluster RPCs (runtime-rule Suspend / Resume / Forward; DSL debug install / collect / stop / stopByClientId). The admin-internal bus is a dedicated transport separate from the public agent / cluster gRPC port (core."/>
+<meta name="twitter:title" content="11.0.0"/>
+<meta name="twitter:description" content="11.0.0 Project  New queryAlarms GraphQL query — entity / layer / rule filters for alarms. Adds a comprehensive alarm query API alongside the legacy getAlarm. The new queryAlarms(condition: AlarmQueryCondition!): Alarms accepts a single input type bundling every filter the alarm record stores: entities: [Entity!] (reuses the MQE Entity shape — pin to specific services / instances / endpoints / processes or their relations, matched against alarm id0 OR id1); layer: String (filter by the alarmed entity&rsquo;s layer — single match, since alarm rows persist one layer); ruleNames: [String!"/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -72,7 +72,7 @@ if (!doNotTrack) {
 
 
 
-    <title>10.5.0 | Apache SkyWalking</title>
+    <title>11.0.0 | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -2241,7 +2241,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/admin-api/admin-ui">Admin UI (Community)</a>
+            <a href="/docs/main/next/en/setup/backend/admin-api/ui-management">UI Management API</a>
         
     </li>
 
@@ -2861,7 +2861,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 137935d</div>
+                  <div class="commit-id">Commit Id: 5b481a4</div>
                 
 
 
@@ -2906,9 +2906,104 @@ if (!doNotTrack) {
 
 
 
-	<h2 id="1050">10.5.0</h2>
+	<h2 id="1100">11.0.0</h2>
 <h4 id="project">Project</h4>
 <ul>
+<li><strong>New <code>queryAlarms</code> GraphQL query — entity / layer / rule filters for alarms.</strong> Adds
+a comprehensive alarm query API alongside the legacy <code>getAlarm</code>. The new
+<code>queryAlarms(condition: AlarmQueryCondition!): Alarms</code> accepts a single input type
+bundling every filter the alarm record stores: <code>entities: [Entity!]</code> (reuses the
+MQE <code>Entity</code> shape — pin to specific services / instances / endpoints / processes
+or their relations, matched against alarm <code>id0</code> OR <code>id1</code>); <code>layer: String</code>
+(filter by the alarmed entity&rsquo;s layer — single match, since alarm rows
+persist one layer); <code>ruleNames: [String!]</code> (filter by which alarm rule
+fired); plus <code>keyword</code>, <code>tags</code>, <code>duration</code>, <code>paging</code>. Legacy <code>getAlarm</code>
+is marked <code>@deprecated</code> but still routes to the same DAO — no client breakage.
+Backend additions: a new <code>layer</code> column on <code>AlarmRecord</code> populated at alarm-mint
+time via <code>MetadataQueryService.getService(serviceId).getLayers()</code>; the existing
+<code>id0</code>/<code>id1</code> columns flipped from <code>storageOnly = true</code> to indexed so the entity
+filter pushes down to storage. <code>IAlarmQueryDAO.queryAlarms(condition, limit, from)</code>
+is a new abstract method — 3rd-party storage backends fail at compile if they miss
+the override (SWIP-14 pattern). All three bundled backends implement it:
+BanyanDB / Elasticsearch / JDBC. <strong>Operator semantics:</strong>
+(1) <strong>Relation entities are exact-match.</strong> Passing <code>{scope: ServiceRelation, serviceName: A, destServiceName: B}</code> matches only the alarm where
+<code>id0=serviceId(A) AND id1=serviceId(B)</code>, not any alarm that touches A or B
+on either side. Wider &ldquo;anything involving A&rdquo; queries should pass the
+individual non-relation entity instead (<code>{scope: Service, serviceName: A}</code> —
+which expands to <code>id0=A OR id1=A</code>).
+(2) <strong>Single layer per alarm row.</strong> The persisted column stores ONE layer
+(the first entry of the entity&rsquo;s resolved layer list — source-first for
+relations). A service in <code>[GENERAL, K8S_SERVICE]</code> whose metadata
+resolves to <code>GENERAL</code> first is filed under <code>GENERAL</code>; querying
+<code>layer: &quot;K8S_SERVICE&quot;</code> will miss it.
+<strong>Operator migration note:</strong> existing pre-upgrade alarm rows continue to
+be filterable by the legacy <code>getAlarm</code> fields; the new entity / layer /
+rule filters in <code>queryAlarms</code> apply only to alarms written after the
+upgrade (existing storage indices don&rsquo;t transition <code>index: false</code> → <code>true</code>
+in place; new daily-rolled indices pick up the indexed columns). Schema
+additions are non-blocking — bootstrap silently skips column-attribute
+changes on existing indices.</li>
+<li><strong>🚨 Breaking change: <code>apm-webapp</code> and the <code>skywalking-booster-ui</code> submodule are
+removed.</strong> This OAP distribution no longer ships a bundled web UI. The legacy Armeria
+reverse proxy in <code>apm-webapp/</code> (the binary that powered the <code>skywalking/ui</code> Docker
+image) and the <code>skywalking-ui</code> git submodule (which tracked <code>apache/skywalking-booster-ui</code>)
+are both deleted along with the <code>docker.ui</code> Maven target, the <code>skywalking/ui</code> Docker
+image build, the <code>apm-dist/</code> webapp packaging, and every CI workflow path that built
+or pushed the UI image. The official UI is now
+<a href="https://github.com/apache/skywalking-horizon-ui"><strong>Horizon UI</strong></a>, a SkyWalking
+sub-project that <strong>releases independently</strong> of the OAP backend on its own
+schedule, with container images published to
+<a href="https://github.com/apache/skywalking-horizon-ui/pkgs/container/skywalking-horizon-ui"><code>ghcr.io/apache/skywalking-horizon-ui</code></a>.
+There is no 1:1 mapping between OAP versions and Horizon UI versions —
+operators pin the UI image tag in their deployment and upgrade the two
+on separate cadences.
+Horizon UI consumes the OAP&rsquo;s public GraphQL/REST surface (default <code>12800</code>) and the
+admin host (default <code>17128</code>). The on-disk dashboard seed files in
+<code>oap-server/server-starter/src/main/resources/ui-initialized-templates/</code> are deleted;
+<code>UITemplateInitializer</code> / <code>UIMenuInitializer</code> are removed from <code>CoreModuleProvider.notifyAfterCompleted()</code>,
+and Horizon UI ships its own dashboard library and its own sidebar menu.
+UI templates are now created and updated through the new
+<code>/ui-management/templates/*</code> REST surface on admin-server (see below).
+All UI-related GraphQL mutations and queries (<code>UIConfigurationManagement</code>:
+<code>addTemplate</code>, <code>changeTemplate</code>, <code>disableTemplate</code>, <code>getAllTemplates</code>,
+<code>getDashboardConfiguration</code>, <code>getMenuItems</code>) are retired from the
+public GraphQL schema, along with the <code>SW_ENABLE_UPDATE_UI_TEMPLATE</code> flag.
+The OAP backend also no longer stores or serves the sidebar menu —
+<code>UIMenuManagementService</code>, <code>UIMenuManagementDAO</code>, <code>UIMenu</code>, <code>MenuItem</code>,
+and the storage impls are all removed; Horizon UI owns the menu
+client-side and uses <code>listServices(layer:...)</code> for dynamic &ldquo;layer has
+services&rdquo; gating. Upgrade path: replace <code>skywalking/ui:&lt;tag&gt;</code> with
+<code>ghcr.io/apache/skywalking-horizon-ui:&lt;tag&gt;</code> in your deployment, expose
+port <code>17128</code> from the OAP container, and migrate any scripts that
+called the legacy GraphQL UI mutations to the REST endpoints under
+<a href="../../setup/backend/admin-api/ui-management">UI Management API</a>. All
+status / debug endpoints (<code>/status/*</code>, <code>/debugging/*</code>) also move to
+admin-only — the public REST dual-bind for status is retired in the
+same release.</li>
+<li><strong>New <code>ui-management</code> admin module — REST surface for dashboard templates.</strong>
+Hosts five operations on admin-server (port <code>17128</code>):
+<code>GET /ui-management/templates</code>, <code>GET /ui-management/templates/{id}</code>,
+<code>POST /ui-management/templates</code>, <code>PUT /ui-management/templates</code>,
+<code>POST /ui-management/templates/{id}/disable</code>.
+Forwards to the existing <code>UITemplateManagementService</code> (no storage DAO
+changes). Enabled by default (<code>SW_UI_MANAGEMENT=default</code>, on a
+default-on admin host). Replaces the retired GraphQL <code>UIConfigurationManagement</code>
+template resolver. The sidebar menu is intentionally NOT served — see
+the breaking-change entry above. Operator reference:
+<a href="../../setup/backend/admin-api/ui-management">UI Management API</a>.</li>
+<li><strong>All admin feature modules default-on.</strong> <code>admin-server</code>, <code>status</code>, <code>inspect</code>,
+<code>ui-management</code>, <code>dsl-debugging</code>, and <code>receiver-runtime-rule</code> all default to enabled.
+Operators who don&rsquo;t want a particular feature set its <code>SW_*</code> env var to empty. This
+closes a usability gap from 10.4.0 where the runtime-rule / dsl-debugging surfaces
+required explicit opt-in even though the admin host was already on.</li>
+<li><strong>Status API moved to admin-host.</strong> Status / debug routes (<code>/status/*</code>, <code>/debugging/*</code>)
+now register on the admin-server REST host (default <code>17128</code>); they no longer mirror
+on <code>core.restPort</code> (default <code>12800</code>). Aligns status with every other admin feature
+module (inspect, dsl-debugging, runtime-rule, ui-management). Horizon UI consumes
+status from the admin host. URIs and payloads are unchanged; only the host moved.
+<strong>One exception:</strong> <code>/status/config/ttl</code> is also bound on the public REST host
+(12800) so ecosystem tools that discover TTL bounds via REST before issuing
+/graphql don&rsquo;t need to learn the admin port.</li>
 <li><strong>New <code>admin-server</code> module — shared host for admin / on-demand write APIs.</strong> Runs on
 <strong>two ports</strong>: an HTTP REST surface (default <code>17128</code>) for operator-facing endpoints,
 and an <strong>admin-internal gRPC bus</strong> (default <code>17129</code>) for peer-to-peer cluster RPCs
@@ -3038,22 +3133,16 @@ method on the interface — any 3rd party storage backend must explicitly
 override or the build fails. <strong>Enabled by default</strong> (both <code>SW_INSPECT</code> and
 <code>SW_ADMIN_SERVER</code> are on by default); set <code>SW_INSPECT=</code> empty to disable.
 Operator reference: <a href="../../setup/backend/admin-api/inspect">Inspect API</a>.</li>
-<li><strong>Status API relocated onto <code>server-admin/</code>.</strong> The legacy
-<code>status-query-plugin</code> is replaced by a new <code>status</code> feature module under
-<code>server-admin/</code>. Every existing route — <code>/status/cluster/nodes</code>,
+<li><strong>Status feature module relocation, finalized.</strong> The legacy
+<code>status-query-plugin</code> was replaced by a new <code>status</code> feature module
+under <code>server-admin/</code>; the route set (<code>/status/cluster/nodes</code>,
 <code>/status/alarm/*</code>, <code>/status/config/ttl</code>, <code>/debugging/config/dump</code>,
-<code>/debugging/query/*</code> — keeps its URI and payload unchanged. The module
-dual-binds the handlers: always on the public REST register (preserving
-the <code>core.restPort</code> binding <code>skywalking-ui</code> consumes) and additionally
-on the admin-server register when admin-server is enabled, so operators
-driving the admin host get the same surface alongside <code>/inspect/*</code> /
-<code>/dsl-debugging/*</code> / <code>/runtime/rule/*</code>. The selector renames from the
-QUERY-plugin form (<code>SW_QUERY=…,status-query-plugin</code>) to a top-level
-<code>SW_STATUS=default</code> (on by default); custom <code>application.yml</code> overrides
-referencing <code>status-query</code> need to repoint to <code>status</code>. Default
-deployments need no change. Status docs move from <code>docs/en/status/</code> to
-<a href="../../setup/backend/admin-api/status">admin-api/status.md</a>; the legacy
-<code>docs/en/status/status_apis.md</code> keeps a one-cycle redirect stub.</li>
+<code>/debugging/query/*</code>) keeps URIs and payloads unchanged. The selector
+renames from the QUERY-plugin form (<code>SW_QUERY=…,status-query-plugin</code>)
+to a top-level <code>SW_STATUS=default</code> (on by default); custom
+<code>application.yml</code> overrides referencing <code>status-query</code> need to repoint
+to <code>status</code>. Routes are admin-host only — see the &ldquo;Status API is
+admin-host only&rdquo; entry above for the public REST retirement.</li>
 </ul>
 <h4 id="oap-server">OAP Server</h4>
 <ul>
@@ -3112,7 +3201,7 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 <li>Add iOS app monitoring setup documentation.</li>
 <li>Add WeChat / Alipay Mini Program monitoring setup documentation, plus a client-side-monitoring section in the security guide covering public-internet ingress (OTLP + <code>/v3/segments</code>) for mobile / browser / mini-program SDKs.</li>
 </ul>
-<p>All issues and pull requests are <a href="https://github.com/apache/skywalking/issues?q=milestone:10.5.0">here</a></p>
+<p>All issues and pull requests are <a href="https://github.com/apache/skywalking/issues?q=milestone:11.0.0">here</a></p>
 
 
 
@@ -3258,8 +3347,6 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 
     </div>
     
-
-
 
 
 

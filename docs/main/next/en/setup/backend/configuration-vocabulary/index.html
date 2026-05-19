@@ -40,7 +40,7 @@ Main Configuration The main configuration is provided by application.yml. It div
 Main Configuration The main configuration is provided by application.yml. It divided into several modules, each of which has its own settings. The following table lists the modules and their settings.
    Module Provider Settings Value(s) and Explanation System Environment Variable¹ Default     core default role Option values: Mixed/Receiver/Aggregator. Receiver mode OAP opens the service to the agents, then analyzes and aggregates the results, and forwards the results for distributed aggregation.">
 
-<meta itemprop="wordCount" content="8441">
+<meta itemprop="wordCount" content="8446">
 
 
 
@@ -2247,7 +2247,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/admin-api/admin-ui">Admin UI (Community)</a>
+            <a href="/docs/main/next/en/setup/backend/admin-api/ui-management">UI Management API</a>
         
     </li>
 
@@ -2867,7 +2867,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 137935d</div>
+                  <div class="commit-id">Commit Id: 5b481a4</div>
                 
 
 
@@ -3264,14 +3264,6 @@ It divided into several modules, each of which has its own settings. The followi
 <td>The maximum thread count of query the eBPF profiling data from database.</td>
 <td>-</td>
 <td>System CPU core size</td>
-</tr>
-<tr>
-<td>-</td>
-<td>-</td>
-<td>uiMenuRefreshInterval</td>
-<td>The period(in seconds) of refreshing the status of all UI menu items.</td>
-<td>-</td>
-<td>20</td>
 </tr>
 <tr>
 <td>-</td>
@@ -4844,14 +4836,6 @@ It divided into several modules, each of which has its own settings. The followi
 <tr>
 <td>-</td>
 <td>-</td>
-<td>enableUpdateUITemplate</td>
-<td>Allow user add，disable and update UI template.</td>
-<td>SW_ENABLE_UPDATE_UI_TEMPLATE</td>
-<td>false</td>
-</tr>
-<tr>
-<td>-</td>
-<td>-</td>
 <td>enableOnDemandPodLog</td>
 <td>Ondemand Pod log: fetch the Pod logs on users' demand, the logs are fetched and displayed in real time, and are not persisted in any kind. This is helpful when users want to do some experiments and monitor the logs and see what&rsquo;s happing inside the service. Note: if you print secrets in the logs, they are also visible to the UI, so for the sake of security, this feature is disabled by default, please set this configuration to enable the feature manually.</td>
 <td>SW_ENABLE_ON_DEMAND_POD_LOG</td>
@@ -5540,8 +5524,8 @@ It divided into several modules, each of which has its own settings. The followi
 <tr>
 <td>status</td>
 <td>default</td>
-<td>(selector; relocated from status-query-plugin in 10.5.0)</td>
-<td>Status feature module — hosts /status/* and /debugging/* routes. Dual-bound: always on the public REST register, plus on the admin-server port. Both <code>status</code> and <code>admin-server</code> are enabled by default; set SW_STATUS empty to disable.</td>
+<td>(selector)</td>
+<td>Status feature module — hosts /status/* and /debugging/* routes on the admin-server REST host only. Both <code>status</code> and <code>admin-server</code> are enabled by default; set SW_STATUS empty to disable.</td>
 <td>SW_STATUS</td>
 <td>default</td>
 </tr>
@@ -5559,6 +5543,14 @@ It divided into several modules, each of which has its own settings. The followi
 <td>(selector)</td>
 <td>Inspect API on admin-server — /inspect/metrics (catalog) and /inspect/entities (entity enumeration with MQE-ready output). Routes only on the admin-server register. <strong>Enabled by default</strong> (admin-server is on by default too); set SW_INSPECT empty to disable.</td>
 <td>SW_INSPECT</td>
+<td>default</td>
+</tr>
+<tr>
+<td>ui-management</td>
+<td>default</td>
+<td>(selector)</td>
+<td>UI Management REST surface on admin-server — /ui-management/templates (CRUD) for dashboard templates. Consumed by Horizon UI; replaces the retired GraphQL <code>UIConfigurationManagement</code> template resolver. The sidebar menu is NOT served (Horizon UI owns it client-side). Routes only on the admin-server register. <strong>Enabled by default</strong>; set SW_UI_MANAGEMENT empty to disable.</td>
+<td>SW_UI_MANAGEMENT</td>
 <td>default</td>
 </tr>
 <tr>
@@ -5797,9 +5789,9 @@ It divided into several modules, each of which has its own settings. The followi
 <td>receiver-runtime-rule</td>
 <td>default</td>
 <td>-</td>
-<td>Hot-update admin endpoint for MAL / LAL rule files. REST routes mount on the <code>admin-server</code> HTTP host (port 17128); cluster Suspend/Resume/Forward RPCs ride the <code>admin-server</code> gRPC bus (port 17129). <strong>Disabled by default</strong>: leave the selector empty to keep the provider unloaded; set <code>SW_RECEIVER_RUNTIME_RULE=default</code> to enable (admin-server itself is on by default). The endpoint has <strong>no authentication</strong> — gateway-protect with IP allow-lists and never expose it to the public internet. See <a href="../admin-api/runtime-rule">Runtime Rule Hot-Update API</a>.</td>
+<td>Hot-update admin endpoint for MAL / LAL rule files. REST routes mount on the <code>admin-server</code> HTTP host (port 17128); cluster Suspend/Resume/Forward RPCs ride the <code>admin-server</code> gRPC bus (port 17129). <strong>Enabled by default</strong> (admin-server is on by default too); set <code>SW_RECEIVER_RUNTIME_RULE=</code> empty to keep the provider unloaded. The endpoint has <strong>no authentication</strong> — gateway-protect with IP allow-lists and never expose it to the public internet. See <a href="../admin-api/runtime-rule">Runtime Rule Hot-Update API</a>.</td>
 <td>SW_RECEIVER_RUNTIME_RULE</td>
-<td>(empty — disabled)</td>
+<td>default</td>
 </tr>
 <tr>
 <td>-</td>
@@ -5821,9 +5813,9 @@ It divided into several modules, each of which has its own settings. The followi
 <td>dsl-debugging</td>
 <td>default</td>
 <td>-</td>
-<td>DSL debug API (sampling debugger for MAL / LAL / OAL rules). REST routes mount on the <code>admin-server</code> HTTP host (port 17128) — read-only OAL listing under <code>/runtime/oal/*</code>, session control plane under <code>/dsl-debugging/*</code>; cluster install/collect/stop RPCs ride the <code>admin-server</code> gRPC bus (port 17129). <strong>Disabled by default</strong>: set <code>SW_DSL_DEBUGGING=default</code> to enable (admin-server itself is on by default). See <a href="../admin-api/dsl-debugging">DSL Debug API</a> and <a href="../../../swip/swip-13">SWIP-13</a>.</td>
+<td>DSL debug API (sampling debugger for MAL / LAL / OAL rules). REST routes mount on the <code>admin-server</code> HTTP host (port 17128) — read-only OAL listing under <code>/runtime/oal/*</code>, session control plane under <code>/dsl-debugging/*</code>; cluster install/collect/stop RPCs ride the <code>admin-server</code> gRPC bus (port 17129). <strong>Enabled by default</strong> (admin-server is on by default too); set <code>SW_DSL_DEBUGGING=</code> empty to disable. See <a href="../admin-api/dsl-debugging">DSL Debug API</a> and <a href="../../../swip/swip-13">SWIP-13</a>.</td>
 <td>SW_DSL_DEBUGGING</td>
-<td>(empty — disabled)</td>
+<td>default</td>
 </tr>
 <tr>
 <td>-</td>
@@ -7501,8 +7493,6 @@ provided in the default <code>application.yml/bydb.yaml</code> file.</p>
 
     </div>
     
-
-
 
 
 
