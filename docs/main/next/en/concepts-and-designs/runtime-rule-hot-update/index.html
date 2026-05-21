@@ -36,7 +36,7 @@
 <meta itemprop="name" content="Runtime Rule Hot-Update — Architecture">
 <meta itemprop="description" content="Runtime Rule Hot-Update — Architecture Operators change MAL and LAL rule files at runtime without restarting OAP. Changes persist in management storage, survive reboots, and propagate across every node in an OAP cluster within a bounded window. This page explains the contract: what the feature guarantees, how the cluster stays consistent, and what to expect when something goes wrong. The HTTP surface is documented separately in Runtime Rule Hot-Update API.">
 
-<meta itemprop="wordCount" content="3387">
+<meta itemprop="wordCount" content="3557">
 
 
 
@@ -2861,7 +2861,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 5b481a4</div>
+                  <div class="commit-id">Commit Id: 5e9db8f</div>
                 
 
 
@@ -3081,6 +3081,23 @@ the old schema and quietly truncated or rejected later.</li>
 explicit ERROR, boot always continues, the affected metric is disabled, and the
 operator reconciles explicitly through the on-demand workflow. The same shape is
 visible across every backend.</p>
+<h3 id="code-defined-stream-opt-in-narrow-exception">Code-defined stream opt-in (narrow exception)</h3>
+<p>The &ldquo;boot never reshapes&rdquo; rule above applies to <strong>runtime-rule (MAL / LAL)</strong>
+registration — those rules ride the <code>/addOrUpdate</code> REST workflow when their
+backing schema needs to change.</p>
+<p>Streams whose schema lives in OAP source code (e.g. <code>AlarmRecord</code>) can opt in
+to <strong>additive</strong> boot-time reshape via
+<code>@Stream(allowBootReshape = true)</code>. When the flag is on and the diff is
+purely additive (new tag / new field; no type changes, no drops, no entity /
+interval / sharding-key flips), the installer calls <code>client.update</code> at boot
+to append the new column to the live measure / stream; non-additive
+divergences still record <code>SKIPPED_SHAPE_MISMATCH</code> and require an operator
+drop+recreate. Only the init / standalone OAP performs the reshape; non-init
+peers continue through the existing poll-and-wait loop so a single node
+drives DDL during a rolling restart.</p>
+<p>This opt-in is <strong>BanyanDB-only</strong>. JDBC and Elasticsearch are append-only on
+the data path and already accept additive column / mapping additions at boot
+without operator intervention, so the flag is unread on those backends.</p>
 <h2 id="on-demand-workflow">On-demand workflow</h2>
 <p>Triggered by an HTTP call to one of the admin endpoints. A request arriving at any
 node is forwarded to the <strong>main</strong> (the node selected from the cluster view); the main
@@ -3346,6 +3363,7 @@ rules diverge along the version split. Use deployment discipline.</li>
         <li><a href="#boot-workflow">Boot workflow</a>
           <ul>
             <li><a href="#why-boot-cannot-reshape-the-backend">Why boot cannot reshape the backend</a></li>
+            <li><a href="#code-defined-stream-opt-in-narrow-exception">Code-defined stream opt-in (narrow exception)</a></li>
           </ul>
         </li>
         <li><a href="#on-demand-workflow">On-demand workflow</a>
