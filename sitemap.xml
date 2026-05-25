@@ -5890,6 +5890,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/soak/g9f-runbook/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/skywalking-banyandb/next/installation/binaries/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -7079,6 +7085,12 @@
   
   <url>
     <loc>/docs/main/next/en/setup/backend/marketplace/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/operation/troubleshooting/measure-vec-flag-off-rollback/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -11090,6 +11102,12 @@
   
   <url>
     <loc>/docs/main/v9.3.0/en/faq/v9-version-upgrade/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/observability/vec-query-tracing/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>

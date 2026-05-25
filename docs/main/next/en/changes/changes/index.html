@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  New queryAlarms GraphQL query — entity / layer / rule filters for alarms. Adds a comprehensive alarm query API alongside the legacy getAlarm. The new queryAlarms(condition: AlarmQueryCondition!): Alarms accepts a single input type bundling every filter the alarm record stores: entities: [Entity!] (reuses the MQE Entity shape — pin to specific services / instances / endpoints / processes or their relations, matched against alarm id0 OR id1); layer: String (filter by the alarmed entity&rsquo;s layer — single match, since alarm rows persist one layer); ruleNames: [String!">
 
-<meta itemprop="wordCount" content="3896">
+<meta itemprop="wordCount" content="3935">
 
 
 
@@ -2861,7 +2861,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 658832e</div>
+                  <div class="commit-id">Commit Id: 40d95a1</div>
                 
 
 
@@ -3146,6 +3146,11 @@ admin-host only&rdquo; entry above for the public REST retirement.</li>
 </ul>
 <h4 id="oap-server">OAP Server</h4>
 <ul>
+<li>Runtime MAL/LAL hot-update rules can declare <code>layerDefinitions:</code> to introduce new
+layers. Ordinals are operator-pinned in the <code>100_000+</code> tier; the layer is
+refcount-tracked and unregistered when the last declaring rule is removed. See
+<a href="../../concepts-and-designs/runtime-rule-hot-update">runtime-rule-hot-update.md#dynamic-layers</a>
+for the conflict rules and limitations.</li>
 <li>Fix: remove the redundant tags from the <code>envoy-ai-gateway.yaml</code> LAL configuration.</li>
 <li>Add Zipkin Virtual GenAI e2e test. Use <code>zipkin_json</code> exporter to avoid protobuf dependency conflict
 between <code>opentelemetry-exporter-zipkin-proto-http</code> (protobuf~=3.12) and <code>opentelemetry-proto</code> (protobuf&gt;=5.0).</li>
@@ -3349,6 +3354,12 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 
     </div>
     
+
+
+
+
+
+
 
 
 
