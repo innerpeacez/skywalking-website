@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  New queryAlarms GraphQL query — entity / layer / rule filters for alarms. Adds a comprehensive alarm query API alongside the legacy getAlarm. The new queryAlarms(condition: AlarmQueryCondition!): Alarms accepts a single input type bundling every filter the alarm record stores: entities: [Entity!] (reuses the MQE Entity shape — pin to specific services / instances / endpoints / processes or their relations, matched against alarm id0 OR id1); layer: String (filter by the alarmed entity&rsquo;s layer — single match, since alarm rows persist one layer); ruleNames: [String!">
 
-<meta itemprop="wordCount" content="3935">
+<meta itemprop="wordCount" content="3941">
 
 
 
@@ -2861,7 +2861,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 40d95a1</div>
+                  <div class="commit-id">Commit Id: ad73355</div>
                 
 
 
@@ -3193,6 +3193,7 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 <li>Fix: <code>avgHistogramPercentile</code> / <code>sumHistogramPercentile</code> meter functions reported the smallest finite bucket boundary (e.g. <code>10</code> for OTel <code>gen_ai_server_request_duration</code> whose <code>le</code> is rewritten from <code>0.01s</code> → <code>10ms</code>) for every rank when no samples were observed in any bucket. The percentile loop&rsquo;s <code>count &gt;= roof</code> check matched on the first sorted bucket because both sides were <code>0</code>. <code>calculate()</code> now short-circuits to <code>0</code> for every rank when the windowed total is <code>0</code>.</li>
 <li>Fix: MAL <code>expPrefix</code> now applies to every metric source in <code>exp</code>, not just the leading one. Previously the prefix was spliced after the first <code>.</code>, so secondary metrics inside arguments (e.g. the divisor in <code>a.sum(['s']).safeDiv(b.sum(['s']))</code>) silently skipped the prefix — a rule like envoy-ai-gateway&rsquo;s <code>request_latency_avg</code> (<code>sum / count</code>) would tag-rewrite only the dividend. The injection is now AST-aware: every bare-IDENTIFIER metric source is wrapped, while downsampling-type constants (<code>SUM</code>, <code>AVG</code>, <code>LATEST</code>, <code>SUM_PER_MIN</code>, <code>MAX</code>, <code>MIN</code>) are skipped.</li>
 <li>Add <code>@Stream(allowBootReshape = true)</code> opt-in for additive boot-time reshape of BanyanDB streams / measures. Code-defined stream classes (e.g. <code>AlarmRecord</code>) can now annotate their schema as eligible for in-place additive update at OAP boot — a new <code>@Column</code> is appended to the live tag-family / fields via <code>client.update</code> instead of being silently rejected with <code>SKIPPED_SHAPE_MISMATCH</code> (which previously forced operators to drop the measure / stream and lose historical rows). Additive includes both new tags / fields <strong>and</strong> relocating an existing tag between families when a <code>@Column</code>&rsquo;s <code>storageOnly</code> flag flips (e.g. <code>id1</code> moving from <code>storage-only</code> → <code>searchable</code> when it becomes indexed). The opt-in is per-stream and gated by an <code>isPurelyAdditive</code> shape diff: tag type changes, tag drops, kind flips (tag↔field), entity / interval / sharding-key changes, and field re-typing still skip with <code>SKIPPED_SHAPE_MISMATCH</code>, so identity-breaking edits remain explicit operator actions. Only the init / standalone OAP performs the reshape; non-init peers continue through the existing poll-and-wait loop so a single node drives DDL. When a <code>check*</code> records <code>SKIPPED_SHAPE_MISMATCH</code> the dependent <code>IndexRule</code> / <code>IndexRuleBinding</code> reconciliation is also skipped — preventing the previous gap where the binding silently updated to a tag list that diverged from the live tag-family layout. <code>AlarmRecord</code> is opted in. Default remains <code>false</code> for all other models — boot-time reshape stays off unless the annotation is explicitly set. <strong>Operator caveat:</strong> BanyanDB does not physically migrate existing rows when a tag&rsquo;s family changes; pre-existing data stays in its original on-disk location while new writes go to the declared family — expect a backfill window for queries that route through new IndexRules on relocated tags.</li>
+<li>Mask keywords <code>trustStorePass</code>, <code>keyStorePass</code> by default.</li>
 </ul>
 <h4 id="ui">UI</h4>
 <ul>

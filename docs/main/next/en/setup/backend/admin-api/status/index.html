@@ -2861,7 +2861,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 40d95a1</div>
+                  <div class="commit-id">Commit Id: ad73355</div>
                 
 
 
@@ -2927,7 +2927,7 @@ status explicitly, unset <code>SW_STATUS</code>:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">status</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#000080">selector</span>:<span style="color:#bbb"> </span>${SW_STATUS:default}<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#000080">default</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">keywords4MaskingSecretsOfConfig</span>:<span style="color:#bbb"> </span>${SW_DEBUGGING_QUERY_KEYWORDS_FOR_MASKING_SECRETS:user,password,token,accessKey,secretKey,authentication}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">keywords4MaskingSecretsOfConfig</span>:<span style="color:#bbb"> </span>${SW_DEBUGGING_QUERY_KEYWORDS_FOR_MASKING_SECRETS:user,password,trustStorePass,keyStorePass,token,accessKey,secretKey,authentication}<span style="color:#bbb">
 </span></code></pre></div><p><code>keywords4MaskingSecretsOfConfig</code> is consumed by <code>/debugging/config/dump</code>
 to redact configuration values whose key contains any listed substring.</p>
 <h2 id="endpoints">Endpoints</h2>
