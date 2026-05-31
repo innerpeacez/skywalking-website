@@ -74,7 +74,7 @@ Table of Contents   banyandb/common/v1/trace.proto
   Tag
   TagFamily">
 
-<meta itemprop="wordCount" content="10816">
+<meta itemprop="wordCount" content="10875">
 
 
 
@@ -1264,7 +1264,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 28cd2a7</div>
+                  <div class="commit-id">Commit Id: 46a3d97</div>
                 
 
 
@@ -12797,6 +12797,12 @@ Registered on the internal gRPC server so FODC agent can access it.</p>
 <td><a href="#banyandb-stream-v1-writerequest">WriteRequest</a></td>
 <td></td>
 <td></td>
+</tr>
+<tr>
+<td>raw_element_id</td>
+<td><a href="#uint64">uint64</a></td>
+<td></td>
+<td>raw_element_id carries the original storage-internal eID (an already-hashed uint64) forwarded by lifecycle row-replay. When non-zero, the receiver uses it directly and skips the HashStr step on element.element_id, so a logical element migrated through both chunk-sync and row-replay paths keeps the same target-side eID and query-layer dedup stays consistent. SDK and topN write paths leave this unset (0).</td>
 </tr>
 </tbody>
 </table>
