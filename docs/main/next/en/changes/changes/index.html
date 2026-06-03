@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  New queryAlarms GraphQL query — entity / layer / rule filters for alarms. Adds a comprehensive alarm query API alongside the legacy getAlarm. The new queryAlarms(condition: AlarmQueryCondition!): Alarms accepts a single input type bundling every filter the alarm record stores: entities: [Entity!] (reuses the MQE Entity shape — pin to specific services / instances / endpoints / processes or their relations, matched against alarm id0 OR id1); layer: String (filter by the alarmed entity&rsquo;s layer — single match, since alarm rows persist one layer); ruleNames: [String!">
 
-<meta itemprop="wordCount" content="3941">
+<meta itemprop="wordCount" content="3975">
 
 
 
@@ -2861,7 +2861,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: b92e0e6</div>
+                  <div class="commit-id">Commit Id: 768d069</div>
                 
 
 
@@ -2952,8 +2952,10 @@ image build, the <code>apm-dist/</code> webapp packaging, and every CI workflow 
 or pushed the UI image. The official UI is now
 <a href="https://github.com/apache/skywalking-horizon-ui"><strong>Horizon UI</strong></a>, a SkyWalking
 sub-project that <strong>releases independently</strong> of the OAP backend on its own
-schedule, with container images published to
-<a href="https://github.com/apache/skywalking-horizon-ui/pkgs/container/skywalking-horizon-ui"><code>ghcr.io/apache/skywalking-horizon-ui</code></a>.
+schedule, with released container images on Docker Hub at
+<a href="https://hub.docker.com/r/apache/skywalking-ui"><code>apache/skywalking-ui</code></a>
+(tags <code>latest</code> / <code>horizon-&lt;version&gt;</code>; per-commit development images live on
+<code>ghcr.io/apache/skywalking-horizon-ui</code>).
 There is no 1:1 mapping between OAP versions and Horizon UI versions —
 operators pin the UI image tag in their deployment and upgrade the two
 on separate cadences.
@@ -2972,8 +2974,10 @@ The OAP backend also no longer stores or serves the sidebar menu —
 <code>UIMenuManagementService</code>, <code>UIMenuManagementDAO</code>, <code>UIMenu</code>, <code>MenuItem</code>,
 and the storage impls are all removed; Horizon UI owns the menu
 client-side and uses <code>listServices(layer:...)</code> for dynamic &ldquo;layer has
-services&rdquo; gating. Upgrade path: replace <code>skywalking/ui:&lt;tag&gt;</code> with
-<code>ghcr.io/apache/skywalking-horizon-ui:&lt;tag&gt;</code> in your deployment, expose
+services&rdquo; gating. Upgrade path: replace <code>skywalking/ui:&lt;tag&gt;</code> with the
+Horizon UI image <code>apache/skywalking-ui:latest</code> (or a <code>horizon-&lt;version&gt;</code>
+tag — pick a version per Horizon UI&rsquo;s OAP-compatibility notes, OAP <code>11.0+</code>
+is supported) in your deployment, expose
 port <code>17128</code> from the OAP container, and migrate any scripts that
 called the legacy GraphQL UI mutations to the REST endpoints under
 <a href="../../setup/backend/admin-api/ui-management">UI Management API</a>. All
