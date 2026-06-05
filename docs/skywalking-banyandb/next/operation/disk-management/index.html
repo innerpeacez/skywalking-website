@@ -1102,6 +1102,14 @@ if (!doNotTrack) {
 
     <li>
         
+            <a href="/docs/skywalking-banyandb/next/concept/storage-and-format">Storage &amp; File Format (by API resource)</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/skywalking-banyandb/next/concept/tsdb">v1.3.0</a>
         
     </li>
@@ -1213,7 +1221,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: af0b2cf</div>
+                  <div class="commit-id">Commit Id: 3aec742</div>
                 
 
 
@@ -1276,11 +1284,11 @@ if (!doNotTrack) {
 <p><strong>Write Queue Mechanism</strong>: Liaison servers maintain a write queue that buffers incoming data before syncing it to data servers. When the queue fills up and disk usage exceeds the configured threshold, the liaison server throttles incoming writes to allow the sync process to catch up and free up disk space.</p>
 <h4 id="inspecting-the-liaison-write-queue-on-disk">Inspecting the Liaison write queue on disk</h4>
 <p>Liaison nodes persist the write queue to disk, so pending data survives restarts and can be inspected during incident response.
-The on-disk layout under each <code>*-data-path</code> mirrors the TSDB structure (group → shard → segment → part). See <a href="../../concept/tsdb">TSDB</a> for the segment and shard concepts.</p>
+The on-disk layout under each <code>*-data-path</code> mirrors the TSDB structure (group → segment → shard → part). See <a href="../../concept/tsdb">TSDB</a> for the segment and shard concepts.</p>
 <p><strong>Where series metadata is stored (<code>smeta.bin</code>)</strong></p>
 <p>Starting from 0.10, each persisted part for <strong>measure</strong>, <strong>stream</strong>, and <strong>trace</strong> may include an optional <code>smeta.bin</code> file in the part directory:</p>
 <ul>
-<li><strong>Location</strong>: <code>.../&lt;group&gt;/shard-&lt;id&gt;/&lt;segment&gt;/.../&lt;partID-hex&gt;/smeta.bin</code></li>
+<li><strong>Location</strong>: <code>.../&lt;group&gt;/&lt;segment&gt;/shard-&lt;id&gt;/&lt;partID-hex&gt;/smeta.bin</code></li>
 <li><strong>Purpose</strong>: <code>smeta.bin</code> stores a compact mapping from <code>SeriesID</code> to the series <code>EntityValues</code> that appear in that part. This makes it possible to identify which series a queued (or malformed) part belongs to even when segment-level indexes are missing or hard to use during debugging.</li>
 <li><strong>Backward compatibility</strong>: older parts may not contain <code>smeta.bin</code>, and tools should handle its absence gracefully.</li>
 </ul>
@@ -1288,9 +1296,9 @@ The on-disk layout under each <code>*-data-path</code> mirrors the TSDB structur
 <p>To inspect a shard directory and have the output include human-readable series (when available), use the <code>dump</code> tool shipped with the repository (source: <code>banyand/cmd/dump</code>).</p>
 <p>Examples:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#998;font-style:italic"># If you have the dump binary in PATH.</span>
-dump measure --shard-path &lt;measure-data-path&gt;/&lt;group&gt;/shard-0 --segment-path &lt;measure-data-path&gt;/&lt;group&gt;/shard-0/&lt;segment&gt;
-dump stream  --shard-path &lt;stream-data-path&gt;/&lt;group&gt;/shard-0  --segment-path &lt;stream-data-path&gt;/&lt;group&gt;/shard-0/&lt;segment&gt;
-dump trace   --shard-path &lt;trace-data-path&gt;/&lt;group&gt;/shard-0   --segment-path &lt;trace-data-path&gt;/&lt;group&gt;/shard-0/&lt;segment&gt;
+dump measure --shard-path &lt;measure-data-path&gt;/&lt;group&gt;/&lt;segment&gt;/shard-0 --segment-path &lt;measure-data-path&gt;/&lt;group&gt;/&lt;segment&gt;
+dump stream  --shard-path &lt;stream-data-path&gt;/&lt;group&gt;/&lt;segment&gt;/shard-0  --segment-path &lt;stream-data-path&gt;/&lt;group&gt;/&lt;segment&gt;
+dump trace   --shard-path &lt;trace-data-path&gt;/&lt;group&gt;/&lt;segment&gt;/shard-0   --segment-path &lt;trace-data-path&gt;/&lt;group&gt;/&lt;segment&gt;
 
 <span style="color:#998;font-style:italic"># Or run it from source.</span>
 go run ./banyand/cmd/dump measure --shard-path &lt;...&gt; --segment-path &lt;...&gt;
@@ -1734,6 +1742,8 @@ go run ./banyand/cmd/dump measure --shard-path &lt;...&gt; --segment-path &lt;..
 
     </div>
     
+
+
 
 
 
