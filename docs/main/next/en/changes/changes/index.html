@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  New queryAlarms GraphQL query — entity / layer / rule filters for alarms. Adds a comprehensive alarm query API alongside the legacy getAlarm. The new queryAlarms(condition: AlarmQueryCondition!): Alarms accepts a single input type bundling every filter the alarm record stores: entities: [Entity!] (reuses the MQE Entity shape — pin to specific services / instances / endpoints / processes or their relations, matched against alarm id0 OR id1); layer: String (filter by the alarmed entity&rsquo;s layer — single match, since alarm rows persist one layer); ruleNames: [String!">
 
-<meta itemprop="wordCount" content="4006">
+<meta itemprop="wordCount" content="4099">
 
 
 
@@ -2861,7 +2861,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: b1dc423</div>
+                  <div class="commit-id">Commit Id: 3e5cb0c</div>
                 
 
 
@@ -3199,6 +3199,7 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 <li>Add <code>@Stream(allowBootReshape = true)</code> opt-in for additive boot-time reshape of BanyanDB streams / measures. Code-defined stream classes (e.g. <code>AlarmRecord</code>) can now annotate their schema as eligible for in-place additive update at OAP boot — a new <code>@Column</code> is appended to the live tag-family / fields via <code>client.update</code> instead of being silently rejected with <code>SKIPPED_SHAPE_MISMATCH</code> (which previously forced operators to drop the measure / stream and lose historical rows). Additive includes both new tags / fields <strong>and</strong> relocating an existing tag between families when a <code>@Column</code>&rsquo;s <code>storageOnly</code> flag flips (e.g. <code>id1</code> moving from <code>storage-only</code> → <code>searchable</code> when it becomes indexed). The opt-in is per-stream and gated by an <code>isPurelyAdditive</code> shape diff: tag type changes, tag drops, kind flips (tag↔field), entity / interval / sharding-key changes, and field re-typing still skip with <code>SKIPPED_SHAPE_MISMATCH</code>, so identity-breaking edits remain explicit operator actions. Only the init / standalone OAP performs the reshape; non-init peers continue through the existing poll-and-wait loop so a single node drives DDL. When a <code>check*</code> records <code>SKIPPED_SHAPE_MISMATCH</code> the dependent <code>IndexRule</code> / <code>IndexRuleBinding</code> reconciliation is also skipped — preventing the previous gap where the binding silently updated to a tag list that diverged from the live tag-family layout. <code>AlarmRecord</code> is opted in. Default remains <code>false</code> for all other models — boot-time reshape stays off unless the annotation is explicitly set. <strong>Operator caveat:</strong> BanyanDB does not physically migrate existing rows when a tag&rsquo;s family changes; pre-existing data stays in its original on-disk location while new writes go to the declared family — expect a backfill window for queries that route through new IndexRules on relocated tags.</li>
 <li>Mask keywords <code>trustStorePass</code>, <code>keyStorePass</code> by default.</li>
 <li>Bump up dependencies to clear CVE alerts on shipped OAP jars: log4j <code>2.25.3</code> → <code>2.25.4</code>, jackson <code>2.18.5</code> → <code>2.18.6</code>, kafka-clients <code>3.4.0</code> → <code>3.9.2</code>, postgresql <code>42.4.4</code> → <code>42.7.11</code>, commons-compress <code>1.21</code> → <code>1.26.2</code>.</li>
+<li>Fix: continuous profiling policy validation now rejects a threshold / count of <code>0</code> to match the error messages and rover&rsquo;s <code>value &gt;= threshold</code> trigger semantics (a <code>0</code> threshold would always trigger). CPU percent and HTTP error rate are tightened from <code>[0-100]</code> to <code>(0-100]</code>.</li>
 </ul>
 <h4 id="ui">UI</h4>
 <ul>
@@ -3213,6 +3214,7 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 <li>Add iOS app monitoring setup documentation.</li>
 <li>Add WeChat / Alipay Mini Program monitoring setup documentation, plus a client-side-monitoring section in the security guide covering public-internet ingress (OTLP + <code>/v3/segments</code>) for mobile / browser / mini-program SDKs.</li>
 <li>Improve downsampling documentation</li>
+<li>Fix the docker-compose quickstart: OAP healthcheck no longer calls <code>curl</code> (absent from the JRE image) and probes the query port via bash <code>/dev/tcp</code>; the Horizon UI service maps the correct container port (8081) and mounts a <code>horizon.yaml</code> (binding <code>0.0.0.0</code>, OAP URLs, demo <code>admin</code>/<code>admin</code> login) instead of non-existent <code>SW_*_ADDRESS</code> env vars.</li>
 </ul>
 <p>All issues and pull requests are <a href="https://github.com/apache/skywalking/issues?q=milestone:11.0.0">here</a></p>
 
