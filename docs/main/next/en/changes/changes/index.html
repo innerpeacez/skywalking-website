@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  New queryAlarms GraphQL query — entity / layer / rule filters for alarms. Adds a comprehensive alarm query API alongside the legacy getAlarm. The new queryAlarms(condition: AlarmQueryCondition!): Alarms accepts a single input type bundling every filter the alarm record stores: entities: [Entity!] (reuses the MQE Entity shape — pin to specific services / instances / endpoints / processes or their relations, matched against alarm id0 OR id1); layer: String (filter by the alarmed entity&rsquo;s layer — single match, since alarm rows persist one layer); ruleNames: [String!">
 
-<meta itemprop="wordCount" content="4099">
+<meta itemprop="wordCount" content="4356">
 
 
 
@@ -924,6 +924,32 @@ if (!doNotTrack) {
     <li>
         
             <a href="/docs/main/next/en/setup/backend/backend-activemq-monitoring">ActiveMQ</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Workflow Scheduler<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/backend-airflow-monitoring">Airflow</a>
         
     </li>
 
@@ -2861,7 +2887,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 3e5cb0c</div>
+                  <div class="commit-id">Commit Id: 75d9433</div>
                 
 
 
@@ -3150,6 +3176,22 @@ admin-host only&rdquo; entry above for the public REST retirement.</li>
 </ul>
 <h4 id="oap-server">OAP Server</h4>
 <ul>
+<li>SWIP-15: rebuild BanyanDB self-observability around the cluster / container / group model
+(requires BanyanDB 0.11+). <code>otel-rules/banyandb/</code> now models a BanyanDB cluster as one <code>Service</code>
+(<code>service(['cluster'])</code>), each container as a <code>ServiceInstance</code> keyed on <code>pod_name</code> + <code>container_name</code>
+(with <code>node_role</code> / <code>node_type</code> / <code>container_name</code> / <code>pod_name</code> as instance attributes), and each
+storage group as an <code>Endpoint</code>. New <code>banyandb-endpoint.yaml</code>; <code>banyandb-service.yaml</code> and
+<code>banyandb-instance.yaml</code> redesigned to mirror the upstream FODC-proxy Grafana boards. The stale
+single-node <code>host_name</code> model and the removed <code>etcd_operation_rate</code> / <code>up</code>-derived <code>active_instance</code>
+metrics are gone.</li>
+<li>SWIP-15: add BanyanDB queue batch / message granularity metrics (requires BanyanDB 0.11.x with the
+<code>queue_pub_total_batch_*</code> / <code>queue_sub_total_message_*</code> families, apache/skywalking-banyandb#1169). Instance scope gains
+<code>publish_batch_throughput</code> / <code>publish_batch_latency_p99</code> (liaison publish-side batch granularity) and
+<code>queue_sub_message_throughput</code> (data per-record subscribe rate); endpoint scope gains
+<code>queue_batch_throughput</code> / <code>queue_message_throughput</code> per storage group (subscribe-side counters that
+carry a real <code>group</code>). The subscribe-side batch counters and the publish-side batch-latency histogram
+are not surfaced where they do not populate per their modeled scope (the data node ingests via the
+per-message path, and <code>queue_pub_total_batch_latency</code> is emitted with an empty <code>group</code>).</li>
 <li>Runtime MAL/LAL hot-update rules can declare <code>layerDefinitions:</code> to introduce new
 layers. Ordinals are operator-pinned in the <code>100_000+</code> tier; the layer is
 refcount-tracked and unregistered when the last declaring rule is removed. See
@@ -3184,6 +3226,7 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 <li>Fix: TTL query add metadata TTL.</li>
 <li>Fix: PersistentWorker used wrong TTL for metrics cache if the storage is BanyanDB.</li>
 <li>Add iOS/iPadOS app monitoring via OpenTelemetry Swift SDK (SWIP-11). Includes the <code>IOS</code> layer, <code>IOSHTTPSpanListener</code> for outbound HTTP client metrics (supports OTel Swift <code>.old</code>/<code>.stable</code>/<code>.httpDup</code> semantic-convention modes via stable-then-legacy attribute fallback), <code>IOSMetricKitSpanListener</code> for daily MetricKit metrics (exit counts split by foreground/background, app-launch / hang-time percentile histograms with finite 30 s overflow ceiling), LAL rules for crash/hang diagnostics, Mobile menu, and iOS dashboards.</li>
+<li>Add Apache Airflow monitoring via native OpenTelemetry metrics (SWIP-7). New <code>AIRFLOW</code> layer with Service (cluster) and Instance (host) dimensions, MAL rules under <code>otel-rules/airflow/</code> (<strong>27</strong> metrics), <a href="../../setup/backend/backend-airflow-monitoring">setup documentation</a>, mock OTLP e2e (<code>cases/airflow/mock/e2e.yaml</code>: 2 entity + 27 metric checks, 29 total), and real Celery-cluster integration smoke (<code>cases/airflow/cluster/e2e.yaml</code>: 2 entity + 14 metric checks, 16 total). See <code>test/e2e-v2/cases/airflow/README.md</code>. Horizon UI dashboards ship separately in <code>apache/skywalking-horizon-ui</code> under the Workflow Scheduler menu group.</li>
 <li>Fix LAL <code>layer: auto</code> mode dropping logs after extractor set the layer. Codegen now propagates <code>layer &quot;...&quot;</code> assignments to <code>LogMetadata.layer</code> so <code>FilterSpec.doSink()</code> sees the script-decided layer.</li>
 <li>Fix MetricKit histogram percentile metrics being reported at 1000× their true value — the listener now marks its <code>SampleFamily</code> with <code>defaultHistogramBucketUnit(MILLISECONDS)</code> so MAL&rsquo;s default SECONDS→MS rescale of <code>le</code> labels is not applied.</li>
 <li>Add WeChat and Alipay Mini Program monitoring via the SkyAPM mini-program-monitor SDK (SWIP-12). Two new layers (<code>WECHAT_MINI_PROGRAM</code>, <code>ALIPAY_MINI_PROGRAM</code>); two new JavaScript componentIds (<code>WeChat-MiniProgram: 10002</code>, <code>AliPay-MiniProgram: 10003</code>). Service / instance / endpoint entities are produced by MAL + LAL, not trace analysis — mini-programs are client-side (exit-only) so <code>RPCAnalysisListener</code> stays unchanged (same pattern as browser and iOS). MAL rules per platform × scope under <code>otel-rules/miniprogram/</code> with explicit <code>.service(...)</code> / <code>.endpoint(...)</code> chains (empty <code>expSuffix</code> so endpoint-scope rules aren&rsquo;t overridden), histogram percentile via <code>.histogram(&quot;le&quot;, TimeUnit.MILLISECONDS)</code> to keep ms bucket bounds intact, and request-cpm derived from the histogram <code>_count</code> family. LAL <code>layer: auto</code> rule produces both layers via <code>miniprogram.platform</code> dispatch and emits error-count samples consumed by per-platform log-MAL rules. Per-layer menu entries and service / instance / endpoint dashboards with Trace and Log sub-tabs.</li>
@@ -3203,6 +3246,7 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 </ul>
 <h4 id="ui">UI</h4>
 <ul>
+<li>Add Airflow layer dashboards and menu i18n under Workflow Scheduler in Horizon UI (SWIP-7).</li>
 <li>Add mobile menu icon and i18n labels for the iOS layer.</li>
 <li>Fix metric label rendering in multi-expression dashboard widgets.</li>
 <li>Add i18n menu labels for WeChat Mini Program and Alipay Mini Program (en / zh / es) — sub-menus rendered as raw keys until this bump.</li>
@@ -3211,6 +3255,7 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 <h4 id="documentation">Documentation</h4>
 <ul>
 <li>Update LAL documentation with <code>sourceAttribute()</code> function and <code>layer: auto</code> mode.</li>
+<li>Add Airflow monitoring setup documentation (SWIP-7).</li>
 <li>Add iOS app monitoring setup documentation.</li>
 <li>Add WeChat / Alipay Mini Program monitoring setup documentation, plus a client-side-monitoring section in the security guide covering public-internet ingress (OTLP + <code>/v3/segments</code>) for mobile / browser / mini-program SDKs.</li>
 <li>Improve downsampling documentation</li>
@@ -3362,6 +3407,10 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 
     </div>
     
+
+
+
+
 
 
 

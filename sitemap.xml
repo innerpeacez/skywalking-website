@@ -3191,6 +3191,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/setup/backend/backend-airflow-monitoring/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/v9.0.0/en/setup/backend/backend-alarm/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -10122,6 +10128,12 @@
   
   <url>
     <loc>/docs/main/next/en/swip/swip-6/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/main/next/en/swip/swip-7/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
