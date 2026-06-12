@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  New queryAlarms GraphQL query — entity / layer / rule filters for alarms. Adds a comprehensive alarm query API alongside the legacy getAlarm. The new queryAlarms(condition: AlarmQueryCondition!): Alarms accepts a single input type bundling every filter the alarm record stores: entities: [Entity!] (reuses the MQE Entity shape — pin to specific services / instances / endpoints / processes or their relations, matched against alarm id0 OR id1); layer: String (filter by the alarmed entity&rsquo;s layer — single match, since alarm rows persist one layer); ruleNames: [String!">
 
-<meta itemprop="wordCount" content="4356">
+<meta itemprop="wordCount" content="4285">
 
 
 
@@ -2887,7 +2887,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 75d9433</div>
+                  <div class="commit-id">Commit Id: 4185f50</div>
                 
 
 
@@ -3176,22 +3176,7 @@ admin-host only&rdquo; entry above for the public REST retirement.</li>
 </ul>
 <h4 id="oap-server">OAP Server</h4>
 <ul>
-<li>SWIP-15: rebuild BanyanDB self-observability around the cluster / container / group model
-(requires BanyanDB 0.11+). <code>otel-rules/banyandb/</code> now models a BanyanDB cluster as one <code>Service</code>
-(<code>service(['cluster'])</code>), each container as a <code>ServiceInstance</code> keyed on <code>pod_name</code> + <code>container_name</code>
-(with <code>node_role</code> / <code>node_type</code> / <code>container_name</code> / <code>pod_name</code> as instance attributes), and each
-storage group as an <code>Endpoint</code>. New <code>banyandb-endpoint.yaml</code>; <code>banyandb-service.yaml</code> and
-<code>banyandb-instance.yaml</code> redesigned to mirror the upstream FODC-proxy Grafana boards. The stale
-single-node <code>host_name</code> model and the removed <code>etcd_operation_rate</code> / <code>up</code>-derived <code>active_instance</code>
-metrics are gone.</li>
-<li>SWIP-15: add BanyanDB queue batch / message granularity metrics (requires BanyanDB 0.11.x with the
-<code>queue_pub_total_batch_*</code> / <code>queue_sub_total_message_*</code> families, apache/skywalking-banyandb#1169). Instance scope gains
-<code>publish_batch_throughput</code> / <code>publish_batch_latency_p99</code> (liaison publish-side batch granularity) and
-<code>queue_sub_message_throughput</code> (data per-record subscribe rate); endpoint scope gains
-<code>queue_batch_throughput</code> / <code>queue_message_throughput</code> per storage group (subscribe-side counters that
-carry a real <code>group</code>). The subscribe-side batch counters and the publish-side batch-latency histogram
-are not surfaced where they do not populate per their modeled scope (the data node ingests via the
-per-message path, and <code>queue_pub_total_batch_latency</code> is emitted with an empty <code>group</code>).</li>
+<li>SWIP-15: rebuild BanyanDB self-observability around the cluster / container / group model (requires BanyanDB 0.11+). A BanyanDB cluster is modeled as one <code>Service</code>, each container as a <code>ServiceInstance</code> (role/tier as attributes), and each storage group as an <code>Endpoint</code>. The <code>otel-rules/banyandb/</code> rules are category-separated by role (<code>node_*</code> / <code>liaison_*</code> / <code>data_*</code> / <code>lifecycle_*</code>) and by data type (<code>measure_*</code> / <code>stream_*</code> / <code>trace_*</code> / <code>property_*</code>), mirroring the upstream FODC-proxy Grafana boards, and include queue batch/message granularity (apache/skywalking-banyandb#1169). Adds a <code>SERVICE_INSTANCE_RELATION</code> MAL scope and <code>serviceInstanceRelation(...)</code> builder powering a new intra-cluster pod-to-pod deployment topology (<code>banyandb-instance-relation.yaml</code>). The stale single-node <code>host_name</code> model is removed.</li>
 <li>Runtime MAL/LAL hot-update rules can declare <code>layerDefinitions:</code> to introduce new
 layers. Ordinals are operator-pinned in the <code>100_000+</code> tier; the layer is
 refcount-tracked and unregistered when the last declaring rule is removed. See
