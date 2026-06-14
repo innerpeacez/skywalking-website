@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  New queryAlarms GraphQL query — entity / layer / rule filters for alarms. Adds a comprehensive alarm query API alongside the legacy getAlarm. The new queryAlarms(condition: AlarmQueryCondition!): Alarms accepts a single input type bundling every filter the alarm record stores: entities: [Entity!] (reuses the MQE Entity shape — pin to specific services / instances / endpoints / processes or their relations, matched against alarm id0 OR id1); layer: String (filter by the alarmed entity&rsquo;s layer — single match, since alarm rows persist one layer); ruleNames: [String!">
 
-<meta itemprop="wordCount" content="4293">
+<meta itemprop="wordCount" content="4564">
 
 
 
@@ -2887,7 +2887,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: b4bc7ea</div>
+                  <div class="commit-id">Commit Id: 53baf8e</div>
                 
 
 
@@ -3182,6 +3182,8 @@ layers. Ordinals are operator-pinned in the <code>100_000+</code> tier; the laye
 refcount-tracked and unregistered when the last declaring rule is removed. See
 <a href="../../concepts-and-designs/runtime-rule-hot-update">runtime-rule-hot-update.md#dynamic-layers</a>
 for the conflict rules and limitations.</li>
+<li>Fix: runtime-rule (MAL/LAL hot-update) schema changes now work in <code>no-init</code> mode — the deployment mode every production cluster runs. Previously a runtime <code>addOrUpdate</code> that introduced a new metric blocked forever in the storage installer&rsquo;s init-node poll loop (<code>ModelInstaller.whenCreating</code>) on a <code>no-init</code> OAP, because the gate keyed off <code>RunningMode</code> rather than the operation&rsquo;s intent; the <code>/delete?mode=revertToBundled</code> recreate and BanyanDB in-place shape updates were dead the same way. The poll loop is now gated on a new <code>StorageManipulationOpt.Flags.deferDDLToInitNode</code> bit set only on the static boot-time <code>schemaCreateIfAbsent()</code> opt (DRYed into <code>ModelInstaller.deferDDLToInitNode(opt)</code> and reused by the BanyanDB shape-check / group-DDL gates), so the runtime-rule opts (<code>withSchemaChange</code> / <code>verifySchemaOnly</code> / <code>withoutSchemaChange</code>) are driven by their flags and by cluster main-ness — <code>no-init</code> and <code>default</code> no longer differ for DSL DDL; <code>init</code> mode stays the dedicated initializer. <code>DSLManager.tickStorageOpt</code> is collapsed accordingly (main → <code>withSchemaChange</code>, peer → <code>verifySchemaOnly</code> at boot / <code>withoutSchemaChange</code> on tick).</li>
+<li>Fix: runtime-rule cross-node writes no longer fail with <code>HTTP 400 forward_self_loop</code> on a multi-replica Kubernetes cluster. Every OAP replica shared the cluster <code>selfNodeId</code> <code>0.0.0.0_11800</code> (derived from the <code>0.0.0.0</code> agent gRPC bind host via <code>TelemetryRelatedContext</code>), so the main&rsquo;s self-loop guard rejected a legitimate peer-to-peer Forward as if it had looped back. The runtime-rule node identity now prefers the unique per-pod <code>SKYWALKING_COLLECTOR_UID</code> (the pod UID injected by the helm chart / swck operator from <code>metadata.uid</code>), resolved in <code>start()</code> before any apply, and falls back to the telemetry id for non-k8s deployments. Adds a kind-based no-init cluster e2e (<code>test/e2e-v2/cases/runtime-rule/cluster</code>, deployed via skywalking-helm with <code>oap.replicas=2</code>) that drives the apply / STRUCTURAL / inactivate / delete lifecycle and the cross-node Forward path, replacing the prior docker-compose default-mode cluster case.</li>
 <li>Fix: remove the redundant tags from the <code>envoy-ai-gateway.yaml</code> LAL configuration.</li>
 <li>Add Zipkin Virtual GenAI e2e test. Use <code>zipkin_json</code> exporter to avoid protobuf dependency conflict
 between <code>opentelemetry-exporter-zipkin-proto-http</code> (protobuf~=3.12) and <code>opentelemetry-proto</code> (protobuf&gt;=5.0).</li>
