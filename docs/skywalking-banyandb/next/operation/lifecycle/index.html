@@ -40,7 +40,7 @@ Overview A dedicated lifecycle agent (an independent Go process) is responsible 
 Overview A dedicated lifecycle agent (an independent Go process) is responsible for:
  Identifying data eligible for migration based on lifecycle stages. Extracting data from the source node. Migrating data to designated target nodes. Removing the original data after a successful migration.">
 
-<meta itemprop="wordCount" content="1126">
+<meta itemprop="wordCount" content="1839">
 
 
 
@@ -1287,7 +1287,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 4421b30</div>
+                  <div class="commit-id">Commit Id: 8709266</div>
                 
 
 
@@ -1519,8 +1519,59 @@ if (!doNotTrack) {
 <td>Schedule for periodic backup (e.g., @yearly, @monthly, @weekly, @daily, etc.)</td>
 <td><code>&quot;&quot;</code></td>
 </tr>
+<tr>
+<td><code>--migration-orphan-policy</code></td>
+<td>What to do with rows whose measure/stream schema was deleted from the registry: <code>archive</code> or <code>discard</code></td>
+<td><code>archive</code></td>
+</tr>
+<tr>
+<td><code>--migration-orphan-archive-subdir</code></td>
+<td>Relative subdirectory, under each catalog&rsquo;s root path, for archived orphan rows when policy is <code>archive</code></td>
+<td><code>archive</code></td>
+</tr>
 </tbody>
 </table>
+<h2 id="handling-orphan-deleted-schema-data">Handling Orphan (Deleted-Schema) Data</h2>
+<p>A source segment can hold data for a measure or stream whose schema was later deleted from the registry (for example, when the upstream metric definition is renamed or removed). Such rows can no longer be written to a target — their schema no longer exists — so the migration treats them as <strong>orphan</strong> rows.</p>
+<p>Orphan handling applies to the <strong>measure</strong> and <strong>stream</strong> catalogs only. Trace migration is not wired for per-series orphan handling: a trace group has a single schema, so a deleted trace schema is a whole-group concern rather than a per-series orphan within a surviving group.</p>
+<p>On the row-replay path (used when a source segment spans multiple target segments), the migration detects orphan rows, skips them so the rest of the group still migrates, and then — unlike rows skipped because of a series-index gap — lets the source segment be deleted normally. What happens to the orphan rows themselves is controlled by <code>--migration-orphan-policy</code>:</p>
+<ul>
+<li>
+<p><code>archive</code> (default): each orphan row is written as one JSON line so an operator can recover it. The archive lives in the <code>--migration-orphan-archive-subdir</code> subdirectory <strong>under each catalog&rsquo;s own root path</strong> (so measure orphans land under <code>&lt;measure-root-path&gt;/&lt;subdir&gt;/…</code> and stream orphans under <code>&lt;stream-root-path&gt;/&lt;subdir&gt;/…</code>); the catalog is therefore not a path level (it is recorded inside every record and manifest instead). The per-part JSONL is <strong>gzip-compressed</strong> on disk (the rows are highly repetitive, so this is ~37× smaller — e.g. 269 MB of raw JSONL becomes ~7 MB). Files are laid out as:</p>
+<pre><code>&lt;catalog-root-path&gt;/&lt;subdir&gt;/&lt;group&gt;/seg-&lt;segment-suffix&gt;/shard-&lt;id&gt;/part-&lt;part-id&gt;.jsonl.gz
+&lt;catalog-root-path&gt;/&lt;subdir&gt;/&lt;group&gt;/seg-&lt;segment-suffix&gt;/manifest.json
+</code></pre><p>Each line is self-describing (decoded from the part&rsquo;s own column types, with no registry schema needed): it carries the group, catalog, the measure/stream name (always under the JSON key <code>measure</code>, regardless of catalog — the <code>catalog</code> field disambiguates), source location, series id, entity, timestamp (both RFC3339 <code>timestamp</code> and epoch-nanos <code>timestamp_unix_nano</code>), tags, and — for measures — <code>version</code>, <code>indexed_tags</code>, and <code>fields</code>; streams carry <code>element_id</code> instead of those three and omit <code>version</code> entirely (rather than emitting a misleading zero). The per-segment <code>manifest.json</code> (plain JSON) indexes which deleted measures/streams were archived and their row counts. A part with no orphan rows writes no file; re-running a part rewrites its file idempotently.</p>
+</li>
+<li>
+<p><code>discard</code>: orphan rows are dropped; nothing is written to disk.</p>
+</li>
+</ul>
+<p>Orphan handling is <strong>not</strong> a migration error — the source segment is migrated and deleted normally. Instead of appearing in the report&rsquo;s <code>errors</code> buckets, it is summarized under an <code>orphans</code> section that records, per catalog → group → deleted measure/stream, how many rows were archived or discarded:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#d14">&#34;orphans&#34;</span><span style="color:#a61717;background-color:#e3d2d2">:</span> {
+  <span style="color:#000080">&#34;policy&#34;</span>: <span style="color:#d14">&#34;archive&#34;</span>,
+  <span style="color:#000080">&#34;measure&#34;</span>: { <span style="color:#000080">&#34;sw_metricsHour&#34;</span>: { <span style="color:#000080">&#34;meter_..._hour&#34;</span>: <span style="color:#099">1234</span> } },
+  <span style="color:#000080">&#34;stream&#34;</span>:  { <span style="color:#000080">&#34;&lt;group&gt;&#34;</span>: { <span style="color:#000080">&#34;&lt;stream&gt;&#34;</span>: <span style="color:#099">56</span> } }
+}
+</code></pre></div><p>(The counts accumulate across resume cycles. If the process is hard-killed mid-group before the group finishes, that run&rsquo;s not-yet-flushed counts are lost from the report — the archive files and their <code>manifest.json</code> are unaffected.)</p>
+<h3 id="reading-the-archive">Reading the archive</h3>
+<p>The <code>manifest.json</code> files are plain text — read them directly. The per-part data is gzip-compressed JSON Lines:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># inspect one part&#39;s rows (Linux: zcat; macOS: gzcat)</span>
+gunzip -c &lt;measure-root-path&gt;/&lt;subdir&gt;/&lt;group&gt;/seg-20260601/shard-0/part-000000000000003b.jsonl.gz | jq .
+
+<span style="color:#998;font-style:italic"># project a few fields</span>
+gunzip -c part-*.jsonl.gz | jq -c <span style="color:#d14">&#39;{measure, ts:.timestamp, v:.fields.value.value}&#39;</span>
+
+<span style="color:#998;font-style:italic"># search without fully decompressing (Linux)</span>
+zgrep <span style="color:#d14">&#34;meter_banyandb_instance_disk_usage&#34;</span> part-*.jsonl.gz
+
+<span style="color:#998;font-style:italic"># what was archived for a segment (counts per deleted measure)</span>
+jq <span style="color:#d14">&#39;{total_rows, total_series, measures:[.measures[]|{measure,rows}]}&#39;</span> .../seg-20260601/manifest.json
+</code></pre></div><p><strong>Limitations and operations notes:</strong></p>
+<ul>
+<li>The archive lives under each catalog&rsquo;s own root path (<code>--measure-root-path</code> / <code>--stream-root-path</code>), so it shares the durability of the volume that already holds the catalog data — no separate path to provision. <code>--migration-orphan-archive-subdir</code> only changes the subdirectory name within that root.</li>
+<li>Detection only happens on the row-replay path. On the chunk-sync path (a source segment that maps to a single target segment), whole part files are copied without per-row decoding, so orphan rows pass through to the target. They then occupy target-stage disk until that stage&rsquo;s TTL expires (e.g. up to the warm-stage TTL), and whether the copy succeeds depends on the receiver&rsquo;s part-acceptance behavior for a now-unregistered schema.</li>
+<li>The archive directory is <strong>not</strong> cleaned up automatically. Prune it periodically once the data is no longer needed.</li>
+</ul>
 <h2 id="automatic-behavior-on-warm-and-cold-nodes">Automatic Behavior on Warm and Cold Nodes</h2>
 <p>When a data node matches a lifecycle stage (i.e., its labels match a stage&rsquo;s <code>node_selector</code>), two behaviors are automatically configured:</p>
 <ul>
@@ -1682,6 +1733,11 @@ banyand data <span style="color:#d14">\
         <li><a href="#command-line-usage">Command-Line Usage</a>
           <ul>
             <li><a href="#command-line-parameters">Command-Line Parameters</a></li>
+          </ul>
+        </li>
+        <li><a href="#handling-orphan-deleted-schema-data">Handling Orphan (Deleted-Schema) Data</a>
+          <ul>
+            <li><a href="#reading-the-archive">Reading the archive</a></li>
           </ul>
         </li>
         <li><a href="#automatic-behavior-on-warm-and-cold-nodes">Automatic Behavior on Warm and Cold Nodes</a></li>
