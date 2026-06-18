@@ -40,7 +40,7 @@ Overview The backup tool performs the following operations:
 Overview The backup tool performs the following operations:
  Connects to a BanyanDB data node via gRPC to request the latest snapshots. Determines the local snapshot directories based on the catalog type:  Stream Catalog: Uses the stream-root-path. Measure Catalog: Uses the measure-root-path. Property Catalog: Uses the property-root-path.">
 
-<meta itemprop="wordCount" content="686">
+<meta itemprop="wordCount" content="697">
 
 
 
@@ -1287,7 +1287,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 8709266</div>
+                  <div class="commit-id">Commit Id: 81e648d</div>
                 
 
 
@@ -1456,6 +1456,11 @@ if (!doNotTrack) {
 <td><code>--schedule</code></td>
 <td>Schedule expression for periodic backup. Options: <code>@yearly</code>, <code>@monthly</code>, <code>@weekly</code>, <code>@daily</code>, <code>@hourly</code>, <code>@every &lt;duration&gt;</code></td>
 <td><em>empty</em></td>
+</tr>
+<tr>
+<td><code>--upload-concurrency</code></td>
+<td>Number of concurrent uploads for small snapshot files (&lt;5MiB).</td>
+<td><code>8</code></td>
 </tr>
 <tr>
 <td><code>--logging-level</code></td>
