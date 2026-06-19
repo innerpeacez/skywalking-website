@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  New queryAlarms GraphQL query — entity / layer / rule filters for alarms. Adds a comprehensive alarm query API alongside the legacy getAlarm. The new queryAlarms(condition: AlarmQueryCondition!): Alarms accepts a single input type bundling every filter the alarm record stores: entities: [Entity!] (reuses the MQE Entity shape — pin to specific services / instances / endpoints / processes or their relations, matched against alarm id0 OR id1); layer: String (filter by the alarmed entity&rsquo;s layer — single match, since alarm rows persist one layer); ruleNames: [String!">
 
-<meta itemprop="wordCount" content="5830">
+<meta itemprop="wordCount" content="6149">
 
 
 
@@ -2887,7 +2887,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 277f19b</div>
+                  <div class="commit-id">Commit Id: dcfb070</div>
                 
 
 
@@ -3236,10 +3236,13 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 <li>Mask keywords <code>trustStorePass</code>, <code>keyStorePass</code> by default.</li>
 <li>Bump up dependencies to clear CVE alerts on shipped OAP jars: log4j <code>2.25.3</code> → <code>2.25.4</code>, jackson <code>2.18.5</code> → <code>2.18.6</code>, kafka-clients <code>3.4.0</code> → <code>3.9.2</code>, postgresql <code>42.4.4</code> → <code>42.7.11</code>, commons-compress <code>1.21</code> → <code>1.26.2</code>.</li>
 <li>Bump Apache Curator <code>4.3.0</code> → <code>5.9.0</code> and Apache ZooKeeper <code>3.5.7</code> → <code>3.9.5</code> together to clear CVE-2023-44981 (the bundled ZooKeeper jar carried it; OAP is a ZooKeeper client only, so the server-side bug was never reachable, but the jar tripped Dependabot). The cluster-zookeeper and configuration-zookeeper plugins use only stable Curator APIs, so no source changes were required. Operator-facing change: the supported ZooKeeper server version is now 3.6+ (Curator 5.x uses ZooKeeper persistent watches, added in server 3.6.0); older servers (3.5.x, 3.4.x) are no longer supported.</li>
+<li>Migrate the Consul cluster and configuration client from the abandoned <code>com.orbitz.consul:consul-client</code> <code>1.5.3</code> to the maintained fork <code>org.kiwiproject:consul-client</code> <code>0.9.0</code> to clear the okhttp CVE the old client carried (CVE-2021-0341; the old client pinned okhttp <code>3.14.9</code>, fixed in okhttp <code>4.9.2+</code>), so the BOM now pins okhttp to <code>4.12.0</code>. The fork&rsquo;s <code>0.9.x</code> line is the last one built for JDK 11 (which SkyWalking still targets); <code>1.0.0+</code> is compiled to JDK 17 bytecode, so the migration stays on <code>0.9.0</code>. The cluster-consul and configuration-consul plugins use only stable Consul client APIs, so the change is a package rename (<code>com.orbitz.consul</code> → <code>org.kiwiproject.consul</code>); okhttp is pulled only by the Consul plugins (the fabric8 Kubernetes client excludes its okhttp transport), so no other module is affected.</li>
 <li>Bump test-scope assertj-core <code>3.20.2</code> → <code>3.27.7</code> to clear CVE-2026-24400 (XXE in <code>isXmlEqualTo</code>, not used by any test).</li>
 <li>Fix: continuous profiling policy validation now rejects a threshold / count of <code>0</code> to match the error messages and rover&rsquo;s <code>value &gt;= threshold</code> trigger semantics (a <code>0</code> threshold would always trigger). CPU percent and HTTP error rate are tightened from <code>[0-100]</code> to <code>(0-100]</code>.</li>
 <li>Fix wrong BanyanDB resource options in record data.</li>
 <li>Align the default BanyanDB stage <code>segmentInterval</code> values so each coarser stage is an integer multiple of the finer one (<code>records</code> cold <code>3</code> → <code>4</code>, <code>metricsMinute</code> cold <code>5</code> → <code>6</code>, <code>metricsHour</code> warm <code>7</code> → <code>10</code> and cold <code>15</code> → <code>20</code>), keeping hot → warm → cold lifecycle migration on the cheap whole-segment fast path.</li>
+<li>Fix: <code>layer-extensions.yml</code> is now excluded from the <code>skywalking-oap</code> jar and shipped to the distribution <code>config/</code> directory, so an operator-edited <code>config/layer-extensions.yml</code> is no longer shadowed by the empty template bundled in the jar. Because the OAP launch script puts <code>oap-libs/*.jar</code> ahead of <code>config/</code> on the classpath, <code>ResourceUtils.read(&quot;layer-extensions.yml&quot;)</code> previously always resolved the jar-bundled <code>layers: []</code> and silently ignored the operator&rsquo;s file — custom layers declared there never registered. The file now follows the same exclude-from-jar + copy-to-<code>config/</code> packaging as every other operator-editable config (<code>application.yml</code>, <code>alarm-settings.yml</code>, etc.).</li>
+<li>Fix: the v2 MAL compiler now resolves custom layers referenced as <code>Layer.NAME</code> in an expression. A custom layer declared through a <code>layerDefinitions:</code> block (or <code>layer-extensions.yml</code> / the <code>LayerExtension</code> SPI) has no generated <code>Layer.*</code> static field, so <code>service(['svc'], Layer.IOT_FLEET)</code> previously failed code generation because <code>Layer</code> has no <code>IOT_FLEET</code> field. The compiler now lowers every <code>Layer.NAME</code> static-field reference to a runtime <code>Layer.nameOf(&quot;NAME&quot;)</code> registry lookup, so a custom layer can be referenced exactly like a built-in one (<code>Layer.GENERAL</code>). For a built-in layer this is equivalent, because <code>Layer.nameOf(&quot;GENERAL&quot;)</code> returns the same instance as the <code>Layer.GENERAL</code> field. The lowering is scoped to <code>Layer</code> only; the other MAL enum types (<code>DetectPoint</code>, <code>DownsamplingType</code>, etc.) are real Java enums and keep their direct static-field reference.</li>
 </ul>
 <h4 id="ui">UI</h4>
 <ul>
