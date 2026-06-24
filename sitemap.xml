@@ -3648,6 +3648,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/design/post-trace-pipeline/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/guides/benchmark/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>

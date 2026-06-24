@@ -38,7 +38,7 @@
 <meta itemprop="description" content="INI Settings This is the configuration list supported in php.ini.
    Configuration Item Description Default Value     skywalking_agent.enable Enable skywalking_agent extension or not. Off   skywalking_agent.log_file Log file path. /tmp/skywalking-agent.log   skywalking_agent.log_level Log level: one of OFF, TRACE, DEBUG, INFO, WARN, ERROR. INFO   skywalking_agent.runtime_dir Skywalking agent runtime directory. /tmp/skywalking-agent   skywalking_agent.server_addr Address of skywalking oap server. Only available when reporter_type is grpc.">
 
-<meta itemprop="wordCount" content="346">
+<meta itemprop="wordCount" content="430">
 
 
 
@@ -443,7 +443,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 5a09c4b</div>
+                  <div class="commit-id">Commit Id: de311c9</div>
                 
 
 
@@ -599,6 +599,16 @@ if (!doNotTrack) {
 <td>The log level reported to SkyWalking, based on PSR-3, one of <code>Off</code>, <code>Debug</code>, <code>Info</code>, Notice<code>, Warning</code>, Error<code>, Critical</code>, Alert<code>, Emergency</code>.</td>
 <td>Off</td>
 </tr>
+<tr>
+<td>skywalking_agent.metrics_enable</td>
+<td>Enable PHP Health Metrics (PHM) meter reporting via native MeterReportService. <strong>Linux only</strong> (requires <code>/proc</code>). Default <strong>On</strong> on Linux when the agent is active; default <strong>Off</strong> on macOS/Windows. Set to <code>Off</code> to disable on Linux. Reports six process meters: CPU utilization, memory used/peak, virtual memory, thread count, and open FD count. See <a href="../../setup/service-agent/php-agent/readme#php-health-metrics-phm">PHP agent README</a>.</td>
+<td>On (Linux); Off (other)</td>
+</tr>
+<tr>
+<td>skywalking_agent.metrics_report_period</td>
+<td>PHM meter collection interval in seconds. Process meters are sampled by the forked reporter worker via <code>/proc</code> (parent PHP process PID). <strong>Linux only.</strong></td>
+<td>30</td>
+</tr>
 </tbody>
 </table>
 
@@ -746,6 +756,8 @@ if (!doNotTrack) {
 
     </div>
     
+
+
 
 
 

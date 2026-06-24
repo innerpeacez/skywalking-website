@@ -29,21 +29,21 @@
 <meta name="theme-color" content="#ffffff">
 
 <title>11.0.0 | Apache SkyWalking</title><meta property="og:title" content="11.0.0" />
-<meta property="og:description" content="11.0.0 Project  New queryAlarms GraphQL query — entity / layer / rule filters for alarms. Adds a comprehensive alarm query API alongside the legacy getAlarm. The new queryAlarms(condition: AlarmQueryCondition!): Alarms accepts a single input type bundling every filter the alarm record stores: entities: [Entity!] (reuses the MQE Entity shape — pin to specific services / instances / endpoints / processes or their relations, matched against alarm id0 OR id1); layer: String (filter by the alarmed entity&rsquo;s layer — single match, since alarm rows persist one layer); ruleNames: [String!" />
+<meta property="og:description" content="11.0.0 Project  Extend the GET /inspect/entities admin API to inspect a metric persisted by any OAP, even one this node does not define locally. When the metric is unknown to the local registry, the caller supplies valueColumn &#43; valueType and the storage backend resolves the physical index/table/group from its own running config (no DB schema/table-metadata read): ES uses the merged metrics-all index &#43; metric_table discriminator, JDBC probes the node&rsquo;s function tables by the table_name discriminator, and BanyanDB synthesizes a read-only measure schema." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/main/next/en/changes/changes/" />
 
 <meta itemprop="name" content="11.0.0">
-<meta itemprop="description" content="11.0.0 Project  New queryAlarms GraphQL query — entity / layer / rule filters for alarms. Adds a comprehensive alarm query API alongside the legacy getAlarm. The new queryAlarms(condition: AlarmQueryCondition!): Alarms accepts a single input type bundling every filter the alarm record stores: entities: [Entity!] (reuses the MQE Entity shape — pin to specific services / instances / endpoints / processes or their relations, matched against alarm id0 OR id1); layer: String (filter by the alarmed entity&rsquo;s layer — single match, since alarm rows persist one layer); ruleNames: [String!">
+<meta itemprop="description" content="11.0.0 Project  Extend the GET /inspect/entities admin API to inspect a metric persisted by any OAP, even one this node does not define locally. When the metric is unknown to the local registry, the caller supplies valueColumn &#43; valueType and the storage backend resolves the physical index/table/group from its own running config (no DB schema/table-metadata read): ES uses the merged metrics-all index &#43; metric_table discriminator, JDBC probes the node&rsquo;s function tables by the table_name discriminator, and BanyanDB synthesizes a read-only measure schema.">
 
-<meta itemprop="wordCount" content="6234">
+<meta itemprop="wordCount" content="6410">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="11.0.0"/>
-<meta name="twitter:description" content="11.0.0 Project  New queryAlarms GraphQL query — entity / layer / rule filters for alarms. Adds a comprehensive alarm query API alongside the legacy getAlarm. The new queryAlarms(condition: AlarmQueryCondition!): Alarms accepts a single input type bundling every filter the alarm record stores: entities: [Entity!] (reuses the MQE Entity shape — pin to specific services / instances / endpoints / processes or their relations, matched against alarm id0 OR id1); layer: String (filter by the alarmed entity&rsquo;s layer — single match, since alarm rows persist one layer); ruleNames: [String!"/>
+<meta name="twitter:description" content="11.0.0 Project  Extend the GET /inspect/entities admin API to inspect a metric persisted by any OAP, even one this node does not define locally. When the metric is unknown to the local registry, the caller supplies valueColumn &#43; valueType and the storage backend resolves the physical index/table/group from its own running config (no DB schema/table-metadata read): ES uses the merged metrics-all index &#43; metric_table discriminator, JDBC probes the node&rsquo;s function tables by the table_name discriminator, and BanyanDB synthesizes a read-only measure schema."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -2887,7 +2887,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 799bb76</div>
+                  <div class="commit-id">Commit Id: fe55b90</div>
                 
 
 
@@ -2935,6 +2935,8 @@ if (!doNotTrack) {
 	<h2 id="1100">11.0.0</h2>
 <h4 id="project">Project</h4>
 <ul>
+<li>Extend the <code>GET /inspect/entities</code> admin API to inspect a metric persisted by <strong>any</strong> OAP, even one this node does not define locally. When the metric is unknown to the local registry, the caller supplies <code>valueColumn</code> + <code>valueType</code> and the storage backend resolves the physical index/table/group from its own running config (no DB schema/table-metadata read): ES uses the merged <code>metrics-all</code> index + <code>metric_table</code> discriminator, JDBC probes the node&rsquo;s function tables by the <code>table_name</code> discriminator, and BanyanDB synthesizes a read-only measure schema. Scope is no longer required — the <code>entity_id</code> is decoded structurally (service / 2nd-level / relations) with a generic <code>name</code> leaf. Locally-defined metrics keep the exact field names, scope, and <code>mqeEntity</code> as before.</li>
+<li>Remove the always-on alarm-to-event conversion (<code>EventHookCallback</code>). A triggered alarm is no longer synthesized into the events pipeline as an <code>Alarm</code>/<code>AlarmRecovery</code> event; events now originate only from real event sources (agents, SkyWalking CLI, Kubernetes Event Exporter). Alarms remain available through the alarm store (<code>getAlarm</code>/<code>queryAlarms</code>) and the configured alarm hooks. This drops a documented &ldquo;Known Event&rdquo; and removes 1-2 synthetic event records per alarm fire.</li>
 <li><strong>New <code>queryAlarms</code> GraphQL query — entity / layer / rule filters for alarms.</strong> Adds
 a comprehensive alarm query API alongside the legacy <code>getAlarm</code>. The new
 <code>queryAlarms(condition: AlarmQueryCondition!): Alarms</code> accepts a single input type
@@ -3408,6 +3410,8 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 
     </div>
     
+
+
 
 
 
