@@ -7852,6 +7852,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/setup/backend/dashboards-php-runtime/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/concepts-and-designs/ebpf-cpu-profiling/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>

@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  Extend the GET /inspect/entities admin API to inspect a metric persisted by any OAP, even one this node does not define locally. When the metric is unknown to the local registry, the caller supplies valueColumn &#43; valueType and the storage backend resolves the physical index/table/group from its own running config (no DB schema/table-metadata read): ES uses the merged metrics-all index &#43; metric_table discriminator, JDBC probes the node&rsquo;s function tables by the table_name discriminator, and BanyanDB synthesizes a read-only measure schema.">
 
-<meta itemprop="wordCount" content="6410">
+<meta itemprop="wordCount" content="6596">
 
 
 
@@ -1453,6 +1453,14 @@ if (!doNotTrack) {
     <li>
         
             <a href="/docs/main/next/en/setup/backend/backend-meter">Meter Analysis</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/dashboards-php-runtime">PHP runtime metrics (PHM)</a>
         
     </li>
 
@@ -2887,7 +2895,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: fe55b90</div>
+                  <div class="commit-id">Commit Id: bb16533</div>
                 
 
 
@@ -2936,6 +2944,7 @@ if (!doNotTrack) {
 <h4 id="project">Project</h4>
 <ul>
 <li>Extend the <code>GET /inspect/entities</code> admin API to inspect a metric persisted by <strong>any</strong> OAP, even one this node does not define locally. When the metric is unknown to the local registry, the caller supplies <code>valueColumn</code> + <code>valueType</code> and the storage backend resolves the physical index/table/group from its own running config (no DB schema/table-metadata read): ES uses the merged <code>metrics-all</code> index + <code>metric_table</code> discriminator, JDBC probes the node&rsquo;s function tables by the <code>table_name</code> discriminator, and BanyanDB synthesizes a read-only measure schema. Scope is no longer required — the <code>entity_id</code> is decoded structurally (service / 2nd-level / relations) with a generic <code>name</code> leaf. Locally-defined metrics keep the exact field names, scope, and <code>mqeEntity</code> as before.</li>
+<li>Add the <code>POST /inspect/values</code> admin API — read the value series of a metric persisted by <strong>another</strong> OAP (one this node does not define locally) by supplying its <code>{valueColumn, valueType}</code>. The real MQE engine runs over a request-scoped <code>InspectQueryContext</code> overlay (provide-if-absent — the local catalog always wins) that makes the foreign metric look registered to every read path: <code>ValueColumnMetadata</code> resolves its value column / type / scope, and the storage location registries resolve where it lives (<code>MetadataRegistry</code> synthesizes a BanyanDB measure schema, <code>IndexController</code> resolves the ES <code>metrics-all</code> index, <code>TableHelper</code> probes the JDBC function tables), so the read returns the native MQE <code>ExpressionResult</code> with no per-DAO special-casing. Admin-only (a forced read this OAP cannot validate); not mirrored onto the public REST / GraphQL surface. See the <a href="../../setup/backend/admin-api/inspect">Inspect API</a>.</li>
 <li>Remove the always-on alarm-to-event conversion (<code>EventHookCallback</code>). A triggered alarm is no longer synthesized into the events pipeline as an <code>Alarm</code>/<code>AlarmRecovery</code> event; events now originate only from real event sources (agents, SkyWalking CLI, Kubernetes Event Exporter). Alarms remain available through the alarm store (<code>getAlarm</code>/<code>queryAlarms</code>) and the configured alarm hooks. This drops a documented &ldquo;Known Event&rdquo; and removes 1-2 synthetic event records per alarm fire.</li>
 <li><strong>New <code>queryAlarms</code> GraphQL query — entity / layer / rule filters for alarms.</strong> Adds
 a comprehensive alarm query API alongside the legacy <code>getAlarm</code>. The new
@@ -3178,6 +3187,10 @@ admin-host only&rdquo; entry above for the public REST retirement.</li>
 </ul>
 <h4 id="oap-server">OAP Server</h4>
 <ul>
+<li>Add PHP runtime PHM meter analyzer (<code>php-runtime.yaml</code>) for SkyWalking PHP agent process
+metrics (CPU, memory, virtual memory, thread count, open file descriptors sampled from
+<code>/proc</code> on Linux). Registers six <code>meter_instance_php_*</code> metrics on the General Service
+layer; <code>php-runtime</code> is included in the default <code>meterAnalyzerActiveFiles</code>.</li>
 <li>Batch the BanyanDB schema fence per runtime-rule apply. A runtime-rule file changes dozens of rules at once, but the post-DDL fence (<code>SchemaWatcher.awaitRevisionApplied</code>) ran once per metric/downsampling, so a large file did <code>K×M</code> sequential ≤2s fences — on a laggy cluster that overran the apply&rsquo;s REST budget. The main-node apply path now uses <code>StorageManipulationOpt.withSchemaChangeDeferredFence()</code>: the installer records each resource&rsquo;s <code>mod_revision</code> without fencing and registers a single flush that the apply runs once on the file&rsquo;s max revision, collapsing the whole file to one barrier. The flush is one-shot — a reconciler tick reuses one opt across every rule file, so after a file flushes, the closure and accumulated revision reset and each file fences on its own DDL only. Drops still fence inline on the dropped resource&rsquo;s own delete revision — or, when that delete recorded no tombstone (<code>mod_revision == 0</code>), on a key-based deletion barrier (<code>AwaitSchemaDeleted</code>) — never on the shared opt&rsquo;s cumulative revision, so a tombstone-less delete in a multi-file tick is still confirmed removed. On the operator REST apply the single create/update fence runs on a configurable, generous budget (default 180s) in the background <strong>before</strong> the rule row is persisted and dispatch resumes — it gates the persist + local commit + peer resume so the durable commit point is only reached once the schema is confirmed cluster-wide, and writes never resume against an un-propagated schema (see the apply-status entry below); the reconciler tick keeps the short inline 2s fence (a background reconcile must not wait minutes per file). Peer / <code>withoutSchemaChange</code> applies are unaffected (no fence).</li>
 <li>Add a runtime-rule apply-status query. The cluster main now tracks each structural apply through a phase machine (<code>SchemaApplyCoordinator</code>: pending → DDL → fencing → rolling-out → applied, with <code>degraded</code> for a committed-but-unconfirmed apply — the cluster schema fence did not confirm within the timeout, in which case the lagging data-node ids are surfaced as <code>fenceLaggards</code> and dispatch is resumed anyway, or the local commit-tail threw — and <code>failed</code> carrying the specific reason). The schema fence runs on a configurable, generous budget (<code>receiver-runtime-rule.deferredFenceTimeoutSeconds</code>, default 180s) and <strong>gates everything durable or visible</strong>: because an un-propagated write is silently dropped at the data node, the order after a successful DDL is suspend → DDL → <strong>fence → persist → commit → resume</strong>. The rule row (the durable commit point) is written only AFTER the fence confirms, so &ldquo;durable&rdquo; implies &ldquo;schema propagated cluster-wide&rdquo; — a main crash before persist leaves no row (peers/crash-recovery stay safely on the old content; the orphaned measure is inert), and any durable row is guaranteed fence-confirmed, so convergence never resumes dispatch against an unpropagated schema. The fence + persist + resume run in the background so they never block the HTTP response — <code>POST /addOrUpdate</code> returns its <code>applyId</code> immediately at <code>fencing</code> (accepted, not yet durable; dispatch for that rule still paused — a clean gap, not dropped writes), and the operator polls <code>GET /runtime/rule/status</code> to watch <code>fencing → rolling-out → applied</code> (or <code>degraded</code>/<code>failed</code>); on a genuine laggard, dispatch resumes after the budget so one stuck node can&rsquo;t park the metric forever. A <code>GetApplyStatus</code> admin-internal gRPC served by the main backs the query — by <code>applyId</code>, or by <code>catalog</code>+<code>name</code> (+ optional <code>contentHash</code>, the durable identity) once the handle is gone after a page refresh. When the live status is gone (apply-id evicted, main restarted, or the main is unreachable), the query degrades to the durable rule row: a matching <code>ACTIVE</code> row reports <code>applied</code> derived from the content hash (a durable row is, by the fence-then-persist order, already propagation-confirmed). Non-main nodes route the read to the deterministic main; status is in-memory by design, with the content hash reconstructing truth after a restart.</li>
 <li>Push runtime-rule convergence to peers on commit. After a successful structural apply — and on the <code>commit_deferred</code> path, where the DB row is durable but this node&rsquo;s commit-tail threw — the main broadcasts a <code>NotifyApplied</code> admin-internal RPC so peers reconcile against the just-persisted DB row immediately, instead of waiting up to one refresh tick (~30s) to notice it. The fan-out runs off the REST response thread (fire-and-forget on a daemon executor) so an unreachable peer&rsquo;s per-call deadline never adds to the operator&rsquo;s apply latency. On the peer side the notify-triggered reconcile is coalesced: a burst of notifies (a multi-rule file, or several applies) collapses to a single queued full reconcile rather than one redundant <code>dao.getAll()</code> scan per notify. The notify is best-effort and idempotent (the peer runs its normal per-file-locked reconcile; a lost notify is harmless — the peer still self-converges on its next tick), so it tightens the cluster-convergence window without adding a hard dependency on the main being reachable.</li>
@@ -3263,6 +3276,7 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 <li>Add WeChat / Alipay Mini Program monitoring setup documentation, plus a client-side-monitoring section in the security guide covering public-internet ingress (OTLP + <code>/v3/segments</code>) for mobile / browser / mini-program SDKs.</li>
 <li>Improve downsampling documentation</li>
 <li>Fix the docker-compose quickstart: OAP healthcheck no longer calls <code>curl</code> (absent from the JRE image) and probes the query port via bash <code>/dev/tcp</code>; the Horizon UI service maps the correct container port (8081) and mounts a <code>horizon.yaml</code> (binding <code>0.0.0.0</code>, OAP URLs, demo <code>admin</code>/<code>admin</code> login) instead of non-existent <code>SW_*_ADDRESS</code> env vars.</li>
+<li>Add PHP runtime metrics (PHM) dashboard documentation (agent setup, OAP <code>php-runtime</code> MAL rules, Horizon UI widgets).</li>
 </ul>
 <p>All issues and pull requests are <a href="https://github.com/apache/skywalking/issues?q=milestone:11.0.0">here</a></p>
 
@@ -3410,6 +3424,8 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 
     </div>
     
+
+
 
 
 

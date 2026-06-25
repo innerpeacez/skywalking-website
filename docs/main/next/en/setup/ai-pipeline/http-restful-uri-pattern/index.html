@@ -1463,6 +1463,14 @@ if (!doNotTrack) {
 
     <li>
         
+            <a href="/docs/main/next/en/setup/backend/dashboards-php-runtime">PHP runtime metrics (PHM)</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/main/next/en/setup/backend/telegraf-receiver">Telegraf Metrics</a>
         
     </li>
@@ -2890,7 +2898,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: fe55b90</div>
+                  <div class="commit-id">Commit Id: bb16533</div>
                 
 
 
@@ -2946,7 +2954,7 @@ and push the data to 3rd party for further analysis. Then OAP would pull the ana
 processing the further telemetry traffic.</p>
 <h2 id="set-up-oap-to-connect-remote-uri-recognition-server">Set up OAP to connect remote URI recognition server</h2>
 <p><code>uriRecognitionServerAddr</code> and <code>uriRecognitionServerPort</code> are the configurations to set up the remote URI recognition server.</p>
-<p>The URI recognition server is a gRPC server, which is defined in <a href="https://github.com/apache/skywalking/tree/fe55b90bcf12b7962017ea64086121b8a07c7368/oap-server/ai-pipeline/src/main/proto/ai_http_uri_recognition.proto">URIRecognition.proto</a>.</p>
+<p>The URI recognition server is a gRPC server, which is defined in <a href="https://github.com/apache/skywalking/tree/bb16533009a597dbb41ab6f013ac300509abbb3e/oap-server/ai-pipeline/src/main/proto/ai_http_uri_recognition.proto">URIRecognition.proto</a>.</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-protobuf" data-lang="protobuf"><span style="color:#000;font-weight:bold">service</span> HttpUriRecognitionService {<span style="color:#a61717;background-color:#e3d2d2">
 </span><span style="color:#a61717;background-color:#e3d2d2"></span>    <span style="color:#998;font-style:italic">// Sync for the pattern recognition dictionary.
 </span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">rpc</span> fetchAllPatterns(HttpUriRecognitionSyncRequest) <span style="color:#000;font-weight:bold">returns</span> (HttpUriRecognitionResponse) {}<span style="color:#a61717;background-color:#e3d2d2">
@@ -3132,6 +3140,8 @@ recognition, and natively supports <code>URIRecognition.proto</code> defined in 
 
     </div>
     
+
+
 
 
 
