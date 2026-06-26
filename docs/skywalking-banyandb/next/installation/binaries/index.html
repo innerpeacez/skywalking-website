@@ -44,7 +44,7 @@ Select and download the distribution from the suggested location for your platfo
  It is essential that you verify the integrity of the downloaded file using the PGP signature ( .asc file) or a hash ( .md5 or .sha* file).
  unpack and extract the package.">
 
-<meta itemprop="wordCount" content="477">
+<meta itemprop="wordCount" content="705">
 
 
 
@@ -1293,7 +1293,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 6f4ef25</div>
+                  <div class="commit-id">Commit Id: 7b96158</div>
                 
 
 
@@ -1399,6 +1399,26 @@ bydbctl-cli
 <blockquote>
 <p>The build script now checks if the binary file exists before rebuilding. If you want to rebuild, please remove the binary file manually by running <code>make clean-build</code>.</p>
 </blockquote>
+<h3 id="reproduce-the-official-release-artifacts">Reproduce the Official Release Artifacts</h3>
+<p>The commands above (<code>make generate &amp;&amp; make build</code>) produce <strong>development</strong> binaries under <code>build/bin/dev/</code> (debug symbols included, larger on disk, version string reports <code>&lt;ver&gt;-release</code>). They are useful for local hacking but <strong>do not match the binaries shipped in the release tarballs</strong>.</p>
+<p>To reproduce the exact <code>banyand</code>, <code>bydbctl</code>, <code>fodc-agent</code> and <code>fodc-proxy</code> artifacts published on the Apache mirror, run the per-component <code>release</code> targets — the same sequence <code>scripts/release.sh</code> uses to package the official tarballs:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#998;font-style:italic"># Prerequisite: code generation must run first.</span>
+make generate
+make -C ui build
+
+<span style="color:#998;font-style:italic"># Linux AMD64 + ARM64 — produces the official banyand, fodc-agent, fodc-proxy packages.</span>
+<span style="color:#008080">TARGET_OS</span><span style="color:#000;font-weight:bold">=</span>linux <span style="color:#008080">PLATFORMS</span><span style="color:#000;font-weight:bold">=</span>linux/amd64,linux/arm64 make -C banyand     release
+<span style="color:#008080">TARGET_OS</span><span style="color:#000;font-weight:bold">=</span>linux <span style="color:#008080">PLATFORMS</span><span style="color:#000;font-weight:bold">=</span>linux/amd64,linux/arm64 make -C fodc/agent release
+<span style="color:#008080">TARGET_OS</span><span style="color:#000;font-weight:bold">=</span>linux <span style="color:#008080">PLATFORMS</span><span style="color:#000;font-weight:bold">=</span>linux/amd64,linux/arm64 make -C fodc/proxy release
+
+<span style="color:#998;font-style:italic"># bydbctl is cross-compiled to more targets because it is a single static binary.</span>
+<span style="color:#008080">TARGET_OS</span><span style="color:#000;font-weight:bold">=</span>linux   <span style="color:#008080">PLATFORMS</span><span style="color:#000;font-weight:bold">=</span>linux/amd64,linux/arm64,linux/386   make -C bydbctl release
+<span style="color:#008080">TARGET_OS</span><span style="color:#000;font-weight:bold">=</span>windows <span style="color:#008080">PLATFORMS</span><span style="color:#000;font-weight:bold">=</span>windows/amd64,windows/386          make -C bydbctl release
+<span style="color:#008080">TARGET_OS</span><span style="color:#000;font-weight:bold">=</span>darwin  <span style="color:#008080">PLATFORMS</span><span style="color:#000;font-weight:bold">=</span>darwin/amd64,darwin/arm64          make -C bydbctl release
+
+<span style="color:#998;font-style:italic"># MCP server (no platform matrix — pure Node bundle).</span>
+make -C mcp release
+</code></pre></div><p>Each <code>release</code> target produces both <code>*-static-*</code> and <code>*-slim-*</code> variants where applicable. The <code>static</code> builds are stripped (<code>-s -w</code>) and statically linked; the <code>slim</code> builds additionally omit the embedded UI bundle. The resulting binaries land under <code>&lt;component&gt;/build/bin/&lt;os&gt;/&lt;arch&gt;/</code>, e.g. <code>banyand/build/bin/linux/amd64/banyand-server-static</code>. The version string in these binaries is set by <code>git describe</code> and looks like <code>v0.10.3-0-g&lt;short-sha&gt;-v0.10.x</code> rather than the <code>0.10.3-release</code> string that <code>make build</code> embeds.</p>
 <h3 id="cross-compile-binaries">Cross-compile Binaries</h3>
 <p>The build system supports cross-compiling binaries for different platforms. For example, to build a Windows binary on a Linux machine, you can issue the following command:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#008080">TARGET_OS</span><span style="color:#000;font-weight:bold">=</span>windows <span style="color:#008080">PLATFORMS</span><span style="color:#000;font-weight:bold">=</span>windows/amd64 make release
@@ -1460,6 +1480,7 @@ windows/amd64/bydbctl-cli-static
             <li><a href="#requirements">Requirements</a></li>
             <li><a href="#windows">Windows</a></li>
             <li><a href="#build-binaries">Build Binaries</a></li>
+            <li><a href="#reproduce-the-official-release-artifacts">Reproduce the Official Release Artifacts</a></li>
             <li><a href="#cross-compile-binaries">Cross-compile Binaries</a></li>
           </ul>
         </li>
