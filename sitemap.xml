@@ -7438,6 +7438,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/setup/backend/dashboards-nodejs-runtime/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/guides/source-extension/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>

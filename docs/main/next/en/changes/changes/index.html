@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  Extend the GET /inspect/entities admin API to inspect a metric persisted by any OAP, even one this node does not define locally. When the metric is unknown to the local registry, the caller supplies valueColumn &#43; valueType and the storage backend resolves the physical index/table/group from its own running config (no DB schema/table-metadata read): ES uses the merged metrics-all index &#43; metric_table discriminator, JDBC probes the node&rsquo;s function tables by the table_name discriminator, and BanyanDB synthesizes a read-only measure schema.">
 
-<meta itemprop="wordCount" content="6596">
+<meta itemprop="wordCount" content="6886">
 
 
 
@@ -1461,6 +1461,14 @@ if (!doNotTrack) {
     <li>
         
             <a href="/docs/main/next/en/setup/backend/dashboards-php-runtime">PHP runtime metrics (PHM)</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/dashboards-nodejs-runtime">Node.js runtime metrics</a>
         
     </li>
 
@@ -2895,7 +2903,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: bb16533</div>
+                  <div class="commit-id">Commit Id: 08b0804</div>
                 
 
 
@@ -3187,6 +3195,7 @@ admin-host only&rdquo; entry above for the public REST retirement.</li>
 </ul>
 <h4 id="oap-server">OAP Server</h4>
 <ul>
+<li>Add Node.js runtime metrics via the Node.js agent <strong><code>MeterReportService</code></strong> pipeline (<code>meter_instance_nodejs_*</code>, 1s collect/report). OAP analyzes raw meters through <code>nodejs-runtime.yaml</code>. Node.js E2E asserts six <code>meter_instance_nodejs_*</code> metrics (<code>test/e2e-v2/cases/nodejs/e2e.yaml</code>).</li>
 <li>Add PHP runtime PHM meter analyzer (<code>php-runtime.yaml</code>) for SkyWalking PHP agent process
 metrics (CPU, memory, virtual memory, thread count, open file descriptors sampled from
 <code>/proc</code> on Linux). Registers six <code>meter_instance_php_*</code> metrics on the General Service
@@ -3259,6 +3268,8 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 <li>Align the default BanyanDB stage <code>segmentInterval</code> values so each coarser stage is an integer multiple of the finer one (<code>records</code> cold <code>3</code> → <code>4</code>, <code>metricsMinute</code> cold <code>5</code> → <code>6</code>, <code>metricsHour</code> warm <code>7</code> → <code>10</code> and cold <code>15</code> → <code>20</code>), keeping hot → warm → cold lifecycle migration on the cheap whole-segment fast path.</li>
 <li>Fix: <code>layer-extensions.yml</code> is now excluded from the <code>skywalking-oap</code> jar and shipped to the distribution <code>config/</code> directory, so an operator-edited <code>config/layer-extensions.yml</code> is no longer shadowed by the empty template bundled in the jar. Because the OAP launch script puts <code>oap-libs/*.jar</code> ahead of <code>config/</code> on the classpath, <code>ResourceUtils.read(&quot;layer-extensions.yml&quot;)</code> previously always resolved the jar-bundled <code>layers: []</code> and silently ignored the operator&rsquo;s file — custom layers declared there never registered. The file now follows the same exclude-from-jar + copy-to-<code>config/</code> packaging as every other operator-editable config (<code>application.yml</code>, <code>alarm-settings.yml</code>, etc.).</li>
 <li>Fix: the v2 MAL compiler now resolves custom layers referenced as <code>Layer.NAME</code> in an expression. A custom layer declared through a <code>layerDefinitions:</code> block (or <code>layer-extensions.yml</code> / the <code>LayerExtension</code> SPI) has no generated <code>Layer.*</code> static field, so <code>service(['svc'], Layer.IOT_FLEET)</code> previously failed code generation because <code>Layer</code> has no <code>IOT_FLEET</code> field. The compiler now lowers every <code>Layer.NAME</code> static-field reference to a runtime <code>Layer.nameOf(&quot;NAME&quot;)</code> registry lookup, so a custom layer can be referenced exactly like a built-in one (<code>Layer.GENERAL</code>). For a built-in layer this is equivalent, because <code>Layer.nameOf(&quot;GENERAL&quot;)</code> returns the same instance as the <code>Layer.GENERAL</code> field. The lowering is scoped to <code>Layer</code> only; the other MAL enum types (<code>DetectPoint</code>, <code>DownsamplingType</code>, etc.) are real Java enums and keep their direct static-field reference.</li>
+<li>Fix Envoy ALS rendering for the LAL live-debugger and the persisted log <code>content</code>: an Istio metadata-exchange peer in <code>common_properties.filter_state_objects</code> (legacy Wasm <code>wasm.*_peer</code> = <code>Any{BytesValue}</code> wrapping a FlatBuffer, or modern <code>*_peer</code> = <code>Any{Struct}</code>) is now decoded into the readable peer metadata (pod / namespace / labels) instead of an opaque <code>jsonformat-failed</code> envelope or base64. The serialization is hardened so a single un-printable field can no longer blank the whole entry — the <code>LalPayloadDebugDump</code> printer carries a well-known-type <code>TypeRegistry</code> and sanitizes every value <code>JsonFormat</code> would reject (an unresolvable, no-slash, or corrupt-bytes <code>Any</code> degrades to an <code>@unresolved</code> placeholder; a non-finite <code>Value</code> double <code>NaN</code>/<code>Infinity</code> is rendered as a string), keeping the rest of the entry readable. Because the LAL output builder&rsquo;s <code>bindInput</code> runs eagerly before the debug capture, this also stops an unregistered <code>filter_state_objects</code> type from throwing and aborting the whole rule (dropping the mesh log). Decoding is wired through a new <code>LalInputDebugRenderer</code> SPI (<code>EnvoyAlsHttpDebugRenderer</code> / <code>EnvoyAlsTcpDebugRenderer</code>) so <code>log-analyzer</code> reaches the receiver-side decoders without depending on the Envoy receiver, and covers both HTTP and TCP access logs.</li>
+<li>Surface the effective BanyanDB configuration (<code>bydb.yml</code> / <code>bydb-topn.yml</code>) in the <code>/debugging/config/dump</code> admin API. Because the BanyanDB config moved to a separate file in 10.2.0, a BanyanDB deployment previously showed an empty <code>storage.banyandb</code> block in the dump; its post-environment-resolution values are now merged into the same response under <code>storage.banyandb.*</code> (TopN rules under <code>storage.banyandb.topN.*</code>), masked by the same secret-keyword list, via a generic <code>ConfigDumpExtension</code> SPI on <code>ServerStatusService</code> that any module loading config from a secondary file can implement.</li>
 </ul>
 <h4 id="ui">UI</h4>
 <ul>
@@ -3277,6 +3288,7 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 <li>Improve downsampling documentation</li>
 <li>Fix the docker-compose quickstart: OAP healthcheck no longer calls <code>curl</code> (absent from the JRE image) and probes the query port via bash <code>/dev/tcp</code>; the Horizon UI service maps the correct container port (8081) and mounts a <code>horizon.yaml</code> (binding <code>0.0.0.0</code>, OAP URLs, demo <code>admin</code>/<code>admin</code> login) instead of non-existent <code>SW_*_ADDRESS</code> env vars.</li>
 <li>Add PHP runtime metrics (PHM) dashboard documentation (agent setup, OAP <code>php-runtime</code> MAL rules, Horizon UI widgets).</li>
+<li>Add Node.js runtime metrics dashboard documentation (agent setup, OAP <code>nodejs-runtime</code> MAL rules, Horizon UI widgets).</li>
 </ul>
 <p>All issues and pull requests are <a href="https://github.com/apache/skywalking/issues?q=milestone:11.0.0">here</a></p>
 
@@ -3424,6 +3436,8 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 
     </div>
     
+
+
 
 
 
