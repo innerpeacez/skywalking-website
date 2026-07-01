@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  Extend the GET /inspect/entities admin API to inspect a metric persisted by any OAP, even one this node does not define locally. When the metric is unknown to the local registry, the caller supplies valueColumn &#43; valueType and the storage backend resolves the physical index/table/group from its own running config (no DB schema/table-metadata read): ES uses the merged metrics-all index &#43; metric_table discriminator, JDBC probes the node&rsquo;s function tables by the table_name discriminator, and BanyanDB synthesizes a read-only measure schema.">
 
-<meta itemprop="wordCount" content="6886">
+<meta itemprop="wordCount" content="6974">
 
 
 
@@ -2903,7 +2903,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 08b0804</div>
+                  <div class="commit-id">Commit Id: eec76ba</div>
                 
 
 
@@ -2954,6 +2954,16 @@ if (!doNotTrack) {
 <li>Extend the <code>GET /inspect/entities</code> admin API to inspect a metric persisted by <strong>any</strong> OAP, even one this node does not define locally. When the metric is unknown to the local registry, the caller supplies <code>valueColumn</code> + <code>valueType</code> and the storage backend resolves the physical index/table/group from its own running config (no DB schema/table-metadata read): ES uses the merged <code>metrics-all</code> index + <code>metric_table</code> discriminator, JDBC probes the node&rsquo;s function tables by the <code>table_name</code> discriminator, and BanyanDB synthesizes a read-only measure schema. Scope is no longer required — the <code>entity_id</code> is decoded structurally (service / 2nd-level / relations) with a generic <code>name</code> leaf. Locally-defined metrics keep the exact field names, scope, and <code>mqeEntity</code> as before.</li>
 <li>Add the <code>POST /inspect/values</code> admin API — read the value series of a metric persisted by <strong>another</strong> OAP (one this node does not define locally) by supplying its <code>{valueColumn, valueType}</code>. The real MQE engine runs over a request-scoped <code>InspectQueryContext</code> overlay (provide-if-absent — the local catalog always wins) that makes the foreign metric look registered to every read path: <code>ValueColumnMetadata</code> resolves its value column / type / scope, and the storage location registries resolve where it lives (<code>MetadataRegistry</code> synthesizes a BanyanDB measure schema, <code>IndexController</code> resolves the ES <code>metrics-all</code> index, <code>TableHelper</code> probes the JDBC function tables), so the read returns the native MQE <code>ExpressionResult</code> with no per-DAO special-casing. Admin-only (a forced read this OAP cannot validate); not mirrored onto the public REST / GraphQL surface. See the <a href="../../setup/backend/admin-api/inspect">Inspect API</a>.</li>
 <li>Remove the always-on alarm-to-event conversion (<code>EventHookCallback</code>). A triggered alarm is no longer synthesized into the events pipeline as an <code>Alarm</code>/<code>AlarmRecovery</code> event; events now originate only from real event sources (agents, SkyWalking CLI, Kubernetes Event Exporter). Alarms remain available through the alarm store (<code>getAlarm</code>/<code>queryAlarms</code>) and the configured alarm hooks. This drops a documented &ldquo;Known Event&rdquo; and removes 1-2 synthetic event records per alarm fire.</li>
+<li><strong>TLS for all OAP HTTP/REST servers, with cert hot-reload.</strong> Adds the
+<code>restSSLEnabled</code> / <code>restSSLKeyPath</code> / <code>restSSLCertChainPath</code> config structure to every
+OAP HTTP server — core REST, sharing-server, admin, PromQL, LogQL, TraceQL and Zipkin
+query/receiver — each with its own dedicated environment variables (<code>SW_CORE_REST_SSL_*</code>,
+<code>SW_RECEIVER_SHARING_REST_SSL_*</code>, <code>SW_ADMIN_SERVER_REST_SSL_*</code>, <code>SW_PROMQL_REST_SSL_*</code>,
+<code>SW_LOGQL_REST_SSL_*</code>, <code>SW_TRACEQL_REST_SSL_*</code>, <code>SW_QUERY_ZIPKIN_REST_SSL_*</code>,
+<code>SW_RECEIVER_ZIPKIN_REST_SSL_*</code>). The shared Armeria <code>HTTPServer</code> reloads the key pair
+from disk on rotation (via <code>TlsProvider.ofScheduled</code>) so refreshed certificates are
+picked up without restarting the OAP, matching the existing gRPC SSL hot-reload
+behavior. HTTP TLS is server-side only (no mTLS).</li>
 <li><strong>New <code>queryAlarms</code> GraphQL query — entity / layer / rule filters for alarms.</strong> Adds
 a comprehensive alarm query API alongside the legacy <code>getAlarm</code>. The new
 <code>queryAlarms(condition: AlarmQueryCondition!): Alarms</code> accepts a single input type
