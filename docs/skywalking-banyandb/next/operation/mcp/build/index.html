@@ -38,7 +38,7 @@ Prerequisites  Node.js 24.6.0&#43; installed npm or yarn package manager TypeScr
 <meta itemprop="description" content="Build and Package This guide is for developers who want to build the MCP server from source and create packages.
 Prerequisites  Node.js 24.6.0&#43; installed npm or yarn package manager TypeScript knowledge (for development)  Project Structure mcp/ ├── src/ │ ├── index.ts # MCP bootstrap entrypoint │ ├── config.ts # Environment parsing and runtime limits │ ├── client/ │ │ ├── index.ts # BanyanDB HTTP client │ │ └── types.">
 
-<meta itemprop="wordCount" content="1120">
+<meta itemprop="wordCount" content="1172">
 
 
 
@@ -1049,6 +1049,14 @@ if (!doNotTrack) {
 
     
 
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/mcp/plugin">Plugin Packaging</a>
+        
+    </li>
+
+    
+
 </ul>
 
         
@@ -1284,7 +1292,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 9b83f0b</div>
+                  <div class="commit-id">Commit Id: 6fb3a1b</div>
                 
 
 
@@ -1354,7 +1362,14 @@ npm install
 </code></pre></div><h3 id="2-build">2. Build</h3>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">npm run build
 </code></pre></div><p>This compiles TypeScript to JavaScript in the <code>dist/</code> directory.</p>
-<p>The runtime is organized into small modules:</p>
+<h3 id="2b-build-the-bydbql-validator-binary">2b. Build the BydbQL validator binary</h3>
+<p>The <code>validate_bydbql</code> tool runs the prebuilt Go validator at <code>tools/bin/bydbql-parse</code>.
+Build it (requires the Go toolchain) so the tool does not depend on <code>go run</code> at
+runtime:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">npm run build:validator
+</code></pre></div><p>To produce both the TypeScript output and the validator binary in one step:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">npm run build:all
+</code></pre></div><p>The runtime is organized into small modules:</p>
 <ul>
 <li><code>src/index.ts</code> wires together configuration, transport selection, and startup.</li>
 <li><code>src/server/mcp.ts</code> owns MCP prompt/tool registration and handlers.</li>
@@ -1632,6 +1647,7 @@ make -C mcp license-fix
           <ul>
             <li><a href="#1-install-dependencies">1. Install Dependencies</a></li>
             <li><a href="#2-build">2. Build</a></li>
+            <li><a href="#2b-build-the-bydbql-validator-binary">2b. Build the BydbQL validator binary</a></li>
             <li><a href="#3-verify-build">3. Verify Build</a></li>
           </ul>
         </li>
@@ -1788,6 +1804,8 @@ make -C mcp license-fix
 
     </div>
     
+
+
 
 
 

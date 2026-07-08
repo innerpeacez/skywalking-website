@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  Extend the GET /inspect/entities admin API to inspect a metric persisted by any OAP, even one this node does not define locally. When the metric is unknown to the local registry, the caller supplies valueColumn &#43; valueType and the storage backend resolves the physical index/table/group from its own running config (no DB schema/table-metadata read): ES uses the merged metrics-all index &#43; metric_table discriminator, JDBC probes the node&rsquo;s function tables by the table_name discriminator, and BanyanDB synthesizes a read-only measure schema.">
 
-<meta itemprop="wordCount" content="7183">
+<meta itemprop="wordCount" content="7309">
 
 
 
@@ -2903,7 +2903,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 585d195</div>
+                  <div class="commit-id">Commit Id: 432d55f</div>
                 
 
 
@@ -3282,6 +3282,7 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 <li>Fix: the v2 MAL compiler now resolves custom layers referenced as <code>Layer.NAME</code> in an expression. A custom layer declared through a <code>layerDefinitions:</code> block (or <code>layer-extensions.yml</code> / the <code>LayerExtension</code> SPI) has no generated <code>Layer.*</code> static field, so <code>service(['svc'], Layer.IOT_FLEET)</code> previously failed code generation because <code>Layer</code> has no <code>IOT_FLEET</code> field. The compiler now lowers every <code>Layer.NAME</code> static-field reference to a runtime <code>Layer.nameOf(&quot;NAME&quot;)</code> registry lookup, so a custom layer can be referenced exactly like a built-in one (<code>Layer.GENERAL</code>). For a built-in layer this is equivalent, because <code>Layer.nameOf(&quot;GENERAL&quot;)</code> returns the same instance as the <code>Layer.GENERAL</code> field. The lowering is scoped to <code>Layer</code> only; the other MAL enum types (<code>DetectPoint</code>, <code>DownsamplingType</code>, etc.) are real Java enums and keep their direct static-field reference.</li>
 <li>Fix Envoy ALS rendering for the LAL live-debugger and the persisted log <code>content</code>: an Istio metadata-exchange peer in <code>common_properties.filter_state_objects</code> (legacy Wasm <code>wasm.*_peer</code> = <code>Any{BytesValue}</code> wrapping a FlatBuffer, or modern <code>*_peer</code> = <code>Any{Struct}</code>) is now decoded into the readable peer metadata (pod / namespace / labels) instead of an opaque <code>jsonformat-failed</code> envelope or base64. The serialization is hardened so a single un-printable field can no longer blank the whole entry — the <code>LalPayloadDebugDump</code> printer carries a well-known-type <code>TypeRegistry</code> and sanitizes every value <code>JsonFormat</code> would reject (an unresolvable, no-slash, or corrupt-bytes <code>Any</code> degrades to an <code>@unresolved</code> placeholder; a non-finite <code>Value</code> double <code>NaN</code>/<code>Infinity</code> is rendered as a string), keeping the rest of the entry readable. Because the LAL output builder&rsquo;s <code>bindInput</code> runs eagerly before the debug capture, this also stops an unregistered <code>filter_state_objects</code> type from throwing and aborting the whole rule (dropping the mesh log). Decoding is wired through a new <code>LalInputDebugRenderer</code> SPI (<code>EnvoyAlsHttpDebugRenderer</code> / <code>EnvoyAlsTcpDebugRenderer</code>) so <code>log-analyzer</code> reaches the receiver-side decoders without depending on the Envoy receiver, and covers both HTTP and TCP access logs.</li>
 <li>Surface the effective BanyanDB configuration (<code>bydb.yml</code> / <code>bydb-topn.yml</code>) in the <code>/debugging/config/dump</code> admin API. Because the BanyanDB config moved to a separate file in 10.2.0, a BanyanDB deployment previously showed an empty <code>storage.banyandb</code> block in the dump; its post-environment-resolution values are now merged into the same response under <code>storage.banyandb.*</code> (TopN rules under <code>storage.banyandb.topN.*</code>), masked by the same secret-keyword list, via a generic <code>ConfigDumpExtension</code> SPI on <code>ServerStatusService</code> that any module loading config from a secondary file can implement.</li>
+<li>Fix: an MQE <code>top_n(metric, N, order, attrX='value')</code> query whose attribute is not a column of the target metric now returns a descriptive MQE error instead of a raw storage <code>IOException</code> surfaced as <code>Internal IO exception, query metrics error.</code>. Attribute columns (<code>attr0..attrN</code>) exist only on decorated metrics (<code>service_*</code> / <code>endpoint_*</code> / <code>kubernetes_service_*</code>, set to the layer name via OAL <code>.decorator(...)</code>) and the MAL meter base; metrics such as relations or database / cache / mq access carry none, so passing an attribute condition previously reached the storage engine with a tag it does not define and failed there. <code>MQEVisitor</code> now validates each attribute key against the metric&rsquo;s registered queryable columns before the storage call and raises <code>IllegalExpressionException</code> (naming the attribute and the metric) when it is absent.</li>
 </ul>
 <h4 id="ui">UI</h4>
 <ul>
@@ -3448,6 +3449,8 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 
     </div>
     
+
+
 
 
 

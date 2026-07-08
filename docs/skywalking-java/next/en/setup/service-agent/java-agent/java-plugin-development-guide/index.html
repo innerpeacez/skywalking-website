@@ -824,7 +824,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: a9b0cf4</div>
+                  <div class="commit-id">Commit Id: 67c9afa</div>
                 
 
 
@@ -1183,7 +1183,7 @@ Please refer to <a href="https://bytebuddy.net/#/">bytebuddy</a> for details of 
 <ol start="3">
 <li>Add plugin definition into the <code>skywalking-plugin.def</code> file.</li>
 </ol>
-<pre><code class="language-properties" data-lang="properties">tomcat-7.x/8.x=TomcatInstrumentation
+<pre><code class="language-properties" data-lang="properties">tomcat=TomcatInstrumentation
 </code></pre><ol start="4">
 <li>
 <p>Set up <code>witnessClasses</code> and/or <code>witnessMethods</code> if the instrumentation has to be activated in specific versions.</p>
@@ -1204,7 +1204,7 @@ Please refer to <a href="https://bytebuddy.net/#/">bytebuddy</a> for details of 
   witnessMethodList<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">add</span><span style="color:#000;font-weight:bold">(</span>witnessMethod<span style="color:#000;font-weight:bold">);</span>
   <span style="color:#000;font-weight:bold">return</span> witnessMethodList<span style="color:#000;font-weight:bold">;</span>
 <span style="color:#000;font-weight:bold">}</span>
-</code></pre></div><p>For more examples, see <a href="https://github.com/apache/skywalking-java/tree/a9b0cf4ca1a424dcd8b1cdad7beb6289465ea363/apm-sniffer/apm-agent-core/src/test/java/org/apache/skywalking/apm/agent/core/plugin/witness/WitnessTest.java">WitnessTest.java</a></p>
+</code></pre></div><p>For more examples, see <a href="https://github.com/apache/skywalking-java/tree/67c9afa00cde91fb5fae6cc5a7d34d88e2579b7e/apm-sniffer/apm-agent-core/src/test/java/org/apache/skywalking/apm/agent/core/plugin/witness/WitnessTest.java">WitnessTest.java</a></p>
 </li>
 </ol>
 <h3 id="implement-an-interceptor">Implement an interceptor</h3>
@@ -1623,6 +1623,8 @@ histogram<span style="color:#000;font-weight:bold">.</span><span style="color:#0
 
     </div>
     
+
+
 
 
 
