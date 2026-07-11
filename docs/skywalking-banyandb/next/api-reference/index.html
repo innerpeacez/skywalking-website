@@ -74,7 +74,7 @@ Table of Contents   banyandb/common/v1/trace.proto
   Tag
   TagFamily">
 
-<meta itemprop="wordCount" content="11943">
+<meta itemprop="wordCount" content="12006">
 
 
 
@@ -892,6 +892,48 @@ if (!doNotTrack) {
         
 
             
+            <a href="#">Trace Pipeline Plugins<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/plugins-development">Development Guide</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/plugins">Packaging and Deployment</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/plugins-debugging">Debugging (Offline)</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
             <a href="#">Observability<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
@@ -1346,7 +1388,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 6fb3a1b</div>
+                  <div class="commit-id">Commit Id: 67a743f</div>
                 
 
 
@@ -5580,6 +5622,12 @@ Identity comes from the carrying Group; there is one config per group by constru
 <td><a href="#string">string</a></td>
 <td></td>
 <td>query is the BydbQL query string</td>
+</tr>
+<tr>
+<td>params</td>
+<td><a href="#banyandb-model-v1-tagvalue">banyandb.model.v1.TagValue</a></td>
+<td>repeated</td>
+<td>params are bound to the <code>?</code> placeholders in the query string by their order of appearance. The number of params must match the number of placeholders. Accepted variants depend on the placeholder's position: str/timestamp for TIME values, str/int/null for scalar comparisons, str/int/null/str_array/int_array for IN/MATCH/HAVING value lists (arrays expand in place), and int for LIMIT/OFFSET/TOP N counts. binary_data is rejected everywhere.</td>
 </tr>
 </tbody>
 </table>
@@ -15122,6 +15170,12 @@ admission and conflict checks of §2.3/§2.4 of the design.</p>
 
     </div>
     
+
+
+
+
+
+
 
 
 
