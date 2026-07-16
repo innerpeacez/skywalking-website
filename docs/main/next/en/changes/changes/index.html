@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  Extend the GET /inspect/entities admin API to inspect a metric persisted by any OAP, even one this node does not define locally. When the metric is unknown to the local registry, the caller supplies valueColumn &#43; valueType and the storage backend resolves the physical index/table/group from its own running config (no DB schema/table-metadata read): ES uses the merged metrics-all index &#43; metric_table discriminator, JDBC probes the node&rsquo;s function tables by the table_name discriminator, and BanyanDB synthesizes a read-only measure schema.">
 
-<meta itemprop="wordCount" content="7372">
+<meta itemprop="wordCount" content="7441">
 
 
 
@@ -2903,7 +2903,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 5f6496e</div>
+                  <div class="commit-id">Commit Id: f9edc58</div>
                 
 
 
@@ -3276,6 +3276,7 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 <li>Migrate the Consul cluster and configuration client from the abandoned <code>com.orbitz.consul:consul-client</code> <code>1.5.3</code> to the maintained fork <code>org.kiwiproject:consul-client</code> <code>0.9.0</code> to clear the okhttp CVE the old client carried (CVE-2021-0341; the old client pinned okhttp <code>3.14.9</code>, fixed in okhttp <code>4.9.2+</code>), so the BOM now pins okhttp to <code>4.12.0</code>. The fork&rsquo;s <code>0.9.x</code> line is the last one built for JDK 11 (which SkyWalking still targets); <code>1.0.0+</code> is compiled to JDK 17 bytecode, so the migration stays on <code>0.9.0</code>. The cluster-consul and configuration-consul plugins use only stable Consul client APIs, so the change is a package rename (<code>com.orbitz.consul</code> → <code>org.kiwiproject.consul</code>); okhttp is pulled only by the Consul plugins (the fabric8 Kubernetes client excludes its okhttp transport), so no other module is affected.</li>
 <li>Bump test-scope assertj-core <code>3.20.2</code> → <code>3.27.7</code> to clear CVE-2026-24400 (XXE in <code>isXmlEqualTo</code>, not used by any test).</li>
 <li>Clear three security alerts: bump the Airflow e2e mock&rsquo;s pinned <code>protobuf</code> <code>4.25.8</code> → <code>5.29.6</code> (with <code>opentelemetry-proto</code> <code>1.24.0</code> → <code>1.28.0</code>, whose <code>protobuf&lt;5.0</code> cap was the blocker, and <code>grpcio</code> <code>1.62.2</code> → <code>1.63.2</code>, required because <code>opentelemetry-proto</code> <code>1.28.0</code>&rsquo;s gRPC stubs call <code>unary_unary(_registered_method=...)</code>) to clear CVE-2026-0994 — a CI-only test fixture, never shipped; and widen the cumulative <code>count</code> accumulator from <code>int</code> to <code>long</code> in <code>SumHistogramPercentileFunction</code> / <code>AvgHistogramPercentileFunction</code> to clear the CodeQL <code>implicit-cast-in-compound-assignment</code> alerts (<code>count += value</code> silently narrowed a <code>long</code> bucket-count sum back to <code>int</code>, while <code>total</code> was already <code>long</code>).</li>
+<li>Clear Dependabot CVE alerts in the e2e Go test fixtures (<code>cases/go/service</code> and <code>cases/profiling/ebpf/network</code>, CI-only, never shipped in any OAP artifact): bump <code>golang.org/x/net</code> <code>0.48.0</code> → <code>0.55.0</code> (CVE-2026-25681, CVE-2026-27136, CVE-2026-33814, CVE-2026-39821) and move the Go toolchain from <code>1.24</code> to <code>1.26.5</code> (CVE-2026-27145 / CVE-2026-42504 fixed in 1.26.4, CVE-2026-39822 fixed in 1.26.5) by switching the shared <code>skywalking-go</code> base image to the <code>-go1.26</code> variant and bumping <code>SW_AGENT_GO_COMMIT</code> to <code>7544822</code>, whose <code>-go1.26</code> image ships go1.26.5.</li>
 <li>Fix: continuous profiling policy validation now rejects a threshold / count of <code>0</code> to match the error messages and rover&rsquo;s <code>value &gt;= threshold</code> trigger semantics (a <code>0</code> threshold would always trigger). CPU percent and HTTP error rate are tightened from <code>[0-100]</code> to <code>(0-100]</code>.</li>
 <li>Fix wrong BanyanDB resource options in record data.</li>
 <li>Align the default BanyanDB stage <code>segmentInterval</code> values so each coarser stage is an integer multiple of the finer one (<code>records</code> cold <code>3</code> → <code>4</code>, <code>metricsMinute</code> cold <code>5</code> → <code>6</code>, <code>metricsHour</code> warm <code>7</code> → <code>10</code> and cold <code>15</code> → <code>20</code>), keeping hot → warm → cold lifecycle migration on the cheap whole-segment fast path.</li>
