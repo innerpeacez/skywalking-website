@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  Extend the GET /inspect/entities admin API to inspect a metric persisted by any OAP, even one this node does not define locally. When the metric is unknown to the local registry, the caller supplies valueColumn &#43; valueType and the storage backend resolves the physical index/table/group from its own running config (no DB schema/table-metadata read): ES uses the merged metrics-all index &#43; metric_table discriminator, JDBC probes the node&rsquo;s function tables by the table_name discriminator, and BanyanDB synthesizes a read-only measure schema.">
 
-<meta itemprop="wordCount" content="7441">
+<meta itemprop="wordCount" content="7572">
 
 
 
@@ -2903,7 +2903,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: f9edc58</div>
+                  <div class="commit-id">Commit Id: 2822f12</div>
                 
 
 
@@ -3286,6 +3286,7 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 <li>Surface the effective BanyanDB configuration (<code>bydb.yml</code> / <code>bydb-topn.yml</code>) in the <code>/debugging/config/dump</code> admin API. Because the BanyanDB config moved to a separate file in 10.2.0, a BanyanDB deployment previously showed an empty <code>storage.banyandb</code> block in the dump; its post-environment-resolution values are now merged into the same response under <code>storage.banyandb.*</code> (TopN rules under <code>storage.banyandb.topN.*</code>), masked by the same secret-keyword list, via a generic <code>ConfigDumpExtension</code> SPI on <code>ServerStatusService</code> that any module loading config from a secondary file can implement.</li>
 <li>Fix: an MQE <code>top_n(metric, N, order, attrX='value')</code> query whose attribute is not a column of the target metric now returns a descriptive MQE error instead of a raw storage <code>IOException</code> surfaced as <code>Internal IO exception, query metrics error.</code>. Attribute columns (<code>attr0..attrN</code>) exist only on decorated metrics (<code>service_*</code> / <code>endpoint_*</code> / <code>kubernetes_service_*</code>, set to the layer name via OAL <code>.decorator(...)</code>) and the MAL meter base; metrics such as relations or database / cache / mq access carry none, so passing an attribute condition previously reached the storage engine with a tag it does not define and failed there. <code>MQEVisitor</code> now validates each attribute key against the metric&rsquo;s registered queryable columns before the storage call and raises <code>IllegalExpressionException</code> (naming the attribute and the metric) when it is absent.</li>
 <li>Migrate all BanyanDB storage read queries from the typed query-builder API to BydbQL.</li>
+<li>Route LAL rules within a layer by their input type, so a single layer can host rules over different proto inputs. Each compiled rule now carries its effective input type (the proto class its <code>parsed.*</code> getters cast to, or <code>null</code> for parser-based / untyped rules), and <code>LogFilterListener</code> skips any rule whose type doesn&rsquo;t match the incoming log instead of running every rule in the layer. This fixes a latent <code>ClassCastException</code> (caught and logged per log) that fired whenever a <code>MESH</code> log of one shape reached a rule compiled for another — e.g. an Envoy TCP access log or a network-profiling <code>LogData</code> hitting the HTTP <code>envoy-als</code> rule. Adds an <code>envoy-als-tcp</code> rule (<code>inputType: TCPAccessLogEntry</code>) alongside the existing HTTP <code>envoy-als</code>; both share the <code>MESH</code> layer and each now only sees its own entry type.</li>
 </ul>
 <h4 id="ui">UI</h4>
 <ul>
