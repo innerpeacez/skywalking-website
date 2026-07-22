@@ -38,7 +38,7 @@ This document specifies the language&rsquo;s syntax, its semantics, and the prec
 <meta itemprop="description" content="BanyanDB Query Language (BydbQL) 1. Introduction 1.1. Purpose This document outlines the design of the BanyanDB Data Query Language (BydbQL), a unified query language with SQL-like syntax for all of BanyanDB&rsquo;s data models. The primary goal of BydbQL is to provide users with a familiar, intuitive, and powerful interface to interact with their data, abstracting the underlying protobuf-based APIs for streams, measures, traces, properties, and Top-N queries.
 This document specifies the language&rsquo;s syntax, its semantics, and the precise mapping from BydbQL statements to the various Request messages.">
 
-<meta itemprop="wordCount" content="6354">
+<meta itemprop="wordCount" content="6495">
 
 
 
@@ -1334,7 +1334,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: c22f7d4</div>
+                  <div class="commit-id">Commit Id: 8d88629</div>
                 
 
 
@@ -1431,6 +1431,13 @@ Abstract Syntax Tree (AST)
 </span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">FROM</span> STREAM MyStream <span style="color:#000;font-weight:bold">in</span> group1   <span style="color:#998;font-style:italic">-- refers to stream &#34;MyStream&#34;
 </span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">FROM</span> STREAM mystream <span style="color:#000;font-weight:bold">in</span> group1   <span style="color:#998;font-style:italic">-- refers to stream &#34;mystream&#34;
 </span></code></pre></div><p><strong>Best Practice</strong>: Use uppercase for reserved words and consistent casing for identifiers to maintain readability.</p>
+<h4 id="identifier-character-set">Identifier Character Set</h4>
+<p>An identifier starts with a letter or underscore and may continue with letters, digits, underscores, hyphens (<code>-</code>), and asterisks (<code>*</code>):</p>
+<pre><code>identifier ::= [a-zA-Z_][a-zA-Z0-9_*-]*
+</code></pre><p>Hyphens and asterisks are allowed only after the first character. This matters because the schema layer accepts such names at creation time — a TopN rule named <code>endpoint_avg-cluster-excludes-*</code>, for instance — and a resource that can be created must remain referenceable from a query:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SHOW</span> TOP <span style="color:#099">10</span> <span style="color:#000;font-weight:bold">FROM</span> MEASURE endpoint_avg<span style="color:#000;font-weight:bold">-</span><span style="color:#000;font-weight:bold">cluster</span><span style="color:#000;font-weight:bold">-</span>excludes<span style="color:#000;font-weight:bold">-*</span> <span style="color:#000;font-weight:bold">IN</span> <span style="color:#000;font-weight:bold">default</span>;
+</code></pre></div><p>Confining <code>*</code> to non-initial positions is what keeps the star projection unambiguous: a bare <code>*</code> cannot begin an identifier, so <code>SELECT *</code> is always a projection.</p>
+<p><strong>Caveat</strong>: an identifier that begins with a reserved word followed by a non-word character is rejected by the lexer — <code>IN group-a</code> fails because <code>group</code> matches the keyword rule first. Avoid naming resources with a reserved-word prefix.</p>
 <h2 id="25-timestamp-formats">2.5. Timestamp Formats</h2>
 <p>BydbQL supports flexible timestamp specifications in TIME clauses, accommodating both absolute and relative time formats:</p>
 <h3 id="251-absolute-time-format">2.5.1. Absolute Time Format</h3>
@@ -1747,7 +1754,7 @@ timestamp       ::= string_literal | integer_literal
 	/* timestamp supports both absolute and relative time formats:
 	   - Absolute: RFC3339 format like &quot;2006-01-02T15:04:05Z07:00&quot;
 	   - Relative: duration strings like &quot;-30m&quot;, &quot;2h&quot;, &quot;1d&quot; (relative to current time) */
-identifier      ::= [a-zA-Z_][a-zA-Z0-9_]*
+identifier      ::= [a-zA-Z_][a-zA-Z0-9_*-]*
 string_literal  ::= &quot;'&quot; [^']* &quot;'&quot; | &quot;\&quot;&quot; [^\&quot;]* &quot;\&quot;&quot;
 integer_literal ::= [0-9]+
 </code></pre><p><strong>Note</strong>: The <code>TIME</code> clause and <code>IN groups</code> clause are <strong>required</strong> for all stream queries. At least one group must be specified. Parentheses around the group list are optional.</p>
@@ -1880,7 +1887,7 @@ timestamp         ::= string_literal | integer_literal
 	/* timestamp supports both absolute and relative time formats:
 	   - Absolute: RFC3339 format like &quot;2006-01-02T15:04:05Z07:00&quot;
 	   - Relative: duration strings like &quot;-30m&quot;, &quot;2h&quot;, &quot;1d&quot; (relative to current time) */
-identifier        ::= [a-zA-Z_][a-zA-Z0-9_]*
+identifier        ::= [a-zA-Z_][a-zA-Z0-9_*-]*
 string_literal    ::= &quot;'&quot; [^']* &quot;'&quot; | &quot;\&quot;&quot; [^\&quot;]* &quot;\&quot;&quot;
 integer_literal   ::= [0-9]+
 </code></pre><p><strong>Note</strong>: The <code>TIME</code> clause and <code>IN groups</code> clause are <strong>required</strong> for all measure queries. At least one group must be specified. Parentheses around the group list are optional.</p>
@@ -2049,7 +2056,7 @@ timestamp          ::= string_literal | integer_literal
 	/* timestamp supports both absolute and relative time formats:
 	   - Absolute: RFC3339 format like &quot;2006-01-02T15:04:05Z07:00&quot;
 	   - Relative: duration strings like &quot;-30m&quot;, &quot;2h&quot;, &quot;1d&quot; (relative to current time) */
-identifier         ::= [a-zA-Z_][a-zA-Z0-9_]*
+identifier         ::= [a-zA-Z_][a-zA-Z0-9_*-]*
 string_literal     ::= &quot;'&quot; [^']* &quot;'&quot; | &quot;\&quot;&quot; [^\&quot;]* &quot;\&quot;&quot;
 integer_literal    ::= [0-9]+
 </code></pre><p><strong>Note</strong>: The <code>TIME</code> clause and <code>IN groups</code> clause are <strong>required</strong> for all Top-N queries. At least one group must be specified. Parentheses around the group list are optional.</p>
@@ -2162,7 +2169,7 @@ condition           ::= identifier binary_op (value | value_list) | &quot;ID&quo
 binary_op           ::= &quot;=&quot; | &quot;!=&quot; | &quot;&gt;&quot; | &quot;&lt;&quot; | &quot;&gt;=&quot; | &quot;&lt;=&quot; | &quot;IN&quot; | &quot;NOT IN&quot;
 value               ::= string_literal | integer_literal | &quot;NULL&quot;
 value_list          ::= &quot;(&quot; value (&quot;,&quot; value)* &quot;)&quot;
-identifier          ::= [a-zA-Z_][a-zA-Z0-9_]*
+identifier          ::= [a-zA-Z_][a-zA-Z0-9_*-]*
 string_literal      ::= &quot;'&quot; [^']* &quot;'&quot; | &quot;\&quot;&quot; [^\&quot;]* &quot;\&quot;&quot;
 integer_literal     ::= [0-9]+
 </code></pre><p><strong>Note</strong>: The <code>IN groups</code> clause is <strong>required</strong> for all property queries. At least one group must be specified. Parentheses around the group list are optional. Property queries do <strong>not</strong> require a <code>TIME</code> clause.</p>
@@ -2238,7 +2245,7 @@ timestamp             ::= string_literal | integer_literal
 	/* timestamp supports both absolute and relative time formats:
 	   - Absolute: RFC3339 format like &quot;2006-01-02T15:04:05Z07:00&quot;
 	   - Relative: duration strings like &quot;-30m&quot;, &quot;2h&quot;, &quot;1d&quot; (relative to current time) */
-identifier            ::= [a-zA-Z_][a-zA-Z0-9_]*
+identifier            ::= [a-zA-Z_][a-zA-Z0-9_*-]*
 string_literal        ::= &quot;'&quot; [^']* &quot;'&quot; | &quot;\&quot;&quot; [^\&quot;]* &quot;\&quot;&quot;
 integer_literal       ::= [0-9]+
 </code></pre><p><strong>Note</strong>: The <code>TIME</code> clause and <code>IN groups</code> clause are <strong>required</strong> for all trace queries. At least one group must be specified. Parentheses around the group list are optional.</p>
