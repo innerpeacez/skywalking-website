@@ -42,7 +42,7 @@ The BanyanDB server compatibility relies on API and release versions, The compat
 ${SW_STORAGE_BANYANDB_COMPATIBLE_SERVER_API_VERSIONS} The compatible BanyanDB Server version number can be found via the API versions mapping.
 If the BanyanDB server API version is not compatible with the OAP server, the OAP server will not start, and the following error message will be displayed:">
 
-<meta itemprop="wordCount" content="1333">
+<meta itemprop="wordCount" content="1370">
 
 
 
@@ -2912,7 +2912,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: dddc3b5</div>
+                  <div class="commit-id">Commit Id: be0383a</div>
                 
 
 
@@ -2991,6 +2991,8 @@ org.apache.skywalking.oap.server.library.module.ModuleStartException: Incompatib
 </span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># A higher value can improve write performance but also increases CPU usage on both OAP and BanyanDB Server.</span><span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#000080">concurrentWriteThreads</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_CONCURRENT_WRITE_THREADS:15}<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># The maximum size of the dataset when the OAP loads cache, such as network aliases.</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># Also the row cap sent for any query that has no limit of its own, so that a query never falls back to</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># BanyanDB&#39;s own default (100 rows for measures, 20 for streams/traces), which truncates results silently.</span><span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#000080">resultWindowMaxSize</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_QUERY_MAX_WINDOW_SIZE:10000}<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># The maximum size of metadata per query.</span><span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#000080">metadataQueryMaxSize</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_QUERY_MAX_SIZE:10000}<span style="color:#bbb">
