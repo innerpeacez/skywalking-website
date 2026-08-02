@@ -10812,6 +10812,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/design/trace-fragment-sampling-guard/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/setup/backend/backend-trace-profiling/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -10843,6 +10849,12 @@
   
   <url>
     <loc>/docs/main/v9.3.0/en/setup/backend/trace-sampling/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/main/next/en/banyandb/tail-sampling/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>

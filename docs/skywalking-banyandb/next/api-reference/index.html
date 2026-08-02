@@ -74,7 +74,7 @@ Table of Contents   banyandb/common/v1/trace.proto
   Tag
   TagFamily">
 
-<meta itemprop="wordCount" content="12006">
+<meta itemprop="wordCount" content="12025">
 
 
 
@@ -1388,7 +1388,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 5dd8fd9</div>
+                  <div class="commit-id">Commit Id: 0422b1b</div>
                 
 
 
@@ -4524,7 +4524,7 @@ Identity comes from the carrying Group; there is one config per group by constru
 <td>merge_grace</td>
 <td><a href="#google-protobuf-duration">google.protobuf.Duration</a></td>
 <td></td>
-<td>merge_grace is the per-trace maturity window for the in-merge filter. Strictly positive if set; engine default 30s if unset.</td>
+<td>merge_grace is the whole-selection maturity delay for destructive in-merge sampling. Sampling is deferred when any selected part extends beyond now - merge_grace; this is not a per-trace completeness guarantee. Strictly positive if set; engine default 2h if unset.</td>
 </tr>
 <tr>
 <td>finalize_grace</td>
@@ -15170,6 +15170,10 @@ admission and conflict checks of §2.3/§2.4 of the design.</p>
 
     </div>
     
+
+
+
+
 
 
 

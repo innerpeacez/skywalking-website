@@ -42,7 +42,7 @@
  from skywalking import config, agent config.init(YourConfiguration=YourValue)) agent.start()  Usage: (Pass by environment variables)
  export SW_AGENT_YourConfiguration=YourValue Agent Core Configuration Options    Configuration Environment Variable Type Default Value Description     agent_collector_backend_services SW_AGENT_COLLECTOR_BACKEND_SERVICES &lt;class &lsquo;str&rsquo;&gt; oap_host:oap_port The backend OAP server address, 11800 is default OAP gRPC port, 12800 is HTTP, Kafka ignores this option and uses kafka_bootstrap_servers option.">
 
-<meta itemprop="wordCount" content="1672">
+<meta itemprop="wordCount" content="1673">
 
 
 
@@ -556,7 +556,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 88d30ab</div>
+                  <div class="commit-id">Commit Id: e78d0cf</div>
                 
 
 
@@ -758,7 +758,7 @@ agent.start()
 <td style="text-align:left">SW_AGENT_EXPERIMENTAL_FORK_SUPPORT</td>
 <td style="text-align:left">&lt;class &lsquo;bool&rsquo;&gt;</td>
 <td style="text-align:left">False</td>
-<td style="text-align:left">The agent will restart itself in any os.fork()-ed child process. Important Note: it&rsquo;s not suitable for short-lived processes as each one will create a new instance in SkyWalking dashboard in format of <code>service_instance-child(pid)</code>. This feature may not work when a precise combination of gRPC + Python 3.7 + subprocess (not fork) is used together. The agent will output a warning log when using on Python 3.7 for such a reason.</td>
+<td style="text-align:left">The agent will restart itself in any os.fork()-ed child process. Important Note: it&rsquo;s not suitable for short-lived processes as each one will create a new instance in SkyWalking dashboard in format of <code>service_instance-child(pid)</code>. When the sw-python CLI detects a pre-forking server (Gunicorn), only worker processes run a full agent; the master installs instrumentation only.</td>
 </tr>
 <tr>
 <td style="text-align:left">agent_queue_timeout</td>
@@ -772,7 +772,7 @@ agent.start()
 <td style="text-align:left">SW_AGENT_ASYNCIO_ENHANCEMENT</td>
 <td style="text-align:left">&lt;class &lsquo;bool&rsquo;&gt;</td>
 <td style="text-align:left">False</td>
-<td style="text-align:left">Replace the threads to asyncio coroutines to report telemetry data to the OAP. This option is experimental and may not work as expected.</td>
+<td style="text-align:left">Replace the threads to asyncio coroutines to report telemetry data to the OAP. This option is experimental and may not work as expected. Not compatible with pre-forking servers (<code>sw-python run -p</code>): the agent refuses to start under a Gunicorn master.</td>
 </tr>
 </tbody>
 </table>
@@ -1321,6 +1321,10 @@ agent.start()
 
     </div>
     
+
+
+
+
 
 
 
