@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  Extend the GET /inspect/entities admin API to inspect a metric persisted by any OAP, even one this node does not define locally. When the metric is unknown to the local registry, the caller supplies valueColumn &#43; valueType and the storage backend resolves the physical index/table/group from its own running config (no DB schema/table-metadata read): ES uses the merged metrics-all index &#43; metric_table discriminator, JDBC probes the node&rsquo;s function tables by the table_name discriminator, and BanyanDB synthesizes a read-only measure schema.">
 
-<meta itemprop="wordCount" content="8170">
+<meta itemprop="wordCount" content="8330">
 
 
 
@@ -2911,7 +2911,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: c693967</div>
+                  <div class="commit-id">Commit Id: 768a954</div>
                 
 
 
@@ -3299,6 +3299,9 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 <li>Support BanyanDB&rsquo;s group-scoped trace retention pipeline in <code>bydb.yml</code>. The <code>trace</code> and <code>zipkinTrace</code> groups gain a <code>pipeline</code> block (<code>enabled</code>, <code>enabledEvents</code>, <code>mergeGraceSeconds</code>, <code>finalizeGraceSeconds</code>, and an ordered <code>plugins</code> chain) that OAP pushes onto the BanyanDB group as a <code>TracePipelineConfig</code>, letting a sampler plugin drop traces inside the data node during Hot-phase compaction — after storage, so it reclaims space already written and decides per whole trace, unlike the ingest-side <a href="../../setup/backend/trace-sampling">server-side trace sampling</a>. Disabled by default, since it deletes stored traces. Even when enabled it is inert unless the data node runs the plugin-capable BanyanDB image with the sampler <code>.so</code> mounted — a node without that support ignores the config, and one that cannot load the plugin logs an error and merges unfiltered, so nothing is dropped unexpectedly. The two grace windows use <code>-1</code> for &ldquo;inherit the data node default&rdquo; (30s merge / 5m finalize) because the node treats any non-positive grace as unset. <code>enabledEvents</code> accepts a comma-separated string so it can be set from the environment (<code>SW_STORAGE_BANYANDB_TRACE_PIPELINE_ENABLED_EVENTS</code> and its <code>ZIPKIN_</code> variant) as well as a YAML block list; an empty value falls back to <code>PIPELINE_EVENT_MERGE</code>, so <code>PIPELINE_EVENT_FINALIZE</code> runs only when named explicitly. Each plugin&rsquo;s <code>config</code> is passed through verbatim as a protobuf <code>Struct</code>: nested lists and objects (e.g. <code>keepTagRules</code>) now survive the config loader and are serialized as real <code>ListValue</code>/<code>Struct</code> rather than being flattened to a string. Note a float written as a <code>${ENV:default}</code> placeholder still reaches the plugin as a JSON string, because the shared placeholder resolver only preserves String/Integer/Long/Boolean; the first-party samplers accept a quoted number for exactly this reason. See <a href="../../banyandb/tail-sampling">Trace Tail Sampling</a> for how a trace is judged, and <a href="../../setup/backend/storages/banyandb">BanyanDB storage</a> for the configuration keys.</li>
 <li>Fix: a blank value in <code>bydb.yml</code> (<code>key:</code> with nothing after it) aborted OAP startup with an opaque <code>NullPointerException</code> from <code>java.util.Properties</code>, which rejects null values. The BanyanDB config loader now skips blank entries and leaves the field at its default, the same outcome as omitting the line.</li>
 <li>Route LAL rules within a layer by their input type, so a single layer can host rules over different proto inputs. Each compiled rule now carries its effective input type (the proto class its <code>parsed.*</code> getters cast to, or <code>null</code> for parser-based / untyped rules), and <code>LogFilterListener</code> skips any rule whose type doesn&rsquo;t match the incoming log instead of running every rule in the layer. This fixes a latent <code>ClassCastException</code> (caught and logged per log) that fired whenever a <code>MESH</code> log of one shape reached a rule compiled for another — e.g. an Envoy TCP access log or a network-profiling <code>LogData</code> hitting the HTTP <code>envoy-als</code> rule. Adds an <code>envoy-als-tcp</code> rule (<code>inputType: TCPAccessLogEntry</code>) alongside the existing HTTP <code>envoy-als</code>; both share the <code>MESH</code> layer and each now only sees its own entry type.</li>
+<li>Fix the PagerDuty alarm hook to default its Events API v2 endpoint to <code>https://events.pagerduty.com/v2/enqueue</code>.</li>
+<li>Fix <code>HttpAlarmCallback</code> logging a successful alarm delivery as a failure. The shared HTTP hook helper treated only <code>200</code> and <code>204</code> as success, so any other 2xx — notably the <code>202 Accepted</code> returned by asynchronous intake APIs such as PagerDuty&rsquo;s Events API v2 — produced <code>send to ... failure. Response code: 202</code> at ERROR level on every delivered alarm. The alarm was still delivered; the log entry was wrong. The check now accepts the whole 2xx range, for all alarm hooks.</li>
+<li>Make the PagerDuty Events API v2 endpoint configurable through a new optional <code>events-api-url</code> setting on each <code>pagerduty</code> hook, defaulting to the US service region endpoint. An account in PagerDuty&rsquo;s EU service region can now point the hook straight at <code>https://events.eu.pagerduty.com/v2/enqueue</code> rather than relying on PagerDuty forwarding the request — and the routing key and alarm payload from an EU-region account no longer transit the US region.</li>
 </ul>
 <h4 id="ui">UI</h4>
 <ul>
@@ -3466,6 +3469,10 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 
     </div>
     
+
+
+
+
 
 
 

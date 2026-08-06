@@ -10818,6 +10818,18 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/design/trace-pipeline-merge-optimization-plan/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/design/trace-pipeline-merge-performance-test/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/setup/backend/backend-trace-profiling/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>

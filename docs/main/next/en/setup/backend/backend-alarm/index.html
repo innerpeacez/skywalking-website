@@ -40,7 +40,7 @@ The alerting core is driven by a collection of rules defined in config/alarm-set
 The alerting core is driven by a collection of rules defined in config/alarm-settings.yml. There are three parts to alerting rule definitions.
  alerting rules. They define how metrics alerting should be triggered and what conditions should be considered. hooks. The list of hooks, which should be called after an alerting is triggered.">
 
-<meta itemprop="wordCount" content="2890">
+<meta itemprop="wordCount" content="2965">
 
 
 
@@ -2917,7 +2917,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: c693967</div>
+                  <div class="commit-id">Commit Id: 768a954</div>
                 
 
 
@@ -3415,6 +3415,18 @@ The alarm message will be sent through HTTP post by <code>application/json</code
 </span><span style="color:#bbb">    </span><span style="color:#000080">integration-keys</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">    </span>- 5c6d805c9dcf4e03d09dfa81e8789ba1<span style="color:#bbb">
 </span></code></pre></div><p>You can also configure multiple integration keys.</p>
+<p><code>events-api-url</code> is optional and defaults to the US service region endpoint, <code>https://events.pagerduty.com/v2/enqueue</code>.
+If your PagerDuty account is in the EU service region, set it to the EU endpoint so that alarms are delivered directly
+instead of being forwarded through the US region:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#000080">pagerduty</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">default</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">is-default</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">text-template</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;Apache SkyWalking Alarm: \n %s.&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">events-api-url</span>:<span style="color:#bbb"> </span>https://events.eu.pagerduty.com/v2/enqueue<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">integration-keys</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- dummy-integration-key<span style="color:#bbb">
+</span></code></pre></div><p>The integration key is sent in the request body, so this endpoint should always use <code>https</code>. OAP logs a warning at
+startup if a non-<code>https</code> URL is configured.</p>
 <h3 id="discord">Discord</h3>
 <p>Follow the <a href="https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks">Discord Webhooks guide</a> and create a new webhook.</p>
 <p>Then configure as follows:</p>
@@ -3711,6 +3723,10 @@ the sliding window will be destroyed and re-created, causing the Alarm of this s
 
     </div>
     
+
+
+
+
 
 
 
