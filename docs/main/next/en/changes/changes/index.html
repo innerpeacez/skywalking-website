@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  Extend the GET /inspect/entities admin API to inspect a metric persisted by any OAP, even one this node does not define locally. When the metric is unknown to the local registry, the caller supplies valueColumn &#43; valueType and the storage backend resolves the physical index/table/group from its own running config (no DB schema/table-metadata read): ES uses the merged metrics-all index &#43; metric_table discriminator, JDBC probes the node&rsquo;s function tables by the table_name discriminator, and BanyanDB synthesizes a read-only measure schema.">
 
-<meta itemprop="wordCount" content="8330">
+<meta itemprop="wordCount" content="8493">
 
 
 
@@ -2911,7 +2911,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 768a954</div>
+                  <div class="commit-id">Commit Id: c59f7b4</div>
                 
 
 
@@ -3213,6 +3213,14 @@ admin-host only&rdquo; entry above for the public REST retirement.</li>
 </ul>
 <h4 id="oap-server">OAP Server</h4>
 <ul>
+<li>Support runtime rule hot-update and DSL debugging for the <code>meter-analyzer-config</code> catalog, bringing native meter (<code>MeterReportService</code>) rules to parity with <code>otel-rules</code>.
+<ul>
+<li>Meter rules now load through the same <code>Rules</code>/<code>Rule</code> pipeline <code>otel-rules</code> uses, so they participate in <code>RuleSetMerger</code>, are recorded in <code>StaticRuleRegistry</code>, support the optional <code>layerDefinitions</code> block, and generate source-named expression classes instead of falling back to <code>MalExpr_&lt;N&gt;</code>.</li>
+<li><code>MeterProcessService</code> now implements <code>MalConverterRegistry</code> and publishes debug holders at boot, so a meter rule can be added / overridden / inactivated at runtime, and attached to a DSL debug session, without restarting the OAP.</li>
+<li>The internal <code>MeterConfig</code> / <code>MeterConfigs</code> model is removed in favour of the shared one.</li>
+<li><strong>Behaviour change:</strong> an entry in <code>meterAnalyzerActiveFiles</code> (<code>SW_METER_ANALYZER_ACTIVE_FILES</code>) with no matching rule file now fails OAP startup instead of being silently ignored, matching how <code>otel-rules</code> has always behaved.</li>
+</ul>
+</li>
 <li>Support Elasticsearch 9.x as storage.</li>
 <li>Add Node.js runtime metrics via the Node.js agent <strong><code>MeterReportService</code></strong> pipeline (<code>meter_instance_nodejs_*</code>, 1s collect/report). OAP analyzes raw meters through <code>nodejs-runtime.yaml</code>. Node.js E2E asserts six <code>meter_instance_nodejs_*</code> metrics (<code>test/e2e-v2/cases/nodejs/e2e.yaml</code>).</li>
 <li>Add PHP runtime PHM meter analyzer (<code>php-runtime.yaml</code>) for SkyWalking PHP agent process
@@ -3313,6 +3321,7 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 </ul>
 <h4 id="documentation">Documentation</h4>
 <ul>
+<li>Document the <code>meter-analyzer-config</code> catalog in the runtime-rule hot-update and DSL-debugging references, and add the optional <code>layerDefinitions</code> block, the active-files startup-failure behaviour, and a hot-update / debugging section to the meter setup doc.</li>
 <li>Update LAL documentation with <code>sourceAttribute()</code> function and <code>layer: auto</code> mode.</li>
 <li>Add Airflow monitoring setup documentation (SWIP-7).</li>
 <li>Add iOS app monitoring setup documentation.</li>
