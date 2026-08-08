@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  Extend the GET /inspect/entities admin API to inspect a metric persisted by any OAP, even one this node does not define locally. When the metric is unknown to the local registry, the caller supplies valueColumn &#43; valueType and the storage backend resolves the physical index/table/group from its own running config (no DB schema/table-metadata read): ES uses the merged metrics-all index &#43; metric_table discriminator, JDBC probes the node&rsquo;s function tables by the table_name discriminator, and BanyanDB synthesizes a read-only measure schema.">
 
-<meta itemprop="wordCount" content="8493">
+<meta itemprop="wordCount" content="8494">
 
 
 
@@ -2911,7 +2911,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: c59f7b4</div>
+                  <div class="commit-id">Commit Id: a2498aa</div>
                 
 
 
@@ -3222,7 +3222,7 @@ admin-host only&rdquo; entry above for the public REST retirement.</li>
 </ul>
 </li>
 <li>Support Elasticsearch 9.x as storage.</li>
-<li>Add Node.js runtime metrics via the Node.js agent <strong><code>MeterReportService</code></strong> pipeline (<code>meter_instance_nodejs_*</code>, 1s collect/report). OAP analyzes raw meters through <code>nodejs-runtime.yaml</code>. Node.js E2E asserts six <code>meter_instance_nodejs_*</code> metrics (<code>test/e2e-v2/cases/nodejs/e2e.yaml</code>).</li>
+<li>Add Node.js runtime metrics via the Node.js agent <strong><code>MeterReportService</code></strong> pipeline (<code>meter_instance_nodejs_*</code>, default 20s sample/report). OAP analyzes raw meters through <code>nodejs-runtime.yaml</code>. Node.js E2E asserts twelve <code>meter_instance_nodejs_*</code> metrics (<code>test/e2e-v2/cases/nodejs/e2e.yaml</code>).</li>
 <li>Add PHP runtime PHM meter analyzer (<code>php-runtime.yaml</code>) for SkyWalking PHP agent process
 metrics (CPU, memory, virtual memory, thread count, open file descriptors sampled from
 <code>/proc</code> on Linux). Registers six <code>meter_instance_php_*</code> metrics on the General Service
