@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  Extend the GET /inspect/entities admin API to inspect a metric persisted by any OAP, even one this node does not define locally. When the metric is unknown to the local registry, the caller supplies valueColumn &#43; valueType and the storage backend resolves the physical index/table/group from its own running config (no DB schema/table-metadata read): ES uses the merged metrics-all index &#43; metric_table discriminator, JDBC probes the node&rsquo;s function tables by the table_name discriminator, and BanyanDB synthesizes a read-only measure schema.">
 
-<meta itemprop="wordCount" content="8494">
+<meta itemprop="wordCount" content="8814">
 
 
 
@@ -2911,7 +2911,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: a2498aa</div>
+                  <div class="commit-id">Commit Id: ec1f9a3</div>
                 
 
 
@@ -3213,6 +3213,15 @@ admin-host only&rdquo; entry above for the public REST retirement.</li>
 </ul>
 <h4 id="oap-server">OAP Server</h4>
 <ul>
+<li>Fix MAL generated-class line attribution, which conflated three different coordinate spaces.
+<ul>
+<li>The <code>_L&lt;n&gt;_</code> segment in a generated class name was the rules-list index, not a line, so every rule file&rsquo;s first rule was reported as <code>L0</code>. It now carries the rule&rsquo;s real YAML line (and the <code>filter:</code> line for filter classes).</li>
+<li>The <code>SourceFile</code> attribute named a file that was never written — it used the metric name while the generated source file is named after the class — so IDE source-attach could never resolve a MAL stack frame regardless of the line. It now equals the generated <code>.java</code> file.</li>
+<li><code>LineNumberTable</code> held statement ordinals matching neither the YAML nor the generated source; it now points at real statements in the generated <code>.java</code>.</li>
+<li>Closure companion classes now get their own <code>.java</code> and their own line. Javassist always stamps a companion&rsquo;s <code>SourceFile</code> as <code>&lt;class&gt;.java</code>, but that file was never written, so every closure frame named a source file that did not exist. Each companion is a separate class file — Javassist cannot emit lambdas, so one rule with two closures produces three classes — and each now carries its own source file plus a single <code>LineNumberTable</code> entry at its SAM signature. One entry rather than a per-statement table is deliberate: the statement scanner detects stores to a result slot, which a closure body never makes, so a per-statement table would be invented rather than derived.</li>
+<li>The same <code>SourceFile</code> defect is fixed in LAL and OAL, which stamped the rule&rsquo;s YAML provenance (<code>(execution-basic.yaml:304)auto-layer-not-set.java</code>) while writing <code>execution_basic_L304_auto_layer_not_set.java</code>, so no generated frame in either DSL could ever resolve. Their <code>.java</code> sidecars are also now written as UTF-8 with an ASCII header instead of through a platform-default <code>FileWriter</code>, which is the pairing that produced a <code>MalformedInputException</code> for MAL on a non-UTF-8 JVM. Hierarchy writes no sidecar at all, so its <code>SourceFile</code> still names nothing — tracked separately, since adding one is a feature rather than a fix.</li>
+</ul>
+</li>
 <li>Support runtime rule hot-update and DSL debugging for the <code>meter-analyzer-config</code> catalog, bringing native meter (<code>MeterReportService</code>) rules to parity with <code>otel-rules</code>.
 <ul>
 <li>Meter rules now load through the same <code>Rules</code>/<code>Rule</code> pipeline <code>otel-rules</code> uses, so they participate in <code>RuleSetMerger</code>, are recorded in <code>StaticRuleRegistry</code>, support the optional <code>layerDefinitions</code> block, and generate source-named expression classes instead of falling back to <code>MalExpr_&lt;N&gt;</code>.</li>
