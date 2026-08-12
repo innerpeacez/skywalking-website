@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  Move the DSL class-loading machinery under core/dsl. core/classloader held only DSL types — RuleClassLoader, DSLClassLoaderManager, ClassLoaderGc, UnloadProbePayload and BytecodeClassDefiner — so it is now core/dsl/classloader, and Catalog moves to core/dsl because a rule-file taxonomy is not a class-loading concern. Three copies of the &ldquo;define a generated class into the right loader&rdquo; dispatch (MAL, LAL, MeterSystem) collapse into a static BytecodeClassDefiner.define, which also gives the JDK 17 --add-opens rationale one home instead of four.">
 
-<meta itemprop="wordCount" content="9641">
+<meta itemprop="wordCount" content="9804">
 
 
 
@@ -2911,7 +2911,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: dae21ce</div>
+                  <div class="commit-id">Commit Id: 102af09</div>
                 
 
 
@@ -3211,6 +3211,8 @@ to a top-level <code>SW_STATUS=default</code> (on by default); custom
 <code>application.yml</code> overrides referencing <code>status-query</code> need to repoint
 to <code>status</code>. Routes are admin-host only — see the &ldquo;Status API is
 admin-host only&rdquo; entry above for the public REST retirement.</li>
+<li>Drop six unused test-scoped dependencies from <code>runtime-rule</code> (<code>library-integration-test</code>, <code>library-banyandb-client</code>, <code>storage-banyandb-plugin</code>, <code>testcontainers</code>, <code>testcontainers:junit-jupiter</code>, <code>grpc-testing</code>). They staged the plugin-side ITs that were retired in favour of e2e; that coverage now lives in <code>test/e2e-v2/cases/runtime-rule/</code> (MAL over BanyanDB / PostgreSQL / Elasticsearch, LAL, meter, and the two-node cluster case). The module has no ITs today, and JUnit and Mockito are inherited from the root POM.</li>
+<li>Declare <code>server-testing</code> at <code>test</code> scope everywhere. It ships only test scaffolding (<code>ModuleManagerTesting</code>, <code>MockModuleManager</code>, the MAL/LAL/Hierarchy rule loaders) plus two empty <code>org.junit</code> stubs that let Testcontainers' <code>GenericContainer</code> hierarchy resolve without JUnit 4, but four modules declared it at compile scope — including the <code>server-configuration</code> parent, so all eight <code>configuration-*</code> children inherited it — which put those <code>org.junit</code> stubs on the runtime classpath that <code>server-starter</code> copies into <code>oap-libs</code>. Modules whose tests need the stubs now declare the dependency themselves rather than inheriting it transitively, and <code>library-banyandb-client</code> gains the direct <code>library-util</code> dependency its <code>BanyanDBClient</code> always needed (it was resolving <code>StringUtil</code> through <code>server-testing</code>, a test-support module).</li>
 </ul>
 <h4 id="oap-server">OAP Server</h4>
 <ul>
