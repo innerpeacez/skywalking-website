@@ -42,7 +42,7 @@ Set up your development environment Follow the steps in the Apache maven deploym
 Use the following block as a template and place it in ~/.m2/settings.xml.
 &lt;settings&gt; ... &lt;servers&gt; &lt;!-- To publish a snapshot of some part of Maven --&gt; &lt;server&gt; &lt;id&gt;apache.">
 
-<meta itemprop="wordCount" content="1068">
+<meta itemprop="wordCount" content="1346">
 
 
 
@@ -827,7 +827,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: afede1b</div>
+                  <div class="commit-id">Commit Id: 1dd1cd8</div>
                 
 
 
@@ -906,8 +906,8 @@ Apache maven staging repository checklist.</li>
 
 <span style="color:#998;font-style:italic"># (send vote email to dev@skywalking.apache.org, wait 72h for vote to pass)</span>
 
-<span style="color:#998;font-style:italic"># Step 2: Promote, push Docker images, generate announce email, and clean up</span>
-./tools/releasing/release.sh vote-passed <span style="color:#000;font-weight:bold">[</span>old_version_to_remove<span style="color:#000;font-weight:bold">]</span>
+<span style="color:#998;font-style:italic"># Step 2: Promote, publish the GitHub Release, generate announce email, and clean up</span>
+./tools/releasing/release.sh vote-passed
 </code></pre></div><p>Run <code>./tools/releasing/release.sh</code> without arguments to see all available commands, including individual steps if you need to run them separately.</p>
 <h3 id="pre-flight-checks">Pre-flight checks</h3>
 <p>Before starting, the script verifies:</p>
@@ -957,8 +957,24 @@ are found in <code>https://dist.apache.org/repos/dist/dev/skywalking/java-agent/
 checked-out branch. By the time you run <code>vote-passed</code>, the release PR has normally been
 merged and <code>release/x.y.z</code> deleted, and <code>main</code> has already moved on to the next
 <code>-SNAPSHOT</code>; the tag is the only thing that still pins the release. The version defaults to
-the highest <code>vx.y.z</code> tag in the repository, and can be overridden with a positional
+the most recently created <code>vx.y.z</code> tag, and can be overridden with a positional
 argument (<code>./release.sh docker 9.7.0</code>) or <code>RELEASE_VERSION=9.7.0</code>.</p>
+<p><code>vote-passed</code> never takes the versions positionally — they do opposite things, and swapping
+them would delete the release that was just promoted. Name them, or be asked:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">./tools/releasing/release.sh vote-passed --release 9.7.0 --old_version 9.6.0
+./tools/releasing/release.sh vote-passed --release 9.7.0 --no-cleanup
+./tools/releasing/release.sh vote-passed          <span style="color:#998;font-style:italic"># asks for both</span>
+</code></pre></div><ul>
+<li><strong>Release version</strong> — the one being published. Defaults to the most recently <em>created</em>
+<code>vx.y.z</code> tag, not the highest one: a <code>9.6.1</code> patch cut from the <code>9.6.0</code> line after <code>9.7.0</code>
+has shipped is newer in time but lower in version.</li>
+<li><strong>Old version</strong> — removed from <code>dist/release</code>, which ASF policy keeps to just the current
+release. Defaults to what is published there now, excluding the version being released.
+Answer <code>none</code> to skip.</li>
+</ul>
+<p><code>RELEASE_VERSION</code> and <code>OLD_VERSION</code> are honoured too; the flags win over them. Both versions
+are validated as <code>x.y.z</code>, the release version must already be tagged, and the two being equal
+is refused.</p>
 <p>After the vote passes, run <code>vote-passed</code> which executes:</p>
 <ol>
 <li><strong>promote</strong> — move packages from <code>dist/dev</code> to <code>dist/release</code> in Apache SVN (prompts for SVN credentials), then release the Nexus staging repository at <a href="https://repository.apache.org">https://repository.apache.org</a> and update the website download page</li>
@@ -967,14 +983,28 @@ argument (<code>./release.sh docker 9.7.0</code>) or <code>RELEASE_VERSION=9.7.0
 <li><strong>cleanup</strong> (optional) — if old version is provided, remove it from <code>dist/release</code>. Update download page links to point to <code>https://archive.apache.org/dist/skywalking</code></li>
 </ol>
 <h3 id="docker-images">Docker images</h3>
-<p>Docker images are published by GitHub Actions, not from your machine. Publishing the
-GitHub Release fires the <code>release: released</code> trigger in
-<a href="https://github.com/apache/skywalking-java/tree/afede1badd98cc03c9a65bca286e3e28b10ad5c2/.github/workflows/publish-docker.yaml"><code>.github/workflows/publish-docker.yaml</code></a>,
-which builds every base variant and pushes
+<p>Docker images are published by GitHub Actions, not from your machine. <code>github-release</code>
+publishes the GitHub Release and then dispatches
+<a href="https://github.com/apache/skywalking-java/tree/1dd1cd88d401a1436e9ea2d3c5d281ad1d772af3/.github/workflows/publish-docker.yaml"><code>.github/workflows/publish-docker.yaml</code></a>
+with the release version. It builds every base variant and pushes
 <code>apache/skywalking-java-agent:x.y.z-{alpine,java8,java11,java17,java21,java25}</code> to Docker
-Hub for <code>linux/amd64</code> and <code>linux/arm64</code>. Watch that workflow; if it fails you can fall back
-to pushing from your machine with <code>./tools/releasing/release.sh docker x.y.z</code>, which needs
-you to be logged in to Docker Hub with push access to the <code>apache</code> organisation.</p>
+Hub for <code>linux/amd64</code> and <code>linux/arm64</code>. Watch that workflow.</p>
+<p>If it fails, run it again: <strong>Actions → publish-docker → Run workflow</strong>, entering the
+version (<code>9.7.0</code>). That is the same path <code>github-release</code> takes, so retrying is safe and
+idempotent.</p>
+<blockquote>
+<p>[!NOTE]
+There is deliberately <strong>no <code>release:</code> trigger</strong>. GitHub runs a release event&rsquo;s workflow as
+it exists <em>at the tag</em>, and the tag is cut at <code>prepare</code> while the Release is published at
+<code>vote-passed</code>, at least 72 hours later — so any change to the workflow in between would
+silently not apply to the release in flight. That window is why 9.7.0 published with no
+workflow run at all. Dispatching instead means the workflow always comes from <code>main</code>,
+while everything it acts on comes from the tag: the tree it builds is checked out at
+<code>vx.y.z</code>, and the agent package is the verified tarball from <code>dist/release</code>.</p>
+</blockquote>
+<p>As a last resort you can push from your machine with
+<code>./tools/releasing/release.sh docker x.y.z</code>, which needs you to be logged in to Docker Hub
+with push access to the <code>apache</code> organisation.</p>
 <p>The image contains the exact tarball that was voted on. The workflow downloads
 <code>apache-skywalking-java-agent-x.y.z.tgz</code> from <code>dist/release</code>, checks it against the
 published <code>.sha512</code>, and verifies the <code>.asc</code> signature against the project
