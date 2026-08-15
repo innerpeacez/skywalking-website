@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  Move the DSL class-loading machinery under core/dsl. core/classloader held only DSL types — RuleClassLoader, DSLClassLoaderManager, ClassLoaderGc, UnloadProbePayload and BytecodeClassDefiner — so it is now core/dsl/classloader, and Catalog moves to core/dsl because a rule-file taxonomy is not a class-loading concern. Three copies of the &ldquo;define a generated class into the right loader&rdquo; dispatch (MAL, LAL, MeterSystem) collapse into a static BytecodeClassDefiner.define, which also gives the JDK 17 --add-opens rationale one home instead of four.">
 
-<meta itemprop="wordCount" content="9804">
+<meta itemprop="wordCount" content="10068">
 
 
 
@@ -2911,7 +2911,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 102af09</div>
+                  <div class="commit-id">Commit Id: 521b2ab</div>
                 
 
 
@@ -3213,6 +3213,7 @@ to <code>status</code>. Routes are admin-host only — see the &ldquo;Status API
 admin-host only&rdquo; entry above for the public REST retirement.</li>
 <li>Drop six unused test-scoped dependencies from <code>runtime-rule</code> (<code>library-integration-test</code>, <code>library-banyandb-client</code>, <code>storage-banyandb-plugin</code>, <code>testcontainers</code>, <code>testcontainers:junit-jupiter</code>, <code>grpc-testing</code>). They staged the plugin-side ITs that were retired in favour of e2e; that coverage now lives in <code>test/e2e-v2/cases/runtime-rule/</code> (MAL over BanyanDB / PostgreSQL / Elasticsearch, LAL, meter, and the two-node cluster case). The module has no ITs today, and JUnit and Mockito are inherited from the root POM.</li>
 <li>Declare <code>server-testing</code> at <code>test</code> scope everywhere. It ships only test scaffolding (<code>ModuleManagerTesting</code>, <code>MockModuleManager</code>, the MAL/LAL/Hierarchy rule loaders) plus two empty <code>org.junit</code> stubs that let Testcontainers' <code>GenericContainer</code> hierarchy resolve without JUnit 4, but four modules declared it at compile scope — including the <code>server-configuration</code> parent, so all eight <code>configuration-*</code> children inherited it — which put those <code>org.junit</code> stubs on the runtime classpath that <code>server-starter</code> copies into <code>oap-libs</code>. Modules whose tests need the stubs now declare the dependency themselves rather than inheriting it transitively, and <code>library-banyandb-client</code> gains the direct <code>library-util</code> dependency its <code>BanyanDBClient</code> always needed (it was resolving <code>StringUtil</code> through <code>server-testing</code>, a test-support module).</li>
+<li>Add <code>ThreadPolicy.ioBound(N)</code> to <code>library-batch-queue</code>, for queues whose consumers spend most of their time blocked. Such a queue runs its drain loops on virtual threads where the runtime provides them (JDK 25+) and falls back to N platform threads otherwise; the count, and therefore concurrency, batching, back-pressure, drop semantics and per-partition ordering, are identical on both paths. Shutdown latency is the one exception: the platform scheduler drops drain tasks parked on their idle backoff, while the virtual-thread adapter sleeps inside the submitted task and cannot, so an <code>ioBound</code> queue should keep <code>maxIdleMs</code> within <code>shutdownTimeoutMs</code>. There is deliberately no CPU-proportional form: virtual threads are not preemptive, so CPU-bound work would hold its carrier and starve the shared carrier pool, and L1/L2/TopN stay on <code>cpuCores</code>/<code>fixed</code>. Also fixes <code>BatchQueue.shutdown()</code>, which ran its final drain on the caller&rsquo;s thread while drain loops could still be inside <code>consume()</code>, invoking a handler concurrently and breaking the single-drain-thread invariant workers such as <code>MetricsAggregateWorker</code> rely on: it now cancels the periodic rebalance task, waits for in-flight consumers (<code>shutdownTimeoutMs</code>, default 500ms per queue), and serialises its final dispatch behind a read/write dispatch lock so the guarantee holds even when that wait times out or is interrupted. Drain loops hold the read lock for the whole cycle — the running recheck, the partition dequeue, the idle notification and the dispatch — because <code>onIdle()</code> touches the same worker state as <code>consume()</code> and an unlocked dequeue would let shutdown dispatch a newer batch ahead of one a task already holds. Concurrent shutdown callers await the winner&rsquo;s completion rather than returning early. A consumer is never interrupted mid-batch.</li>
 </ul>
 <h4 id="oap-server">OAP Server</h4>
 <ul>
