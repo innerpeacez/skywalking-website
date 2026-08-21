@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.0.0">
 <meta itemprop="description" content="11.0.0 Project  Move the DSL class-loading machinery under core/dsl. core/classloader held only DSL types — RuleClassLoader, DSLClassLoaderManager, ClassLoaderGc, UnloadProbePayload and BytecodeClassDefiner — so it is now core/dsl/classloader, and Catalog moves to core/dsl because a rule-file taxonomy is not a class-loading concern. Three copies of the &ldquo;define a generated class into the right loader&rdquo; dispatch (MAL, LAL, MeterSystem) collapse into a static BytecodeClassDefiner.define, which also gives the JDK 17 --add-opens rationale one home instead of four.">
 
-<meta itemprop="wordCount" content="10068">
+<meta itemprop="wordCount" content="10089">
 
 
 
@@ -2911,7 +2911,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 521b2ab</div>
+                  <div class="commit-id">Commit Id: 5839d2a</div>
                 
 
 
@@ -3217,6 +3217,8 @@ admin-host only&rdquo; entry above for the public REST retirement.</li>
 </ul>
 <h4 id="oap-server">OAP Server</h4>
 <ul>
+<li>Add component IDs for the Spring LDAP Java agent plugin (<code>spring-ldap</code>: 179) and LDAP server (<code>LDAP</code>: 180),
+including their server mapping.</li>
 <li>Fix LAL&rsquo;s <code>segmentId</code> and <code>spanId</code> extractor statements, which the grammar accepted and the parser never implemented. <code>LALParser.g4</code> declares <code>traceIdStatement</code>, <code>segmentIdStatement</code> and <code>spanIdStatement</code>, and the codegen already carried <code>setSegmentId</code>/<code>setSpanId</code> in its setter table, but <code>LALScriptParser.visitExtractorStatement</code> had a branch for only the first of the three. The remaining alternatives fell through to a line that assumed whatever was left had to be an <code>ifStatement</code>, so a rule writing <code>segmentId ...</code> failed at boot with a <code>NullPointerException</code> naming <code>IfStatementContext</code> — for a rule line containing no <code>if</code>. Both statements now work, and an unhandled extractor statement reports its own rule line instead of throwing. Existing log records are unaffected: <code>LogBuilder</code> copies trace id, segment id and span id straight from the log&rsquo;s metadata, and only skips that copy when a rule has set them — which no shipped rule did, which is why the gap went unnoticed. Dedicated execution tests now cover reading all three fields from <code>log.traceContext.*</code> and writing all three from an extractor.</li>
 <li>Remove dead code from the DSL subsystem and correct the shared kernel&rsquo;s own documentation. Deleted <code>DslContentHash</code> (a byte-identical, zero-caller twin of the live <code>ContentHash</code>), the unused <code>oal-rt</code> metrics-function registry, <code>LogAnalyzerFactory</code>, <code>LALCodegenHelper.METADATA_GETTER_ALIASES</code> (a permanently empty map whose reader branch could never execute — the DSL-name-to-getter mismatch it existed for no longer exists, since <code>LogMetadata.TraceContext</code> names the field <code>traceSegmentId</code> directly), and three unreferenced members. Three kernel classes carried javadoc asserting consumers that do not exist — <code>DSLClassLoaderManager</code> claimed the MAL and LAL compile paths reach for its singleton, <code>LogDataDebugDump</code> claimed core renders through it, and <code>DslContentHash</code> instructed the reader to consolidate toward the dead copy; a false rationale in a shared kernel is an instruction to the next contributor, so those are now what the call sites actually support. <code>OALDebug</code>, <code>OALDebugRecorder</code> and <code>DebugHolderProvider</code> now record why they sit in core while MAL&rsquo;s and LAL&rsquo;s equivalents do not: <code>dsl-debugging</code> declares no <code>oal-rt</code> dependency, so they cannot move.</li>
 <li>Unify source attribution for every generated DSL class, so a stack frame from OAL, MAL, LAL or Hierarchy code leads back to the rule that produced it.
