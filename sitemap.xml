@@ -2488,8 +2488,32 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/design/archive/0.12.0/native-inverted-index/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/index.json</loc>
     <lastmod>2023-02-28T16:58:57+08:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/design/archive/0.10.0/readme/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/design/archive/0.11.0/readme/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/design/archive/0.12.0/readme/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -2526,6 +2550,12 @@
   
   <url>
     <loc>/docs/main/next/en/changes/changes-10.4.0/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/main/next/en/changes/changes-11.0.0/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -3185,6 +3215,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/setup/backend/ai-evaluation/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/setup/ai-pipeline/introduction/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -3492,6 +3528,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/design/archive/readme/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/setup/backend/backend-aws-api-gateway-monitoring/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -3648,7 +3690,7 @@
   </url>
   
   <url>
-    <loc>/docs/skywalking-banyandb/next/design/post-trace-pipeline/</loc>
+    <loc>/docs/skywalking-banyandb/next/design/archive/0.11.0/post-trace-pipeline/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -4309,7 +4351,7 @@
   </url>
   
   <url>
-    <loc>/docs/skywalking-banyandb/next/design/fodc/context-aware-panic-diagnostics/</loc>
+    <loc>/docs/skywalking-banyandb/next/design/archive/0.10.0/fodc/context-aware-panic-diagnostics/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -4916,6 +4958,12 @@
   
   <url>
     <loc>/docs/skywalking-satellite/v1.1.0/en/concepts-and-designs/mmap-queue/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/design/readme/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -5692,7 +5740,7 @@
   </url>
   
   <url>
-    <loc>/docs/skywalking-banyandb/next/design/fodc/proxy/</loc>
+    <loc>/docs/skywalking-banyandb/next/design/archive/0.10.0/fodc/proxy/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -6736,7 +6784,7 @@
   </url>
   
   <url>
-    <loc>/docs/skywalking-banyandb/next/design/ktm/</loc>
+    <loc>/docs/skywalking-banyandb/next/design/archive/0.10.0/ktm/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -10433,6 +10481,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/swip/swip-16/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/skywalking-banyandb/next/operation/system/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -10818,31 +10872,31 @@
   </url>
   
   <url>
-    <loc>/docs/skywalking-banyandb/next/design/trace-fragment-sampling-guard/</loc>
+    <loc>/docs/skywalking-banyandb/next/design/archive/0.11.0/trace-fragment-sampling-guard/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/docs/skywalking-banyandb/next/design/trace-drop-set-bounding/</loc>
+    <loc>/docs/skywalking-banyandb/next/design/archive/0.11.0/trace-drop-set-bounding/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/docs/skywalking-banyandb/next/design/trace-drop-set-bounding-plan/</loc>
+    <loc>/docs/skywalking-banyandb/next/design/archive/0.11.0/trace-drop-set-bounding-plan/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/docs/skywalking-banyandb/next/design/trace-pipeline-merge-optimization-plan/</loc>
+    <loc>/docs/skywalking-banyandb/next/design/archive/0.11.0/trace-pipeline-merge-optimization-plan/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/docs/skywalking-banyandb/next/design/trace-pipeline-merge-performance-test/</loc>
+    <loc>/docs/skywalking-banyandb/next/design/archive/0.11.0/trace-pipeline-merge-performance-test/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -11347,7 +11401,7 @@
   </url>
   
   <url>
-    <loc>/docs/skywalking-banyandb/next/design/fodc/watchdog-and-flight-recoder/</loc>
+    <loc>/docs/skywalking-banyandb/next/design/archive/0.10.0/fodc/watchdog-and-flight-recoder/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>

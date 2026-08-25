@@ -32,7 +32,7 @@
 <meta property="og:description" content="Trace Merge Drop-Set Bounding Status This document specifies a bound on the merge-wide dropped-trace-ID collector introduced by Phase 6 of the merge optimization plan, which was unbounded in the number of dropped traces per merge.
 Implemented, except the validation. The mechanism (DS-1, DS-1b), the budget resolver (DS-2), the ceiling seam (DS-3), observability (DS-4), activation (DS-5), and the production instruments of section 6 are in the tree. The ceiling is therefore live on every merge." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/skywalking-banyandb/next/design/trace-drop-set-bounding/" />
+<meta property="og:url" content="/docs/skywalking-banyandb/next/design/archive/0.11.0/trace-drop-set-bounding/" />
 
 <meta itemprop="name" content="Trace Merge Drop-Set Bounding">
 <meta itemprop="description" content="Trace Merge Drop-Set Bounding Status This document specifies a bound on the merge-wide dropped-trace-ID collector introduced by Phase 6 of the merge optimization plan, which was unbounded in the number of dropped traces per merge.
@@ -1342,7 +1342,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 3b83e18</div>
+                  <div class="commit-id">Commit Id: e7bb0d3</div>
                 
 
 
@@ -1905,11 +1905,11 @@ operator after a merge that never hit one.</li>
 <td>Retained-by-ceiling and capped-merge counters.</td>
 </tr>
 <tr>
-<td><code>docs/design/post-trace-pipeline.md:630-632</code></td>
+<td><code>post-trace-pipeline.md:630-632</code></td>
 <td>Note that a merge may stop dropping at its ceiling; the pruning predicate and lockstep publication are unchanged.</td>
 </tr>
 <tr>
-<td><code>docs/design/trace-pipeline-merge-optimization-plan.md</code> Phase 6</td>
+<td><code>trace-pipeline-merge-optimization-plan.md</code> Phase 6</td>
 <td>Record that the collector is now ceiling-bounded; the phase&rsquo;s exactness invariant is unchanged.</td>
 </tr>
 </tbody>
@@ -2259,6 +2259,24 @@ by this design; worth deciding separately.</li>
 
     </div>
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

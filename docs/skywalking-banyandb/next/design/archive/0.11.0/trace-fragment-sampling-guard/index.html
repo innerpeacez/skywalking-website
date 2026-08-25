@@ -33,7 +33,7 @@
 Context and Problem Statement BanyanDB&rsquo;s trace merge policy selects file parts primarily by compressed size to control write amplification. The selected parts are merged in trace-ID order, and an enabled post-trace sampler may discard traces from the merge output.
 A trace can have fragments in both selected and unselected parts. Sampling only the selected fragments can therefore produce an incorrect partial decision: the selected fragment may be dropped while another fragment remains visible in an unselected part." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/skywalking-banyandb/next/design/trace-fragment-sampling-guard/" />
+<meta property="og:url" content="/docs/skywalking-banyandb/next/design/archive/0.11.0/trace-fragment-sampling-guard/" />
 
 <meta itemprop="name" content="Trace Fragment Guard for Sampling Design">
 <meta itemprop="description" content="Trace Fragment Guard for Sampling Design Status Core enforcement implemented using the resolved merge-grace safety contract.
@@ -1345,7 +1345,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 3b83e18</div>
+                  <div class="commit-id">Commit Id: e7bb0d3</div>
                 
 
 
@@ -2149,6 +2149,24 @@ transitional merges.</li>
 
     </div>
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
