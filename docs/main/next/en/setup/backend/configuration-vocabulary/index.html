@@ -40,7 +40,7 @@ Main Configuration The main configuration is provided by application.yml. It div
 Main Configuration The main configuration is provided by application.yml. It divided into several modules, each of which has its own settings. The following table lists the modules and their settings.
    Module Provider Settings Value(s) and Explanation System Environment Variable¹ Default     core default role Option values: Mixed/Receiver/Aggregator. Receiver mode OAP opens the service to the agents, then analyzes and aggregates the results, and forwards the results for distributed aggregation.">
 
-<meta itemprop="wordCount" content="8825">
+<meta itemprop="wordCount" content="8865">
 
 
 
@@ -2951,7 +2951,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 9ae0b8d</div>
+                  <div class="commit-id">Commit Id: 7903c44</div>
                 
 
 
@@ -6240,6 +6240,12 @@ The following table lists the configuration items:</p>
 <td>sslTrustCAPath</td>
 <td>If the BanyanDB server is configured with TLS, config the TLS cert file path and open tls connection.</td>
 <td>SW_STORAGE_BANYANDB_SSL_TRUST_CA_PATH</td>
+<td>-</td>
+</tr>
+<tr>
+<td>secretsManagementFile</td>
+<td>Secrets management file in the properties format, including the user and password, which are managed by a 3rd party tool. When set, it overrides <code>user</code>/<code>password</code>, and a rotation of the file is applied without restarting the OAP.</td>
+<td>SW_STORAGE_BANYANDB_SECRETS_MANAGEMENT_FILE</td>
 <td>-</td>
 </tr>
 <tr>
