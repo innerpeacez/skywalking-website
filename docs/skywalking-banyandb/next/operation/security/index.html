@@ -40,7 +40,7 @@ Basic Authentication To enable authentication on the BanyanDB server, you need t
 Authentication BanyanDB supports username and password-based authentication for both gRPC and HTTP endpoints. This guide explains how to configure and use this feature for both the BanyanDB server and the bydbctl command-line tool.
 Basic Authentication To enable authentication on the BanyanDB server, you need to create a YAML configuration file that defines your users and their passwords.">
 
-<meta itemprop="wordCount" content="904">
+<meta itemprop="wordCount" content="1335">
 
 
 
@@ -1345,7 +1345,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 8b4e153</div>
+                  <div class="commit-id">Commit Id: eeb3b92</div>
                 
 
 
@@ -1459,7 +1459,88 @@ banyand data --tls<span style="color:#000;font-weight:bold">=</span><span style=
 </ul>
 <p>You can update the files or recreate the files, and the servers will automatically reload them.</p>
 <h2 id="authorization">Authorization</h2>
-<p>BanyanDB does not have built-in authorization mechanisms. However, you can use external tools like <a href="https://www.envoyproxy.io/">Envoy</a> or <a href="https://istio.io/">Istio</a> to manage access control and authorization.</p>
+<p>BanyanDB liaison supports optional role-based access control (RBAC) for its
+public gRPC and HTTP APIs. Authentication and RBAC use the same file supplied
+through <code>--auth-config-file</code>; no separate policy store is required.</p>
+<p>RBAC is disabled by default. A file containing only <code>users</code>, or an explicit
+<code>rbac.enabled: false</code>, preserves the existing authenticate-then-allow behavior.
+When RBAC is enabled, a successfully authenticated user must be bound to a role
+containing the permission required by the requested method. An unbound user is
+authenticated but receives <code>PermissionDenied</code>.</p>
+<h3 id="configure-rbac">Configure RBAC</h3>
+<p>The built-in <code>reader</code>, <code>writer</code>, and <code>admin</code> roles cannot be overridden. Custom
+roles are flat permission sets. Bindings associate configured users with roles
+and exact group names or <code>*</code>; multiple bindings for a user combine their grants.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">users</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- <span style="color:#000080">username</span>:<span style="color:#bbb"> </span>admin<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">password</span>:<span style="color:#bbb"> </span>StrongPassword123<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- <span style="color:#000080">username</span>:<span style="color:#bbb"> </span>monitor<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">password</span>:<span style="color:#bbb"> </span>AnotherStrongPassword456<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- <span style="color:#000080">username</span>:<span style="color:#bbb"> </span>writer<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">password</span>:<span style="color:#bbb"> </span>YetAnotherStrongPassword789<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000080">rbac</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">enabled</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">roles</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">monitor</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">permissions</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>- cluster:read<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">bindings</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#000080">principal</span>:<span style="color:#bbb"> </span>admin<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">role</span>:<span style="color:#bbb"> </span>admin<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">groups</span>:<span style="color:#bbb"> </span>[<span style="color:#d14">&#34;*&#34;</span>]<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#000080">principal</span>:<span style="color:#bbb"> </span>monitor<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">role</span>:<span style="color:#bbb"> </span>monitor<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">groups</span>:<span style="color:#bbb"> </span>[<span style="color:#d14">&#34;*&#34;</span>]<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#000080">principal</span>:<span style="color:#bbb"> </span>writer<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">role</span>:<span style="color:#bbb"> </span>writer<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">groups</span>:<span style="color:#bbb"> </span>[sw_metric]<span style="color:#bbb">
+</span></code></pre></div><p>The permission vocabulary is fixed:</p>
+<ul>
+<li><code>cluster:read</code></li>
+<li><code>cluster:admin</code></li>
+<li><code>schema:read</code></li>
+<li><code>schema:write</code></li>
+<li><code>data:read</code></li>
+<li><code>data:write</code></li>
+</ul>
+<p><code>reader</code> grants <code>schema:read</code> and <code>data:read</code>; <code>writer</code> adds both write
+permissions; <code>admin</code> grants all six permissions. Cluster permissions and the
+<code>admin</code> role require a <code>*</code> binding. An enabled policy is rejected for unknown
+fields or permissions, built-in overrides, empty groups, <code>*</code> mixed with exact
+groups, invalid references or cluster scopes, and duplicate users, custom
+roles, permissions, groups, or equivalent bindings. It also requires at least
+one user. The authentication file must still have mode <code>0600</code>. Valid file
+changes are applied atomically without restarting liaison; an invalid reload
+leaves the last valid policy and revision in force.</p>
+<h3 id="authorization-coverage-in-this-release">Authorization coverage in this release</h3>
+<p>This release activates the global cluster permissions:</p>
+<ul>
+<li><code>cluster:read</code> covers cluster state, current node, group inspection, and
+deletion-task queries.</li>
+<li><code>cluster:admin</code> covers snapshots, retention deletion, measure internal query,
+and the conditionally registered node-schema-status RPCs.</li>
+</ul>
+<p><code>GetAPIVersion</code> requires authentication but no role binding. Schema-barrier
+methods, including <code>AwaitRevisionApplied</code>, remain classified as <code>schema:read</code>
+and fail closed in this release.</p>
+<p>The existing <code>--enable-health-auth</code> setting continues to decide whether the
+gRPC <code>Check</code> and HTTP health checks require credentials; no RBAC role is added
+to that policy. Static web assets remain public. The gRPC <code>List</code> and <code>Watch</code>
+health methods retain their existing authentication requirement.</p>
+<p>Although schema and data permission names may be configured, their executors
+are not active in this release. With RBAC enabled, methods outside the activated
+global cluster set therefore fail closed with <code>PermissionDenied</code>, including for
+a role that lists the corresponding permission. Leave RBAC disabled until the
+available method coverage matches the deployment&rsquo;s needs.</p>
+<p>HTTP Basic authentication and direct gRPC authentication converge on the same
+gRPC authorization decision. The HTTP gateway discards caller-supplied identity
+metadata and forwards only the identity established from valid Basic
+credentials. Missing or invalid credentials return <code>Unauthenticated</code> before
+authorization, and denied requests do not invoke their handlers.</p>
+<p>External policy proxies such as <a href="https://www.envoyproxy.io/">Envoy</a> or
+<a href="https://istio.io/">Istio</a> may still be used when deployments require an
+authorization model beyond BanyanDB&rsquo;s built-in RBAC.</p>
 <h2 id="data-encryption">Data Encryption</h2>
 <p>BanyanDB does not provide data encryption at rest. If you require data encryption, you can use disk-level encryption or other encryption mechanisms provided by the underlying storage system.</p>
 
@@ -1507,7 +1588,12 @@ banyand data --tls<span style="color:#000;font-weight:bold">=</span><span style=
             <li><a href="#internal-tls-liaison--data-nodes">Internal TLS (Liaison ↔ Data Nodes)</a></li>
           </ul>
         </li>
-        <li><a href="#authorization">Authorization</a></li>
+        <li><a href="#authorization">Authorization</a>
+          <ul>
+            <li><a href="#configure-rbac">Configure RBAC</a></li>
+            <li><a href="#authorization-coverage-in-this-release">Authorization coverage in this release</a></li>
+          </ul>
+        </li>
         <li><a href="#data-encryption">Data Encryption</a></li>
       </ul>
     </li>
