@@ -28,25 +28,25 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>to Apache SkyWalking Cloud on Kubernetes Document Repository | Apache SkyWalking</title><meta property="og:title" content="to Apache SkyWalking Cloud on Kubernetes Document Repository" />
-<meta property="og:description" content="Welcome to Apache SkyWalking Cloud on Kubernetes Document Repository Here you can lean all you need to know about Apache SkyWalking Cloud on Kubernetes(SWCK). This repository provides how to onboard and customize the agent injector, operator and adapter.
- Design. Some materials regarding the design decision under the hood. Setup. Several instruments to onboard the agent injector, operator and adapter. Examples. A number of examples of how to use SWCK.  We&rsquo;re always looking for help to improve our documentation and codes, so please don’t hesitate to file an issue if you see any problems." />
+<title>to Apache SkyWalking Cloud on Kubernetes | Apache SkyWalking</title><meta property="og:title" content="to Apache SkyWalking Cloud on Kubernetes" />
+<meta property="og:description" content="Welcome to Apache SkyWalking Cloud on Kubernetes Here you can learn everything you need to know about Apache SkyWalking Cloud on Kubernetes (SWCK): how to deploy the operator, the Java agent injector and the custom metrics adapter, and how to customize them.
+ Concepts and Designs — what SWCK is made of, and the design decisions under the hood. Setup — how to install and configure each component. Start with Getting Started for a cluster from scratch, or Install with Helm if you already have one." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/skywalking-swck/next/readme/" />
 
-<meta itemprop="name" content="to Apache SkyWalking Cloud on Kubernetes Document Repository">
-<meta itemprop="description" content="Welcome to Apache SkyWalking Cloud on Kubernetes Document Repository Here you can lean all you need to know about Apache SkyWalking Cloud on Kubernetes(SWCK). This repository provides how to onboard and customize the agent injector, operator and adapter.
- Design. Some materials regarding the design decision under the hood. Setup. Several instruments to onboard the agent injector, operator and adapter. Examples. A number of examples of how to use SWCK.  We&rsquo;re always looking for help to improve our documentation and codes, so please don’t hesitate to file an issue if you see any problems.">
+<meta itemprop="name" content="to Apache SkyWalking Cloud on Kubernetes">
+<meta itemprop="description" content="Welcome to Apache SkyWalking Cloud on Kubernetes Here you can learn everything you need to know about Apache SkyWalking Cloud on Kubernetes (SWCK): how to deploy the operator, the Java agent injector and the custom metrics adapter, and how to customize them.
+ Concepts and Designs — what SWCK is made of, and the design decisions under the hood. Setup — how to install and configure each component. Start with Getting Started for a cluster from scratch, or Install with Helm if you already have one.">
 
-<meta itemprop="wordCount" content="108">
+<meta itemprop="wordCount" content="152">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="to Apache SkyWalking Cloud on Kubernetes Document Repository"/>
-<meta name="twitter:description" content="Welcome to Apache SkyWalking Cloud on Kubernetes Document Repository Here you can lean all you need to know about Apache SkyWalking Cloud on Kubernetes(SWCK). This repository provides how to onboard and customize the agent injector, operator and adapter.
- Design. Some materials regarding the design decision under the hood. Setup. Several instruments to onboard the agent injector, operator and adapter. Examples. A number of examples of how to use SWCK.  We&rsquo;re always looking for help to improve our documentation and codes, so please don’t hesitate to file an issue if you see any problems."/>
+<meta name="twitter:title" content="to Apache SkyWalking Cloud on Kubernetes"/>
+<meta name="twitter:description" content="Welcome to Apache SkyWalking Cloud on Kubernetes Here you can learn everything you need to know about Apache SkyWalking Cloud on Kubernetes (SWCK): how to deploy the operator, the Java agent injector and the custom metrics adapter, and how to customize them.
+ Concepts and Designs — what SWCK is made of, and the design decisions under the hood. Setup — how to install and configure each component. Start with Getting Started for a cluster from scratch, or Install with Helm if you already have one."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -75,7 +75,7 @@ if (!doNotTrack) {
 
 
 
-    <title>to Apache SkyWalking Cloud on Kubernetes Document Repository | Apache SkyWalking</title>
+    <title>to Apache SkyWalking Cloud on Kubernetes | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -281,7 +281,7 @@ if (!doNotTrack) {
     <li>
         
             
-            <a href="#">Designs<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">Concepts and Designs<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -290,7 +290,15 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-swck/next/design/proposal">Proposal</a>
+            <a href="/docs/skywalking-swck/next/en/concepts-and-designs/overview">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/concepts-and-designs/proposal">Proposal</a>
         
     </li>
 
@@ -313,7 +321,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-swck/next/java-agent-injector">Java Agent Injector</a>
+            <a href="/docs/skywalking-swck/next/en/setup/getting-started">Getting Started</a>
         
     </li>
 
@@ -321,7 +329,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-swck/next/operator">Operator</a>
+            <a href="/docs/skywalking-swck/next/en/setup/helm-chart">Install with Helm</a>
         
     </li>
 
@@ -329,7 +337,47 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-swck/next/custom-metrics-adapter">Adapter</a>
+            <a href="/docs/skywalking-swck/next/en/setup/operator">Operator</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/setup/java-agent-injector">Java Agent Injector</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/setup/javaagent">JavaAgent</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/setup/oapserver-configuration">OAP Server Configuration</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/setup/banyandb">BanyanDB Storage</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/setup/custom-metrics-adapter">Custom Metrics Adapter</a>
         
     </li>
 
@@ -352,7 +400,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-swck/next/examples/java-agent-injector-usage">Inject Java Agent</a>
+            <a href="/docs/skywalking-swck/next/en/examples/default-backend">Deploy OAP and UI</a>
         
     </li>
 
@@ -360,7 +408,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-swck/next/examples/default-backend">Deploy OAP and UI</a>
+            <a href="/docs/skywalking-swck/next/en/examples/java-agent-injector-usage">Inject Java Agent</a>
         
     </li>
 
@@ -368,7 +416,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-swck/next/examples/storage">Deploy Storage</a>
+            <a href="/docs/skywalking-swck/next/en/examples/storage">Deploy Storage</a>
         
     </li>
 
@@ -376,7 +424,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-swck/next/examples/istio-controlplane">Fetch metrics</a>
+            <a href="/docs/skywalking-swck/next/en/examples/istio-controlplane">Fetch metrics</a>
         
     </li>
 
@@ -384,7 +432,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-swck/next/examples/satellite">Install Satellite</a>
+            <a href="/docs/skywalking-swck/next/en/examples/satellite">Install Satellite</a>
         
     </li>
 
@@ -392,7 +440,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-swck/next/examples/event-exporter">Deploy Event Exporter</a>
+            <a href="/docs/skywalking-swck/next/en/examples/event-exporter">Deploy Event Exporter</a>
         
     </li>
 
@@ -431,7 +479,23 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-swck/next/release">Release Guide</a>
+            <a href="/docs/skywalking-swck/next/en/guides/how-to-add-new-crd-and-controller">How to add a CRD and controller</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/guides/e2e">End-to-end tests</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/guides/release">Release Guide</a>
         
     </li>
 
@@ -444,7 +508,112 @@ if (!doNotTrack) {
     
     <li>
         
-            <a href="https://github.com/apache/skywalking-swck/tree/master/changes">Changelog</a>
+            
+            <a href="#">Changelog<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/changes/changes">Current Version</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/changes/changes-0.10.0">0.10.0</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/changes/changes-0.9.0">0.9.0</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/changes/changes-0.8.0">0.8.0</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/changes/changes-0.7.0">0.7.0</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/changes/changes-0.6.1">0.6.1</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/changes/changes-0.6.0">0.6.0</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/changes/changes-0.5.0">0.5.0</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/changes/changes-0.4.0">0.4.0</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/changes/changes-0.3.0">0.3.0</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/changes/changes-0.2.0">0.2.0</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-swck/next/en/changes/changes-0.1.0">0.1.0</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
     
@@ -470,7 +639,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 7fd090a</div>
+                  <div class="commit-id">Commit Id: be2f3fe</div>
                 
 
 
@@ -494,16 +663,24 @@ if (!doNotTrack) {
 
 
 
-	<h1 id="welcome-to-apache-skywalking-cloud-on-kubernetes-document-repository">Welcome to Apache SkyWalking Cloud on Kubernetes Document Repository</h1>
-<p>Here you can lean all you need to know about Apache SkyWalking Cloud on Kubernetes(SWCK). This
-repository provides how to onboard and customize the agent injector, operator and adapter.</p>
+	<h1 id="welcome-to-apache-skywalking-cloud-on-kubernetes">Welcome to Apache SkyWalking Cloud on Kubernetes</h1>
+<p>Here you can learn everything you need to know about Apache SkyWalking Cloud on Kubernetes (SWCK):
+how to deploy the operator, the Java agent injector and the custom metrics adapter, and how to
+customize them.</p>
 <ul>
-<li>Design. Some materials regarding the design decision under the hood.</li>
-<li>Setup. Several instruments to onboard the agent injector, operator and adapter.</li>
-<li>Examples. A number of examples of how to use SWCK.</li>
+<li><strong><a href="../en/concepts-and-designs/overview">Concepts and Designs</a></strong> — what SWCK is made of, and the
+design decisions under the hood.</li>
+<li><strong><a href="../en/setup/getting-started">Setup</a></strong> — how to install and configure each component. Start with
+<a href="../en/setup/getting-started">Getting Started</a> for a cluster from scratch, or
+<a href="../en/setup/helm-chart">Install with Helm</a> if you already have one.</li>
+<li><strong><a href="../en/examples/default-backend">Examples</a></strong> — worked examples of every custom resource.</li>
+<li><strong><a href="../en/guides/how-to-add-new-crd-and-controller">Contributing Guides</a></strong> — adding a CRD, running
+the <a href="../en/guides/e2e">end-to-end tests</a>, and the <a href="../en/guides/release">release process</a>.</li>
+<li><strong><a href="../en/changes/changes">Changelog</a></strong> — what changed, per version.</li>
 </ul>
-<p>We&rsquo;re always looking for help to improve our documentation and codes, so please don’t hesitate to file an issue
-if you see any problems. Or better yet, directly contribute by submitting a pull request to help us get better!</p>
+<p>We&rsquo;re always looking for help to improve our documentation and code, so please don&rsquo;t hesitate to
+file an issue if you see any problems. Or better yet, directly contribute by submitting a pull
+request to help us get better!</p>
 
 
 
@@ -536,12 +713,6 @@ if you see any problems. Or better yet, directly contribute by submitting a pull
 
 
 
-
-<nav id="TableOfContents">
-  <ul>
-    <li><a href="#welcome-to-apache-skywalking-cloud-on-kubernetes-document-repository">Welcome to Apache SkyWalking Cloud on Kubernetes Document Repository</a></li>
-  </ul>
-</nav>
 
 
 
@@ -655,6 +826,38 @@ if you see any problems. Or better yet, directly contribute by submitting a pull
 
     </div>
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
