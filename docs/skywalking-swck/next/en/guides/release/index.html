@@ -38,7 +38,7 @@ Two scripts Most of what follows is automated by two scripts, modelled on apache
 <meta itemprop="description" content="Apache SkyWalking Cloud on Kubernetes release guide This documentation guides the release manager to release the SkyWalking Cloud on Kubernetes in the Apache Way, and also helps people to check the release for vote.
 Two scripts Most of what follows is automated by two scripts, modelled on apache/skywalking&rsquo;s own tools/releasing/release.sh. Read the rest of this guide anyway: the scripts do exactly these steps, and when one fails you need to know which step it was on.">
 
-<meta itemprop="wordCount" content="3132">
+<meta itemprop="wordCount" content="3161">
 
 
 
@@ -526,6 +526,14 @@ if (!doNotTrack) {
 
     <li>
         
+            <a href="/docs/skywalking-swck/next/en/changes/changes-0.11.0">0.11.0</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/skywalking-swck/next/en/changes/changes-0.10.0">0.10.0</a>
         
     </li>
@@ -639,7 +647,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: be2f3fe</div>
+                  <div class="commit-id">Commit Id: cd1c9a0</div>
                 
 
 
@@ -744,7 +752,7 @@ never run.</p>
 </tbody>
 </table>
 <p>Neither script publishes an image or a chart before the vote passes. That is not only policy: the
-Docker Hub image is built from the <strong>released</strong> binary tarball, downloaded from <code>archive.apache.org</code>
+Docker Hub image is built from the <strong>released</strong> binary tarball, downloaded from the ASF mirror
 and GPG-verified, so it cannot be built until the release is real.</p>
 <p>Do not confuse <code>tools/releasing/release.sh</code> with <code>build/package/release.sh</code>, which is the packaging
 helper <code>make release</code> calls.</p>
@@ -1098,14 +1106,14 @@ svn mv https://dist.apache.org/repos/dist/dev/skywalking/swck/<span style="color
 <li>
 <p>Remove the last released tarballs from <code>https://dist.apache.org/repos/dist/release/skywalking</code>.
 <code>dist/release</code> is mirrored everywhere, so it carries only the current release; older ones stay
-available on <code>archive.apache.org</code>.</p>
+available on the ASF mirror (<code>downloads.apache.org</code>), which carries the current release within minutes of the <code>dist/release</code> commit.</p>
 </li>
 <li>
 <p>Publish the convenience binaries: the container images and the Helm chart.</p>
 <p>These are <strong>not</strong> the release &ndash; the voted source tarball is. They are convenience binaries and
 <strong>must not be pushed before the vote passes</strong> and the tarballs have moved to <code>dist/release</code>. This
 is not only policy: <code>build/images/Dockerfile.release</code> builds the Docker Hub image by downloading
-<code>skywalking-swck-$VERSION-bin.tgz</code> from <code>archive.apache.org</code> and verifying its <code>.asc</code>, so it
+<code>skywalking-swck-$VERSION-bin.tgz</code> from <code>downloads.apache.org</code>, falling back to <code>archive.apache.org</code> for a version that is no longer current, and verifying its <code>.asc</code>, so it
 simply cannot be built until the tarball is released and has propagated to the archive.</p>
 <p>Publishing is triggered by <strong>publishing the GitHub release</strong>, exactly as in <code>apache/skywalking</code>:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">gh release create <span style="color:#d14">&#34;v</span><span style="color:#008080">$VERSION</span><span style="color:#d14">&#34;</span> --repo apache/skywalking-swck --title <span style="color:#d14">&#34;</span><span style="color:#008080">$VERSION</span><span style="color:#d14">&#34;</span> <span style="color:#d14">\
@@ -1114,7 +1122,7 @@ simply cannot be built until the tarball is released and has propagated to the a
 release tag and pushes the five registry artifacts listed in
 <a href="#release-artifacts-and-version-scheme">Release artifacts and version scheme</a>. Pushes to <code>master</code>
 continue to publish only SHA-tagged development images and a <code>0.0.0-&lt;sha&gt;</code> chart to GHCR.</p>
-<p>The workflow waits up to 30 minutes for <code>archive.apache.org</code> to serve the binary tarball before
+<p>The workflow waits up to ten minutes for either source to serve the binary tarball before
 it builds the combined image. If the mirrors take longer than that, re-run the release path by
 hand once the URL resolves &ndash; it is the same workflow, and the tag is its only input:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">gh workflow run publish-docker.yml --repo apache/skywalking-swck --ref master -f <span style="color:#008080">tag</span><span style="color:#000;font-weight:bold">=</span>v<span style="color:#008080">$VERSION</span>
@@ -1131,7 +1139,7 @@ helm show chart oci://ghcr.io/apache/skywalking-swck/helm/skywalking-swck --vers
 
 <span style="color:#998;font-style:italic"># the combined image must still pull AFTER the chart has been pushed to the same repository</span>
 docker pull apache/skywalking-swck:<span style="color:#008080">$VERSION</span>
-helm show chart oci://registry-1.docker.io/apache/skywalking-swck --version <span style="color:#d14">&#34;</span><span style="color:#008080">$VERSION</span><span style="color:#d14">-helm&#34;</span>
+helm show chart oci://docker.io/apache/skywalking-swck --version <span style="color:#d14">&#34;</span><span style="color:#008080">$VERSION</span><span style="color:#d14">-helm&#34;</span>
 </code></pre></div><p>If <code>docker pull</code> fails here, the chart was pushed onto the image&rsquo;s tag and clobbered its manifest
 &ndash; see <a href="#why-the--helm-suffix-on-docker-hub">Why the <code>-helm</code> suffix on Docker Hub</a>; rebuild and
 re-push the image, and correct the chart version.</p>
@@ -1160,7 +1168,7 @@ helm push <span style="color:#d14">&#34;build/release/skywalking-swck-</span><sp
 
 <span style="color:#998;font-style:italic"># Docker Hub: the same chart, repackaged at the -helm tag</span>
 helm package chart/skywalking-swck --version <span style="color:#d14">&#34;</span><span style="color:#008080">$VERSION</span><span style="color:#d14">-helm&#34;</span> --app-version <span style="color:#d14">&#34;</span><span style="color:#008080">$VERSION</span><span style="color:#d14">&#34;</span> -d build/release
-helm push <span style="color:#d14">&#34;build/release/skywalking-swck-</span><span style="color:#008080">$VERSION</span><span style="color:#d14">-helm.tgz&#34;</span> oci://registry-1.docker.io/apache
+helm push <span style="color:#d14">&#34;build/release/skywalking-swck-</span><span style="color:#008080">$VERSION</span><span style="color:#d14">-helm.tgz&#34;</span> oci://docker.io/apache
 </code></pre></div><p>No retagging is involved on GHCR: <code>helm push</code> appends the chart <em>name</em> to the OCI namespace it is
 given, so pushing into <code>oci://ghcr.io/apache/skywalking-swck/helm</code> produces
 <code>ghcr.io/apache/skywalking-swck/helm/skywalking-swck:$VERSION</code> &ndash; the chart artifact of the
@@ -1375,6 +1383,8 @@ The Apache SkyWalking Team
 
     </div>
     
+
+
 
 
 

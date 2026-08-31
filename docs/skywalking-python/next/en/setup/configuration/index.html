@@ -32,7 +32,7 @@
 <meta property="og:description" content="Supported Agent Configuration Options Below is the full list of supported configurations you can set to customize the agent behavior, please take some time to read the descriptions for what they can achieve.
  Usage: (Pass in intrusive setup)
  from skywalking import config, agent config.init(YourConfiguration=YourValue)) agent.start()  Usage: (Pass by environment variables)
- export SW_AGENT_YourConfiguration=YourValue Agent Core Configuration Options    Configuration Environment Variable Type Default Value Description     agent_collector_backend_services SW_AGENT_COLLECTOR_BACKEND_SERVICES &lt;class &lsquo;str&rsquo;&gt; oap_host:oap_port The backend OAP server address, 11800 is default OAP gRPC port, 12800 is HTTP, Kafka ignores this option and uses kafka_bootstrap_servers option." />
+ export SW_AGENT_YourConfiguration=YourValue Agent Core Configuration Options    Configuration Environment Variable Type Default Value Description     agent_collector_backend_services SW_AGENT_COLLECTOR_BACKEND_SERVICES &lt;class &lsquo;str&rsquo;&gt; oap_host:oap_port The backend OAP server address(es)." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/skywalking-python/next/en/setup/configuration/" />
 
@@ -40,9 +40,9 @@
 <meta itemprop="description" content="Supported Agent Configuration Options Below is the full list of supported configurations you can set to customize the agent behavior, please take some time to read the descriptions for what they can achieve.
  Usage: (Pass in intrusive setup)
  from skywalking import config, agent config.init(YourConfiguration=YourValue)) agent.start()  Usage: (Pass by environment variables)
- export SW_AGENT_YourConfiguration=YourValue Agent Core Configuration Options    Configuration Environment Variable Type Default Value Description     agent_collector_backend_services SW_AGENT_COLLECTOR_BACKEND_SERVICES &lt;class &lsquo;str&rsquo;&gt; oap_host:oap_port The backend OAP server address, 11800 is default OAP gRPC port, 12800 is HTTP, Kafka ignores this option and uses kafka_bootstrap_servers option.">
+ export SW_AGENT_YourConfiguration=YourValue Agent Core Configuration Options    Configuration Environment Variable Type Default Value Description     agent_collector_backend_services SW_AGENT_COLLECTOR_BACKEND_SERVICES &lt;class &lsquo;str&rsquo;&gt; oap_host:oap_port The backend OAP server address(es).">
 
-<meta itemprop="wordCount" content="1673">
+<meta itemprop="wordCount" content="1739">
 
 
 
@@ -52,7 +52,7 @@
 <meta name="twitter:description" content="Supported Agent Configuration Options Below is the full list of supported configurations you can set to customize the agent behavior, please take some time to read the descriptions for what they can achieve.
  Usage: (Pass in intrusive setup)
  from skywalking import config, agent config.init(YourConfiguration=YourValue)) agent.start()  Usage: (Pass by environment variables)
- export SW_AGENT_YourConfiguration=YourValue Agent Core Configuration Options    Configuration Environment Variable Type Default Value Description     agent_collector_backend_services SW_AGENT_COLLECTOR_BACKEND_SERVICES &lt;class &lsquo;str&rsquo;&gt; oap_host:oap_port The backend OAP server address, 11800 is default OAP gRPC port, 12800 is HTTP, Kafka ignores this option and uses kafka_bootstrap_servers option."/>
+ export SW_AGENT_YourConfiguration=YourValue Agent Core Configuration Options    Configuration Environment Variable Type Default Value Description     agent_collector_backend_services SW_AGENT_COLLECTOR_BACKEND_SERVICES &lt;class &lsquo;str&rsquo;&gt; oap_host:oap_port The backend OAP server address(es)."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -556,7 +556,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 1bd4692</div>
+                  <div class="commit-id">Commit Id: b2565aa</div>
                 
 
 
@@ -618,7 +618,7 @@ agent.start()
 <td style="text-align:left">SW_AGENT_COLLECTOR_BACKEND_SERVICES</td>
 <td style="text-align:left">&lt;class &lsquo;str&rsquo;&gt;</td>
 <td style="text-align:left">oap_host:oap_port</td>
-<td style="text-align:left">The backend OAP server address, 11800 is default OAP gRPC port, 12800 is HTTP, Kafka ignores this option and uses kafka_bootstrap_servers option. <strong>This option should be changed accordingly with selected protocol</strong></td>
+<td style="text-align:left">The backend OAP server address(es). 11800 is default OAP gRPC port, 12800 is HTTP, Kafka ignores this option and uses kafka_bootstrap_servers option. For gRPC, a comma-separated list enables native pick_first failover (per-process shuffle of the preferred backend; :authority stays the first configured endpoint). See Intrusive.md for encoding, DNS, TLS authority, proxy, and READY-gate details. <strong>This option should be changed accordingly with selected protocol</strong></td>
 </tr>
 <tr>
 <td style="text-align:left">agent_protocol</td>
@@ -702,7 +702,7 @@ agent.start()
 <td style="text-align:left">SW_AGENT_FORCE_TLS</td>
 <td style="text-align:left">&lt;class &lsquo;bool&rsquo;&gt;</td>
 <td style="text-align:left">False</td>
-<td style="text-align:left">Use TLS for communication with SkyWalking OAP (no cert required)</td>
+<td style="text-align:left">Use TLS for gRPC/HTTP with the OAP (no client cert required). For gRPC, ensure the server certificate SAN matches the first usable backend in agent_collector_backend_services (used as grpc.default_authority).</td>
 </tr>
 <tr>
 <td style="text-align:left">agent_authentication</td>
@@ -744,7 +744,7 @@ agent.start()
 <td style="text-align:left">SW_AGENT_COLLECTOR_PROPERTIES_REPORT_PERIOD_FACTOR</td>
 <td style="text-align:left">&lt;class &lsquo;int&rsquo;&gt;</td>
 <td style="text-align:left">10</td>
-<td style="text-align:left">The agent will report service instance properties every <code>factor * heartbeat period</code> seconds default: 10*30 = 300 seconds</td>
+<td style="text-align:left">The agent will report service instance properties every <code>factor * heartbeat period</code> seconds default: 10*30 = 300 seconds (Java/Node cadence). Also covers gRPC pick_first silent backend switches that stay READY without a disconnect event.</td>
 </tr>
 <tr>
 <td style="text-align:left">agent_instance_properties_json</td>
@@ -1321,6 +1321,8 @@ agent.start()
 
     </div>
     
+
+
 
 
 
