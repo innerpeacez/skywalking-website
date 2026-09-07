@@ -36,7 +36,7 @@
 <meta itemprop="name" content="11.1.0">
 <meta itemprop="description" content="11.1.0 Project OAP Server  Add customizable LLM-as-judge support for AI evaluation, with OpenAI-compatible endpoint / model / API key configuration, and persist the evaluation result as queryable GenAIEvaluationRecord rows for later inspection. Support hot-reloading the BanyanDB credentials from a new secretsManagementFile setting in bydb.yml (SW_STORAGE_BANYANDB_SECRETS_MANAGEMENT_FILE), matching the ElasticSearch storage plugin. The properties file carrying user/password is watched, so a rotation performed by a 3rd party tool such as Vault is applied without restarting the OAP.">
 
-<meta itemprop="wordCount" content="1255">
+<meta itemprop="wordCount" content="1471">
 
 
 
@@ -1010,6 +1010,14 @@ if (!doNotTrack) {
     <li>
         
             <a href="/docs/main/next/en/setup/backend/ai-evaluation">AI Evaluation</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/ai-agent-conversation">AI Agent Conversations</a>
         
     </li>
 
@@ -2945,7 +2953,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: e27cc27</div>
+                  <div class="commit-id">Commit Id: 116a0bd</div>
                 
 
 
@@ -3002,6 +3010,7 @@ if (!doNotTrack) {
 <li>Add BanyanDB trace tail sampling metrics to the BanyanDB self-observability layer, in a new <code>otel-rules/banyandb/banyandb-trace-sampling.yaml</code> rule file. It covers the whole <code>banyandb_trace_pipeline_*</code> / <code>banyandb_trace_tst_pipeline_*</code> catalog a sampler plugin chain emits — pipeline reconciliation, per-plugin <code>Decide</code> execution rate and latency, chain batching, the trace-level evaluated / retained / dropped / immature outcomes, every fail-open guard and bounded-retention counter, drop-set capacity and finalization state, the plugin telemetry-host safety bounds, and the first-party <code>sw-trace-sampler</code> / <code>zipkin-trace-sampler</code> decision and row metrics. The plugin chain is optional, and the metrics follow it: on a cluster with no sampler configured the wire families are never registered, so every metric here stays absent rather than reading zero. Modeled at Service scope with <code>group</code> kept as a metric label rather than at Endpoint scope, so one cluster-wide page can render per-group series and cluster totals alike — OAP does no cross-scope rollup, so an Endpoint-scope metric could not have been aggregated back up to the cluster.</li>
 <li>Fix a second <code>CounterWindow</code> key collision in the v2 MAL engine, this time ACROSS rules. <code>rate()</code> / <code>increase()</code> / <code>irate()</code> resolve their lower bound from a process-wide window keyed on the counter&rsquo;s own name plus its post-<code>.sum(...)</code> label set, with nothing identifying the rule doing the evaluation. Two rules that read one wire family, tell their streams apart with <code>tagEqual(...)</code>, and then <code>.sum(...)</code> away the label they filtered on therefore collapse onto one window slot and difference against each other&rsquo;s values. The queue is ordered by (timestamp, value), so the smaller counter wins the lower-bound lookup and still reads correctly while its partner is inflated by the gap between them — which is why this went unnoticed. A collision needs the discriminating label to be DROPPED by the <code>.sum(...)</code>: where it survives, the rules' label values differ and the window keeps them apart. Auditing the shipped rules on that basis gives 10 colliding keys over ~25 rules — <code>meter_activemq_cluster_gc_parallel_young_collection_count</code> reported ~9000/min of young-gen collections from a completely idle broker (differencing against the old-gen counter); MySQL <code>commands_*</code> / <code>tps</code> rate against each other; so do the GenAI gateway input/output token rates, four Envoy <code>cluster_*</code> counters, APISIX matched/unmatched instance bandwidth, and BanyanDB&rsquo;s own <code>network_recv</code> / <code>network_sent</code>, which drop the <code>kind</code> label that separates bytes-received from bytes-sent on one interface. Measured against two live scrapes of the demo cluster&rsquo;s FODC proxy, that last pair was wrong on every interface: <code>network_sent</code> read a flat 0 B/s and <code>network_recv</code> read large negative values (down to -778 MB/s) from differencing against the sent counter, where both now match the byte delta exactly. No rule changes were needed for any of these &ndash; each rule already reduces to the labels it should; only the window key was wrong. The window is now keyed by (owning rule, counter name, labels). This is the complement of the within-rule collision fixed earlier by keying on the counter&rsquo;s own name: neither name alone is sufficient, because the two collisions are independent. <code>RunningContext.metricName</code> — written on every rule evaluation and read by nobody since that earlier fix — is what supplies the rule identity, so no code generation or MAL syntax changes. Note the whole-rule-set comparison suite could not have caught this: it resets the shared window before every rule, the one condition under which the collision cannot appear.</li>
 <li>Fix <code>meter_rabbitmq_node_outgoing_messages_total</code> double-counting one of its terms. The rule summed six delivery-rate terms but <code>rabbitmq_global_messages_delivered_get_auto_ack_total</code> appeared twice, so auto-ack <code>basic.get</code> deliveries were counted once more than the other four delivery paths and the reported outgoing rate ran high whenever polling consumers were in use. The duplicate term is removed, leaving the five distinct families (redelivered, consume auto/manual ack, get auto/manual ack).</li>
+<li>Add AI agent conversations landed by the AI Sessionizer: the <code>AI_AGENT</code> layer, the bundled <code>lal/ai-agent.yaml</code> rule with the <code>ConversationFile</code> output builder that verifies and stores Session Data and Session Flow files, the <code>ai_agent_session_data</code> and <code>ai_agent_session_flow</code> models in a new BanyanDB group <code>recordsAIAgent</code>, the <code>ai-agent-conversation</code> module that folds a conversation into one <code>asz.view</code> document, and the <code>listConversations</code> (with optional <code>conversation</code> and <code>title</code> conditions) / <code>getConversationRawFiles</code> GraphQL queries and the streamed <code>GET /ai-agent/conversations/{conversation}/v1/view</code> route that serves the document. A round from before the list attributes existed lands and lists with zero counts, and the view shows as much as landed: the chain resumes after a missing, unreadable or refused round, and the absent rounds and files are named once as ranges. A file over <code>maxFileBytes</code>, 15 MiB by default, is rejected at ingest and counted under the reason <code>size</code>, because one file over BanyanDB&rsquo;s 16 MiB gRPC message limit fails the bulk write it travels in and every record behind it; on MySQL the body column is <code>LONGTEXT</code>, since a body that size outgrows <code>MEDIUMTEXT</code> as Base64. Each window read is capped at <code>maxResponseBytes</code>, 100 MiB by default, as a per-call option on the BanyanDB client in place of its 50 MB default, so the module&rsquo;s reads are bounded by its own settings and nothing else&rsquo;s read changes.</li>
 </ul>
 <h4 id="ui">UI</h4>
 <ul>
@@ -3157,6 +3166,8 @@ if (!doNotTrack) {
 
     </div>
     
+
+
 
 
 

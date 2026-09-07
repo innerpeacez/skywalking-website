@@ -1017,6 +1017,14 @@ if (!doNotTrack) {
 
     <li>
         
+            <a href="/docs/main/next/en/setup/backend/ai-agent-conversation">AI Agent Conversations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/main/next/en/setup/backend/backend-envoy-ai-gateway-monitoring">Envoy AI Gateway</a>
         
     </li>
@@ -2945,7 +2953,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: e27cc27</div>
+                  <div class="commit-id">Commit Id: 116a0bd</div>
                 
 
 
@@ -3160,13 +3168,13 @@ istioctl install -y --set <span style="color:#008080">profile</span><span style=
 <span style="color:#998;font-style:italic"># enbale envoy proxy in default namespace</span>
 kubectl label namespace default istio-injection<span style="color:#000;font-weight:bold">=</span>enabled
 </code></pre></div><h4 id="install-swck">Install SWCK</h4>
-<p>SWCK provides convenience for users to deploy and upgrade SkyWalking related components based on Kubernetes. The automatic scale function of Satellite also mainly relies on SWCK. For more information, you could refer to the <a href="https://github.com/apache/skywalking-swck/blob/master/docs/operator.md#guides-of-operator-deployment">official documentation</a>.</p>
+<p>SWCK provides convenience for users to deploy and upgrade SkyWalking related components based on Kubernetes. The automatic scale function of Satellite also mainly relies on SWCK. For more information, you could refer to the <a href="https://github.com/apache/skywalking-swck/blob/master/docs/en/setup/operator.md#operator-deployment">official documentation</a>.</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#998;font-style:italic"># Install cert-manager</span>
 kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.3.1/cert-manager.yaml
 
 <span style="color:#998;font-style:italic"># Deploy SWCK</span>
 mkdir -p skywalking-swck <span style="color:#000;font-weight:bold">&amp;&amp;</span> <span style="color:#0086b3">cd</span> skywalking-swck
-wget https://dlcdn.apache.org/skywalking/swck/0.6.1/skywalking-swck-0.6.1-bin.tgz
+wget https://archive.apache.org/dist/skywalking/swck/0.6.1/skywalking-swck-0.6.1-bin.tgz
 tar -zxvf skywalking-swck-0.6.1-bin.tgz
 <span style="color:#0086b3">cd</span> config
 kubectl apply -f operator-bundle.yaml
@@ -3396,6 +3404,8 @@ hpa-demo   Deployment/skywalking-system-satellite   6/10      <span style="color
 
     </div>
     
+
+
 
 
 

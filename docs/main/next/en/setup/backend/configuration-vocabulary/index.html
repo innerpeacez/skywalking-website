@@ -40,7 +40,7 @@ Main Configuration The main configuration is provided by application.yml. It div
 Main Configuration The main configuration is provided by application.yml. It divided into several modules, each of which has its own settings. The following table lists the modules and their settings.
    Module Provider Settings Value(s) and Explanation System Environment Variable¹ Default     core default role Option values: Mixed/Receiver/Aggregator. Receiver mode OAP opens the service to the agents, then analyzes and aggregates the results, and forwards the results for distributed aggregation.">
 
-<meta itemprop="wordCount" content="8865">
+<meta itemprop="wordCount" content="9049">
 
 
 
@@ -1016,6 +1016,14 @@ if (!doNotTrack) {
     <li>
         
             <a href="/docs/main/next/en/setup/backend/ai-evaluation">AI Evaluation</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/ai-agent-conversation">AI Agent Conversations</a>
         
     </li>
 
@@ -2951,7 +2959,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: e27cc27</div>
+                  <div class="commit-id">Commit Id: 116a0bd</div>
                 
 
 
@@ -4324,6 +4332,62 @@ It divided into several modules, each of which has its own settings. The followi
 <td>The MAL configuration file names (without file extension) to be activated. Read <a href="../../../concepts-and-designs/lal">LAL</a> for more details.</td>
 <td>SW_LOG_MAL_FILES</td>
 <td>&quot;&quot;</td>
+</tr>
+<tr>
+<td>ai-agent-conversation</td>
+<td>default</td>
+<td>Conversations of long-lived AI agents landed by the AI Sessionizer as Session Data and Session Flow files over OTLP logs under the <code>AI_AGENT</code> layer.</td>
+<td>SW_AI_AGENT_CONVERSATION</td>
+<td>default</td>
+<td>-</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>fileReadWindow</td>
+<td>How many Session Data files one storage read fetches; keeps one BanyanDB response under its inbound cap.</td>
+<td>SW_AI_AGENT_CONVERSATION_FILE_READ_WINDOW</td>
+<td>16</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>roundReadWindow</td>
+<td>How many Session Flow rounds one storage read fetches; a long conversation is read window by window up to its head.</td>
+<td>SW_AI_AGENT_CONVERSATION_ROUND_READ_WINDOW</td>
+<td>16</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>maxListLimit</td>
+<td>The most rounds one list query reads before folding to one row per conversation.</td>
+<td>SW_AI_AGENT_CONVERSATION_MAX_LIST_LIMIT</td>
+<td>10000</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>viewRequestTimeout</td>
+<td>How long one conversation view request may take, in seconds, in place of the HTTP server&rsquo;s default.</td>
+<td>SW_AI_AGENT_CONVERSATION_VIEW_REQUEST_TIMEOUT</td>
+<td>120</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>maxFileBytes</td>
+<td>The largest file stored, in bytes; a larger one is rejected at ingest and counted under the reason <code>size</code>. Under BanyanDB&rsquo;s 16 MiB gRPC message limit.</td>
+<td>SW_AI_AGENT_CONVERSATION_MAX_FILE_BYTES</td>
+<td>15728640</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>maxResponseBytes</td>
+<td>The most bytes one window read may answer with, applied to that read alone where the storage caps a response per call, in place of the BanyanDB client&rsquo;s 50 MB.</td>
+<td>SW_AI_AGENT_CONVERSATION_MAX_RESPONSE_BYTES</td>
+<td>104857600</td>
 </tr>
 <tr>
 <td>event-analyzer</td>
@@ -7751,6 +7815,8 @@ provided in the default <code>application.yml/bydb.yaml</code> file.</p>
 
     </div>
     
+
+
 
 
 

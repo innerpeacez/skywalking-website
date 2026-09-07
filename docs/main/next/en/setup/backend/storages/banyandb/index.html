@@ -42,7 +42,7 @@ The BanyanDB server compatibility relies on API and release versions, The compat
 ${SW_STORAGE_BANYANDB_COMPATIBLE_SERVER_API_VERSIONS} The compatible BanyanDB Server version number can be found via the API versions mapping.
 If the BanyanDB server API version is not compatible with the OAP server, the OAP server will not start, and the following error message will be displayed:">
 
-<meta itemprop="wordCount" content="3346">
+<meta itemprop="wordCount" content="3407">
 
 
 
@@ -1019,6 +1019,14 @@ if (!doNotTrack) {
     <li>
         
             <a href="/docs/main/next/en/setup/backend/ai-evaluation">AI Evaluation</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/ai-agent-conversation">AI Agent Conversations</a>
         
     </li>
 
@@ -2954,7 +2962,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: e27cc27</div>
+                  <div class="commit-id">Commit Id: 116a0bd</div>
                 
 
 
@@ -3186,6 +3194,29 @@ org.apache.skywalking.oap.server.library.module.ModuleStartException: Incompatib
 </span><span style="color:#bbb">      </span><span style="color:#000080">ttl</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_LOG_COLD_TTL_DAYS:30}<span style="color:#bbb">
 </span><span style="color:#bbb">      </span><span style="color:#000080">replicas</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_LOG_COLD_REPLICAS:0}<span style="color:#bbb">
 </span><span style="color:#bbb">      </span><span style="color:#000080">nodeSelector</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_LOG_COLD_NODE_SELECTOR:&#34;type=cold&#34;}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># The &#34;recordsAIAgent&#34; group holds AI agent conversation files landed by the AI Sessionizer: Session Data (.sd)</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># and Session Flow (.sf) rows of up to 2 MiB each. It mirrors the log group&#39;s keys but has its own retention,</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># because conversations are kept for weeks and a round whose files have expired is a broken chain.</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># See the &#34;AI Agent Conversations&#34; document.</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">recordsAIAgent</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">shardNum</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_SHARD_NUM:2}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">segmentInterval</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_SI_DAYS:1}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">ttl</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_TTL_DAYS:30}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">replicas</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_REPLICAS:0}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">enableWarmStage</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_ENABLE_WARM_STAGE:false}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">enableColdStage</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_ENABLE_COLD_STAGE:false}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">warm</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">shardNum</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_WARM_SHARD_NUM:2}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">segmentInterval</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_WARM_SI_DAYS:1}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">ttl</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_WARM_TTL_DAYS:60}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">replicas</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_WARM_REPLICAS:0}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">nodeSelector</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_WARM_NODE_SELECTOR:&#34;type=warm&#34;}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">cold</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">shardNum</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_COLD_SHARD_NUM:2}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">segmentInterval</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_COLD_SI_DAYS:1}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">ttl</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_COLD_TTL_DAYS:180}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">replicas</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_COLD_REPLICAS:0}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">nodeSelector</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_COLD_NODE_SELECTOR:&#34;type=cold&#34;}<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#000080">recordsBrowserErrorLog</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#000080">shardNum</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_BROWSER_ERROR_LOG_SHARD_NUM:2}<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#000080">segmentInterval</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_BROWSER_ERROR_LOG_SI_DAYS:1}<span style="color:#bbb">
@@ -3760,6 +3791,8 @@ docker run -d <span style="color:#d14">\
 
     </div>
     
+
+
 
 
 

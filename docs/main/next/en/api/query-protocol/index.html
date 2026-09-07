@@ -44,7 +44,7 @@ All deprecated APIs are moved here.
 Metadata Metadata contains concise information on all services and their instances, endpoints, etc. under monitoring. You may query the metadata in different ways.
 V2 APIs Provide Metadata V2 query APIs since 9.">
 
-<meta itemprop="wordCount" content="1226">
+<meta itemprop="wordCount" content="1356">
 
 
 
@@ -1022,6 +1022,14 @@ if (!doNotTrack) {
     <li>
         
             <a href="/docs/main/next/en/setup/backend/ai-evaluation">AI Evaluation</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/ai-agent-conversation">AI Agent Conversations</a>
         
     </li>
 
@@ -2957,7 +2965,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: e27cc27</div>
+                  <div class="commit-id">Commit Id: 116a0bd</div>
                 
 
 
@@ -3261,7 +3269,22 @@ full log text fuzzy queries, while others do not due to considerations related t
 </span><span style="color:#bbb">    </span><span style="color:#998;font-style:italic"># List layer hierarchy levels. The layer levels are defined in the `hierarchy-definition.yml`.</span><span style="color:#bbb">
 </span><span style="color:#bbb">    </span>listLayerLevels:<span style="color:#bbb"> </span>[<span style="color:#458;font-weight:bold">LayerLevel</span>!]!<span style="color:#bbb">
 </span><span style="color:#bbb"></span>}<span style="color:#bbb">
-</span></code></pre></div><h2 id="condition">Condition</h2>
+</span></code></pre></div><h3 id="ai-agent-conversations">AI Agent Conversations</h3>
+<p>Provide <a href="../../setup/backend/ai-agent-conversation">AI agent conversation</a> query APIs since 11.1.0: the list page and the raw-file export
+are GraphQL queries; the conversation itself is an HTTP route on the same server, because its <code>asz.view</code> document is as
+large as the conversation and is streamed.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">extend</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Query</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#998;font-style:italic"># The conversations of a service active in the duration, newest first.</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>listConversations(condition:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ConversationListCondition</span>!,<span style="color:#bbb"> </span>duration:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Duration</span>!,<span style="color:#bbb"> </span>debug:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Boolean</span>):<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ConversationList</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#998;font-style:italic"># Every file of a conversation, as stored. Select `body` to export them.</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>getConversationRawFiles(condition:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ConversationCondition</span>!,<span style="color:#bbb"> </span>files:<span style="color:#bbb"> </span>[<span style="color:#458;font-weight:bold">ID</span>!],<span style="color:#bbb"> </span>debug:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Boolean</span>):<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ConversationRawFiles</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><pre><code>GET /ai-agent/conversations/{conversation}/v1/view?service={serviceName}[&amp;instance={instanceName}]
+</code></pre><p>The body is one <code>asz.view</code> 1.0 document, streamed, and its <code>Content-Type</code> names the format and the version:
+<code>application/vnd.skywalking.asz.view+json; version=1.0</code>, or the <code>+yaml</code> twin when <code>Accept</code> asks for YAML; compressed on
+<code>Accept-Encoding</code>. <code>v1</code> in the path is the document version. 400 without a service, 404 when no round of the conversation
+is stored, 500 on a storage failure, each as <code>application/problem+json</code>.</p>
+<h2 id="condition">Condition</h2>
 <h3 id="duration">Duration</h3>
 <p>Duration is a widely used parameter type as the APM data is time-related. See the following for more details.
 Step relates to precision.</p>
@@ -3348,6 +3371,7 @@ Step relates to precision.</p>
             <li><a href="#profiling">Profiling</a></li>
             <li><a href="#on-demand-pod-logs">On-Demand Pod Logs</a></li>
             <li><a href="#hierarchy">Hierarchy</a></li>
+            <li><a href="#ai-agent-conversations">AI Agent Conversations</a></li>
           </ul>
         </li>
         <li><a href="#condition">Condition</a>
@@ -3472,6 +3496,8 @@ Step relates to precision.</p>
 
     </div>
     
+
+
 
 
 
