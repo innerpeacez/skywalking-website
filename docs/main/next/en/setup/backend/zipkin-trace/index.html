@@ -42,7 +42,7 @@ NOTICE, Zipkin trace would not be analyzed like SkyWalking native trace format.
 Use the following config to activate it. Set enableHttpCollector to enable HTTP collector and enableKafkaCollector to enable Kafka collector.
 receiver-zipkin:selector:${SW_RECEIVER_ZIPKIN:default}default:# Defines a set of span tag keys which are searchable.">
 
-<meta itemprop="wordCount" content="303">
+<meta itemprop="wordCount" content="534">
 
 
 
@@ -2962,7 +2962,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 116a0bd</div>
+                  <div class="commit-id">Commit Id: 7773bdc</div>
                 
 
 
@@ -3066,7 +3066,46 @@ It implemented <code>ZipkinQueryApiV2</code> through the HTTP service, supportin
 </span><span style="color:#bbb">    </span><span style="color:#000080">uiQueryLimit</span>:<span style="color:#bbb"> </span>${SW_QUERY_ZIPKIN_UI_QUERY_LIMIT:10}<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#998;font-style:italic"># Default look back for search traces, 15 minutes in millis</span><span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#000080">uiDefaultLookback</span>:<span style="color:#bbb"> </span>${SW_QUERY_ZIPKIN_UI_DEFAULT_LOOKBACK:900000}<span style="color:#bbb">
-</span></code></pre></div><h2 id="lens-ui">Lens UI</h2>
+</span></code></pre></div><h3 id="query-traces-from-the-banyandb-cold-stage">Query traces from the BanyanDB cold stage</h3>
+<p>When the BanyanDB <code>zipkinTrace</code> group has the cold <a href="../../../banyandb/stages">lifecycle stage</a> enabled, the
+trace-fetching endpoints accept the following optional query parameters in addition to the standard Zipkin ones.
+They are SkyWalking extensions of the Zipkin API: a request without them behaves exactly as before, so existing
+Zipkin clients, including the Lens UI, keep working unchanged.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Extra parameters</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/api/v2/traces</code></td>
+<td><code>coldStage</code></td>
+<td><code>true</code> queries the cold stage instead of the hot/warm stages, within the standard <code>endTs</code>/<code>lookback</code> time range. Default <code>false</code>.</td>
+</tr>
+<tr>
+<td><code>/api/v2/trace/{traceId}</code></td>
+<td><code>coldStage</code>, <code>endTs</code>, <code>lookback</code></td>
+<td>The standard Zipkin API has no time range for these lookups, so without any of the three parameters BanyanDB searches everything its hot/warm stages retain. Passing any of them bounds the query to <code>[endTs - lookback, endTs]</code>, <code>endTs</code> defaulting to now and <code>lookback</code> to the <code>lookback</code> setting above (both in milliseconds), and <code>coldStage=true</code> targets the cold stage.</td>
+</tr>
+<tr>
+<td><code>/api/v2/traceMany</code></td>
+<td><code>coldStage</code>, <code>endTs</code>, <code>lookback</code></td>
+<td>Same as <code>/api/v2/trace/{traceId}</code>.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>coldStage</code> is only meaningful for BanyanDB, the other storages ignore it, the same as the <code>coldStage</code> flag of
+the GraphQL <code>Duration</code> input.</li>
+<li>Cold data is older than the hot (and warm) TTL by definition, so always send an <code>endTs</code>/<code>lookback</code> pair that
+covers the time the trace happened. The defaults, now and one day back, normally point at hot data.</li>
+</ul>
+<p>For example, fetch a trace that happened 2 to 4 days ago from the cold stage:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl <span style="color:#d14">&#34;http://127.0.0.1:9412/zipkin/api/v2/trace/fcb10b060c6b2492?coldStage=true&amp;endTs=</span><span style="color:#000;font-weight:bold">$(($(</span>date +%s<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">*</span><span style="color:#099">1000</span><span style="color:#000;font-weight:bold">-</span><span style="color:#099">172800000</span><span style="color:#000;font-weight:bold">))</span><span style="color:#d14">&amp;lookback=172800000&#34;</span>
+</code></pre></div><h2 id="lens-ui">Lens UI</h2>
 <p>Lens UI is Zipkin&rsquo;s native browser UI. The OAP distribution does not bundle
 it; deploy a standalone Zipkin Lens container against the OAP Zipkin
 endpoints if you want a Lens-style trace view. SkyWalking
@@ -3111,7 +3150,11 @@ own trace views over the same OAP trace data.</p>
     <li>
       <ul>
         <li><a href="#zipkin-receiver">Zipkin receiver</a></li>
-        <li><a href="#zipkin-query">Zipkin query</a></li>
+        <li><a href="#zipkin-query">Zipkin query</a>
+          <ul>
+            <li><a href="#query-traces-from-the-banyandb-cold-stage">Query traces from the BanyanDB cold stage</a></li>
+          </ul>
+        </li>
         <li><a href="#lens-ui">Lens UI</a></li>
       </ul>
     </li>
