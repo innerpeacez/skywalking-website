@@ -7288,12 +7288,6 @@
   </url>
   
   <url>
-    <loc>/docs/skywalking-banyandb/next/operation/troubleshooting/measure-vec-flag-off-rollback/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>/docs/main/next/en/setup/backend/mq/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
