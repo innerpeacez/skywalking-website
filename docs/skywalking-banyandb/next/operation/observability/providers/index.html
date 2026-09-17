@@ -40,7 +40,7 @@ When the Prometheus metrics provider is enabled, each BanyanDB process exposes i
 Prometheus Prometheus is auto enabled at run time, if no flag is passed or if prometheus is set in observability-modes flag.
 When the Prometheus metrics provider is enabled, each BanyanDB process exposes its own metrics on port 2121.">
 
-<meta itemprop="wordCount" content="602">
+<meta itemprop="wordCount" content="597">
 
 
 
@@ -1345,7 +1345,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 4033967</div>
+                  <div class="commit-id">Commit Id: 0179585</div>
                 
 
 
@@ -1428,7 +1428,7 @@ if (!doNotTrack) {
     end
 
     ep == &quot;TopicMeasureWrite (target = selected node)&quot; ==&gt; ts
-</code></pre><p>Node selection (the liaison&rsquo;s <code>nodeSelector</code>) resolves targets through the cluster node registry — the property-based schema registry with <code>dns</code> / <code>file</code> node discovery; <strong>etcd is no longer used</strong>.</p>
+</code></pre><p>Node selection (the liaison&rsquo;s <code>nodeSelector</code>) resolves targets through the cluster node registry — the property-based schema registry with <code>dns</code> / <code>file</code> node discovery.</p>
 <h3 id="read-flow">Read Flow</h3>
 <p>The read flow is the same as reading data from <code>measure</code>, with each metric being a new measure.</p>
 
@@ -1597,6 +1597,8 @@ if (!doNotTrack) {
 
     </div>
     
+
+
 
 
 

@@ -74,7 +74,7 @@ Table of Contents   banyandb/common/v1/trace.proto
   Tag
   TagFamily">
 
-<meta itemprop="wordCount" content="13430">
+<meta itemprop="wordCount" content="13614">
 
 
 
@@ -1396,7 +1396,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 4033967</div>
+                  <div class="commit-id">Commit Id: 0179585</div>
                 
 
 
@@ -1527,6 +1527,7 @@ if (!doNotTrack) {
 <li><a href="#banyandb-measure-v1-queryrequest-aggregation">QueryRequest.Aggregation</a></li>
 <li><a href="#banyandb-measure-v1-queryrequest-fieldprojection">QueryRequest.FieldProjection</a></li>
 <li><a href="#banyandb-measure-v1-queryrequest-groupby">QueryRequest.GroupBy</a></li>
+<li><a href="#banyandb-measure-v1-queryrequest-groupby-timebucket">QueryRequest.GroupBy.TimeBucket</a></li>
 <li><a href="#banyandb-measure-v1-queryrequest-groupmodrevisionsentry">QueryRequest.GroupModRevisionsEntry</a></li>
 <li><a href="#banyandb-measure-v1-queryrequest-top">QueryRequest.Top</a></li>
 <li><a href="#banyandb-measure-v1-queryresponse">QueryResponse</a></li>
@@ -3071,6 +3072,11 @@ if (!doNotTrack) {
 <td>5</td>
 <td></td>
 </tr>
+<tr>
+<td>AGGREGATION_FUNCTION_COUNT_DISTINCT</td>
+<td>6</td>
+<td>COUNT_DISTINCT counts the distinct non-null values of the target. It is exact and bounded by the per-query memory budget.</td>
+</tr>
 </tbody>
 </table>
 <p><a name="banyandb_model_v1_query-proto"></a></p>
@@ -3821,7 +3827,7 @@ Contains shard information for proper deduplication.</p>
 <td>agg</td>
 <td><a href="#banyandb-measure-v1-queryrequest-aggregation">QueryRequest.Aggregation</a></td>
 <td></td>
-<td>agg aggregates data points based on a field</td>
+<td>agg aggregates data points based on a field or a tag</td>
 </tr>
 <tr>
 <td>top</td>
@@ -3897,6 +3903,18 @@ Contains shard information for proper deduplication.</p>
 <td></td>
 <td>field_name must be one of files indicated by the field_projection</td>
 </tr>
+<tr>
+<td>tag_name</td>
+<td><a href="#string">string</a></td>
+<td></td>
+<td>tag_name aggregates over a tag instead of a field. Exactly one of field_name and tag_name must be set.</td>
+</tr>
+<tr>
+<td>tag_family</td>
+<td><a href="#string">string</a></td>
+<td></td>
+<td>tag_family qualifies tag_name; required when tag_name is set. Tag names are only unique within a family, so an unqualified tag_name would be ambiguous on schemas that repeat a name across families.</td>
+</tr>
 </tbody>
 </table>
 <p><a name="banyandb-measure-v1-QueryRequest-FieldProjection"></a></p>
@@ -3942,6 +3960,32 @@ Contains shard information for proper deduplication.</p>
 <td><a href="#string">string</a></td>
 <td></td>
 <td>field_name must be one of fields indicated by field_projection</td>
+</tr>
+<tr>
+<td>time_bucket</td>
+<td><a href="#banyandb-measure-v1-queryrequest-groupby-timebucket">QueryRequest.GroupBy.TimeBucket</a></td>
+<td></td>
+<td>time_bucket adds the data point's timestamp, floored to a bucket boundary, as the leading group key, and re-emits it as the result row's timestamp. Buckets are anchored at the Unix epoch: bucket_start = ts - ts % width, matching DATE_BIN with a Unix-epoch origin. Unset means no time bucketing — the whole time_range collapses to one row per tag group, as today.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="banyandb-measure-v1-QueryRequest-GroupBy-TimeBucket"></a></p>
+<h3 id="queryrequestgroupbytimebucket">QueryRequest.GroupBy.TimeBucket</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>width</td>
+<td><a href="#string">string</a></td>
+<td></td>
+<td>width is a duration string using the same units as Measure.interval (&quot;ns&quot;, &quot;us&quot;, &quot;ms&quot;, &quot;s&quot;, &quot;m&quot;, &quot;h&quot;, &quot;d&quot;). Empty means &quot;use the measure's interval&quot;; if the measure has no interval either, the request is rejected.</td>
 </tr>
 </tbody>
 </table>
@@ -15259,6 +15303,7 @@ admission and conflict checks of §2.3/§2.4 of the design.</p>
             <li><a href="#queryrequestaggregation">QueryRequest.Aggregation</a></li>
             <li><a href="#queryrequestfieldprojection">QueryRequest.FieldProjection</a></li>
             <li><a href="#queryrequestgroupby">QueryRequest.GroupBy</a></li>
+            <li><a href="#queryrequestgroupbytimebucket">QueryRequest.GroupBy.TimeBucket</a></li>
             <li><a href="#queryrequestgroupmodrevisionsentry">QueryRequest.GroupModRevisionsEntry</a></li>
             <li><a href="#queryrequesttop">QueryRequest.Top</a></li>
             <li><a href="#queryresponse">QueryResponse</a></li>
@@ -15851,6 +15896,8 @@ admission and conflict checks of §2.3/§2.4 of the design.</p>
 
     </div>
     
+
+
 
 
 
