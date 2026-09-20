@@ -2962,7 +2962,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 029571c</div>
+                  <div class="commit-id">Commit Id: 3af86a1</div>
                 
 
 
@@ -3175,6 +3175,25 @@ org.apache.skywalking.oap.server.library.module.ModuleStartException: Incompatib
 </span><span style="color:#bbb">            </span><span style="color:#000080">durationThresholdMs</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_ZIPKIN_TRACE_SAMPLER_DURATION_THRESHOLD_MS:1000}<span style="color:#bbb">
 </span><span style="color:#bbb">            </span><span style="color:#000080">keepErrors</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_ZIPKIN_TRACE_SAMPLER_KEEP_ERRORS:true}<span style="color:#bbb">
 </span><span style="color:#bbb">            </span><span style="color:#000080">healthySampleRate</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_ZIPKIN_TRACE_SAMPLER_HEALTHY_SAMPLE_RATE:0.05}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">otlpTrace</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">shardNum</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_SHARD_NUM:2}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">segmentInterval</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_SI_DAYS:1}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">ttl</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_TTL_DAYS:3}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">replicas</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_REPLICAS:0}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">enableWarmStage</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_ENABLE_WARM_STAGE:false}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">enableColdStage</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_ENABLE_COLD_STAGE:false}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">warm</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">shardNum</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_WARM_SHARD_NUM:2}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">segmentInterval</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_WARM_SI_DAYS:1}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">ttl</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_WARM_TTL_DAYS:7}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">replicas</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_WARM_REPLICAS:0}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">nodeSelector</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_WARM_NODE_SELECTOR:&#34;type=warm&#34;}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">cold</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">shardNum</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_COLD_SHARD_NUM:2}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">segmentInterval</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_COLD_SI_DAYS:1}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">ttl</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_COLD_TTL_DAYS:30}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">replicas</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_COLD_REPLICAS:0}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#000080">nodeSelector</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_COLD_NODE_SELECTOR:&#34;type=cold&#34;}<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#000080">recordsLog</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#000080">shardNum</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_LOG_SHARD_NUM:2}<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#000080">segmentInterval</span>:<span style="color:#bbb"> </span>${SW_STORAGE_BANYANDB_LOG_SI_DAYS:1}<span style="color:#bbb">
@@ -3791,6 +3810,8 @@ docker run -d <span style="color:#d14">\
 
     </div>
     
+
+
 
 
 
