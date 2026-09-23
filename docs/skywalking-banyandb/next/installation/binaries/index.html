@@ -31,7 +31,7 @@
 <title>Get Binaries | Apache SkyWalking</title><meta property="og:title" content="Get Binaries" />
 <meta property="og:description" content="Get Binaries This page shows how to get binaries of Banyand.
 Prebuilt Released binaries Go to the SkyWalking download page .
-Select and download the distribution from the suggested location for your platform, such as skywalking-banyandb-x.x.x-banyand.tgz and skywalking-bydbctl-x.x.x-bydbctl.tgz.
+Select and download the distribution from the suggested location for your platform, such as skywalking-banyandb-x.x.x-banyand.tgz, skywalking-banyandb-x.x.x-bydbctl.tgz, and skywalking-banyandb-x.x.x-canopy.tgz.
  It is essential that you verify the integrity of the downloaded file using the PGP signature ( .asc file) or a hash ( .md5 or .sha* file).
  unpack and extract the package." />
 <meta property="og:type" content="article" />
@@ -40,11 +40,11 @@ Select and download the distribution from the suggested location for your platfo
 <meta itemprop="name" content="Get Binaries">
 <meta itemprop="description" content="Get Binaries This page shows how to get binaries of Banyand.
 Prebuilt Released binaries Go to the SkyWalking download page .
-Select and download the distribution from the suggested location for your platform, such as skywalking-banyandb-x.x.x-banyand.tgz and skywalking-bydbctl-x.x.x-bydbctl.tgz.
+Select and download the distribution from the suggested location for your platform, such as skywalking-banyandb-x.x.x-banyand.tgz, skywalking-banyandb-x.x.x-bydbctl.tgz, and skywalking-banyandb-x.x.x-canopy.tgz.
  It is essential that you verify the integrity of the downloaded file using the PGP signature ( .asc file) or a hash ( .md5 or .sha* file).
  unpack and extract the package.">
 
-<meta itemprop="wordCount" content="705">
+<meta itemprop="wordCount" content="756">
 
 
 
@@ -53,7 +53,7 @@ Select and download the distribution from the suggested location for your platfo
 <meta name="twitter:title" content="Get Binaries"/>
 <meta name="twitter:description" content="Get Binaries This page shows how to get binaries of Banyand.
 Prebuilt Released binaries Go to the SkyWalking download page .
-Select and download the distribution from the suggested location for your platform, such as skywalking-banyandb-x.x.x-banyand.tgz and skywalking-bydbctl-x.x.x-bydbctl.tgz.
+Select and download the distribution from the suggested location for your platform, such as skywalking-banyandb-x.x.x-banyand.tgz, skywalking-banyandb-x.x.x-bydbctl.tgz, and skywalking-banyandb-x.x.x-canopy.tgz.
  It is essential that you verify the integrity of the downloaded file using the PGP signature ( .asc file) or a hash ( .md5 or .sha* file).
  unpack and extract the package."/>
 
@@ -1351,7 +1351,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 89403f9</div>
+                  <div class="commit-id">Commit Id: 1838618</div>
                 
 
 
@@ -1377,7 +1377,7 @@ if (!doNotTrack) {
 <p>This page shows how to get binaries of Banyand.</p>
 <h2 id="prebuilt-released-binaries">Prebuilt Released binaries</h2>
 <p>Go to the <a href="https://skywalking.apache.org/downloads/#Database">SkyWalking download page</a> .</p>
-<p>Select and download the distribution from the suggested location for your platform, such as <code>skywalking-banyandb-x.x.x-banyand.tgz</code> and <code>skywalking-bydbctl-x.x.x-bydbctl.tgz</code>.</p>
+<p>Select and download the distribution from the suggested location for your platform, such as <code>skywalking-banyandb-x.x.x-banyand.tgz</code>, <code>skywalking-banyandb-x.x.x-bydbctl.tgz</code>, and <code>skywalking-banyandb-x.x.x-canopy.tgz</code>.</p>
 <blockquote>
 <p>It is essential that you verify the integrity of the downloaded file using the PGP signature ( .asc file) or a hash ( .md5 or .sha* file).</p>
 </blockquote>
@@ -1387,7 +1387,6 @@ tar -zxvf skywalking-bydbctl-x.y.z-bydbctl.tgz
 </code></pre></div><p>The banyand and bydbctl directory structure is as follows.</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">├── CHANGES.md
 ├── LICENSE
-├── LICENSE.tpl
 ├── NOTICE
 ├── README.md
 ├── bin
@@ -1398,7 +1397,6 @@ tar -zxvf skywalking-bydbctl-x.y.z-bydbctl.tgz
 └── licenses
 </code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">├── CHANGES.md
 ├── LICENSE
-├── LICENSE.tpl
 ├── NOTICE
 ├── README.md
 ├── bin
@@ -1410,12 +1408,13 @@ tar -zxvf skywalking-bydbctl-x.y.z-bydbctl.tgz
 │   ├── bydbctl-cli-static-darwin-amd64
 │   └── bydbctl-cli-static-darwin-arm64
 └── licenses
-</code></pre></div><h2 id="build-from-source">Build From Source</h2>
+</code></pre></div><p>The Canopy archive (<code>skywalking-banyandb-x.y.z-canopy.tgz</code>) is a separate Node.js distribution (built SPA + BFF). After unpacking, run <code>npm ci --omit=dev</code> and start the BFF from <code>server/</code> as described in the packaged <code>README.md</code>.</p>
+<h2 id="build-from-source">Build From Source</h2>
 <h3 id="requirements">Requirements</h3>
 <p>Users who want to build a binary from sources have to set up:</p>
 <ul>
-<li>Go 1.23</li>
-<li>Node 24.6.0</li>
+<li>Go 1.25.13</li>
+<li>Node.js &gt;= 24.6.0</li>
 <li>Git &gt;= 2.30</li>
 <li>Linux, macOS or Windows+WSL2</li>
 <li>GNU make</li>
@@ -1464,6 +1463,10 @@ bydbctl-cli
 make generate
 make -C ui build
 
+<span style="color:#998;font-style:italic"># Official binaries embed $(RELEASE_VERSION)-release. The source tarball ships</span>
+<span style="color:#998;font-style:italic"># .env with RELEASE_VERSION set. From a git checkout, pass it explicitly, e.g.</span>
+<span style="color:#998;font-style:italic"># RELEASE_VERSION=0.11.1.</span>
+
 <span style="color:#998;font-style:italic"># Linux AMD64 + ARM64 — produces the official banyand, fodc-agent, fodc-proxy packages.</span>
 <span style="color:#008080">TARGET_OS</span><span style="color:#000;font-weight:bold">=</span>linux <span style="color:#008080">PLATFORMS</span><span style="color:#000;font-weight:bold">=</span>linux/amd64,linux/arm64 make -C banyand     release
 <span style="color:#008080">TARGET_OS</span><span style="color:#000;font-weight:bold">=</span>linux <span style="color:#008080">PLATFORMS</span><span style="color:#000;font-weight:bold">=</span>linux/amd64,linux/arm64 make -C fodc/agent release
@@ -1476,7 +1479,7 @@ make -C ui build
 
 <span style="color:#998;font-style:italic"># MCP server (no platform matrix — pure Node bundle).</span>
 make -C mcp release
-</code></pre></div><p>Each <code>release</code> target produces both <code>*-static-*</code> and <code>*-slim-*</code> variants where applicable. The <code>static</code> builds are stripped (<code>-s -w</code>) and statically linked; the <code>slim</code> builds additionally omit the embedded UI bundle. The resulting binaries land under <code>&lt;component&gt;/build/bin/&lt;os&gt;/&lt;arch&gt;/</code>, e.g. <code>banyand/build/bin/linux/amd64/banyand-server-static</code>. The version string in these binaries is set by <code>git describe</code> and looks like <code>v0.10.3-0-g&lt;short-sha&gt;-v0.10.x</code> rather than the <code>0.10.3-release</code> string that <code>make build</code> embeds.</p>
+</code></pre></div><p>Each <code>release</code> target produces both <code>*-static-*</code> and <code>*-slim-*</code> variants where applicable. The <code>static</code> builds are stripped (<code>-s -w</code>) and statically linked; the <code>slim</code> builds additionally omit the embedded UI bundle. The resulting binaries land under <code>&lt;component&gt;/build/bin/&lt;os&gt;/&lt;arch&gt;/</code>, e.g. <code>banyand/build/bin/linux/amd64/banyand-server-static</code>. With <code>RELEASE_VERSION</code> set (from <code>.env</code> or the command line), <code>--version</code> reports <code>&lt;version&gt;-release</code>. Without it, a git checkout falls back to <code>git describe</code>.</p>
 <h3 id="cross-compile-binaries">Cross-compile Binaries</h3>
 <p>The build system supports cross-compiling binaries for different platforms. For example, to build a Windows binary on a Linux machine, you can issue the following command:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#008080">TARGET_OS</span><span style="color:#000;font-weight:bold">=</span>windows <span style="color:#008080">PLATFORMS</span><span style="color:#000;font-weight:bold">=</span>windows/amd64 make release
@@ -1659,6 +1662,8 @@ windows/amd64/bydbctl-cli-static
 
     </div>
     
+
+
 
 
 
