@@ -44,7 +44,7 @@ Select and download the distribution from the suggested location for your platfo
  It is essential that you verify the integrity of the downloaded file using the PGP signature ( .asc file) or a hash ( .md5 or .sha* file).
  unpack and extract the package.">
 
-<meta itemprop="wordCount" content="756">
+<meta itemprop="wordCount" content="747">
 
 
 
@@ -598,141 +598,15 @@ if (!doNotTrack) {
 
     <li>
         
-
-            
-            <a href="#">Web UI<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/dashboard">Dashboard</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">CRUD Schema<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/group">Group</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/measure">Measure</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/stream">Stream</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/index-rule">IndexRule</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/index-rule-binding">IndexRuleBinding</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/top-n-aggregation">Top N Aggregation</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Querying Data<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/query/measure">Measure</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/query/stream">Stream</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/property">CRUD Property</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
             <a href="/docs/skywalking-banyandb/next/interacting/client">Client APIs</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/canopy">Web Console (Canopy)</a>
         
     </li>
 
@@ -1351,7 +1225,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: adf684f</div>
+                  <div class="commit-id">Commit Id: 77b7fd4</div>
                 
 
 
@@ -1426,9 +1300,6 @@ tar -zxvf skywalking-bydbctl-x.y.z-bydbctl.tgz
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">make generate
 ...
 make build
---- ui: all ---
-...
-Done building ui
 --- banyand: all ---
 ...
 chmod +x build/bin/banyand-server;
@@ -1448,7 +1319,7 @@ bydbctl-cli
 <ul>
 <li><code>make -C banyand banyand-server</code> generates a basic <code>banyand-server</code>.</li>
 <li><code>make -C banyand banyand-server-static</code> builds out a static binary <code>banyand-server-static</code> which is statically linked with all dependencies.</li>
-<li><code>make -C banyand banyand-server-slim</code> builds out a slim binary <code>banyand-server-slim</code> which doesn&rsquo;t include <code>UI</code>.</li>
+<li><code>make -C banyand banyand-server-slim</code> builds out a slim binary <code>banyand-server-slim</code>, built without the memory-pool diagnostic tracking.</li>
 <li><code>make -C banyand release</code> builds out the static and slim binaries for releasing.</li>
 <li><code>make -C bydbctl bydbctl-cli</code> generates a basic <code>bydbctl-cli</code>.</li>
 <li><code>make -C bydbctl release</code> or <code>make -C banyand bydbctl-cli-static</code> builds out a static binary <code>bydbctl-cli-static</code> for releasing. This binary is statically linked with all dependencies.</li>
@@ -1461,7 +1332,6 @@ bydbctl-cli
 <p>To reproduce the exact <code>banyand</code>, <code>bydbctl</code>, <code>fodc-agent</code> and <code>fodc-proxy</code> artifacts published on the Apache mirror, run the per-component <code>release</code> targets — the same sequence <code>scripts/release.sh</code> uses to package the official tarballs:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#998;font-style:italic"># Prerequisite: code generation must run first.</span>
 make generate
-make -C ui build
 
 <span style="color:#998;font-style:italic"># Official binaries embed $(RELEASE_VERSION)-release. The source tarball ships</span>
 <span style="color:#998;font-style:italic"># .env with RELEASE_VERSION set. From a git checkout, pass it explicitly, e.g.</span>
@@ -1479,7 +1349,7 @@ make -C ui build
 
 <span style="color:#998;font-style:italic"># MCP server (no platform matrix — pure Node bundle).</span>
 make -C mcp release
-</code></pre></div><p>Each <code>release</code> target produces both <code>*-static-*</code> and <code>*-slim-*</code> variants where applicable. The <code>static</code> builds are stripped (<code>-s -w</code>) and statically linked; the <code>slim</code> builds additionally omit the embedded UI bundle. The resulting binaries land under <code>&lt;component&gt;/build/bin/&lt;os&gt;/&lt;arch&gt;/</code>, e.g. <code>banyand/build/bin/linux/amd64/banyand-server-static</code>. With <code>RELEASE_VERSION</code> set (from <code>.env</code> or the command line), <code>--version</code> reports <code>&lt;version&gt;-release</code>. Without it, a git checkout falls back to <code>git describe</code>.</p>
+</code></pre></div><p>Each <code>release</code> target produces both <code>*-static-*</code> and <code>*-slim-*</code> variants where applicable. The <code>static</code> builds are stripped (<code>-s -w</code>) and statically linked; the <code>slim</code> builds additionally stub out the memory-pool diagnostic tracking. The resulting binaries land under <code>&lt;component&gt;/build/bin/&lt;os&gt;/&lt;arch&gt;/</code>, e.g. <code>banyand/build/bin/linux/amd64/banyand-server-static</code>. With <code>RELEASE_VERSION</code> set (from <code>.env</code> or the command line), <code>--version</code> reports <code>&lt;version&gt;-release</code>. Without it, a git checkout falls back to <code>git describe</code>.</p>
 <h3 id="cross-compile-binaries">Cross-compile Binaries</h3>
 <p>The build system supports cross-compiling binaries for different platforms. For example, to build a Windows binary on a Linux machine, you can issue the following command:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#008080">TARGET_OS</span><span style="color:#000;font-weight:bold">=</span>windows <span style="color:#008080">PLATFORMS</span><span style="color:#000;font-weight:bold">=</span>windows/amd64 make release
@@ -1662,24 +1532,6 @@ windows/amd64/bydbctl-cli-static
 
     </div>
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
